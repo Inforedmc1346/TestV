@@ -1697,7 +1697,7 @@ function Update:Window(text,logo,keybind)
         Labeld.BackgroundTransparency = 1.000
         Labeld.Size = UDim2.new(0, 410, 0, 20)
         Labeld.Font = Enum.Font.GothamSemibold
-        Labeld.TextColor3 = Color3.fromRGB(0, 0, 0)
+        Labeld.TextColor3 = Color3.fromRGB(255, 255, 255)
         Labeld.TextSize = 15.000
         Labeld.Text = display or ""
         Labeld.TextXAlignment = Enum.TextXAlignment.Left
@@ -8598,10 +8598,6 @@ M:AddToggle('Kill Sea baeat Hop', false, function(value)
     local BoneFarm = M:AddToggle("Farm Bone",_G.Auto_Bone,function(value)
         _G.Auto_Bone = value
         StopTween(_G.Auto_Bone)
-        wait(0.1)
-        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9515.3720703125, 164.00624084473, 5786.0610351562)
-        game.Players.LocalPlayer.Character.Head:Destroy()
-		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetSpawnPoint")
     end)
     
     spawn(function()
@@ -8609,6 +8605,9 @@ M:AddToggle('Kill Sea baeat Hop', false, function(value)
             if _G.Auto_Bone and World3 then
                 pcall(function()
                     if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton [Lv. 1975]") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie [Lv. 2000]") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul [Lv. 2025]") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy [Lv. 2050]") then
+                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - boneframe.Position).Magnitude > 2000 then
+                        BTP(boneframe)
+                        end
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Reborn Skeleton [Lv. 1975]" or v.Name == "Living Zombie [Lv. 2000]" or v.Name == "Demonic Soul [Lv. 2025]" or v.Name == "Posessed Mummy [Lv. 2050]" then
                                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then

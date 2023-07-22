@@ -135,7 +135,7 @@ function Update:Window(text,logo,keybind)
     BtnStroke.Name = "BtnStroke"
     BtnStroke.Parent = Main
     BtnStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-    BtnStroke.Color = Color3.fromRGB(0, 0, 0)
+    BtnStroke.Color = Color3.fromRGB(255, 255, 255)
     BtnStroke.LineJoinMode = Enum.LineJoinMode.Round
     BtnStroke.Thickness = 1
     BtnStroke.Transparency = 0
@@ -410,7 +410,7 @@ function Update:Window(text,logo,keybind)
         BtnStroke.Name = "BtnStroke"
         BtnStroke.Parent = TabButton
         BtnStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-        BtnStroke.Color = Color3.fromRGB(0, 0, 0)
+        BtnStroke.Color = Color3.fromRGB(255, 255, 255)
         BtnStroke.LineJoinMode = Enum.LineJoinMode.Round
         BtnStroke.Thickness = 1
         BtnStroke.Transparency = 0
@@ -655,7 +655,7 @@ function Update:Window(text,logo,keybind)
 
         Button.Name = "Button"
         Button.Parent = MainFramePage
-        Button.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        Button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
         Button.Size = UDim2.new(0, 387, 0, 31)
 
         UICorner.CornerRadius = UDim.new(0, 5)
@@ -694,12 +694,12 @@ function Update:Window(text,logo,keybind)
         Space.Font = Enum.Font.GothamSemibold
         Space.Text = "|"
         Space.TextSize = 15.000
-        Space.TextColor3 = Color3.fromRGB(0, 0, 0)
+        Space.TextColor3 = Color3.fromRGB(255, 255, 255)
         Space.TextXAlignment = Enum.TextXAlignment.Right
 
         Black.Name = "Black"
         Black.Parent = Button
-        Black.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        Black.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
         Black.BackgroundTransparency = 1.000
         Black.BorderSizePixel = 0
         Black.Position = UDim2.new(0, 1, 0, 1)
@@ -772,7 +772,7 @@ function Update:Window(text,logo,keybind)
         UIStroke.Name = "UIStroke"
         UIStroke.Parent = CheckFrame2
         UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-        UIStroke.Color = Color3.fromRGB(0, 0, 0)
+        UIStroke.Color = Color3.fromRGB(255, 255, 255)
         UIStroke.LineJoinMode = Enum.LineJoinMode.Round
         UIStroke.Thickness = 1
         UIStroke.Transparency = 0
@@ -835,7 +835,7 @@ function Update:Window(text,logo,keybind)
             game.TweenService:Create(
                 ImageButton,
                 TweenInfo.new(0.08, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut),
-                {ImageColor3 = Color3.fromRGB(0, 0, 0)}
+                {ImageColor3 = Color3.fromRGB(255, 255, 255)}
             ):Play()
             toggle = not toggle
             pcall(callback, toggle)
@@ -885,7 +885,7 @@ function Update:Window(text,logo,keybind)
         UIStroke.Name = "UIStroke"
         UIStroke.Parent = Dropdown
         UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-        UIStroke.Color = Color3.fromRGB(0, 0, 0)
+        UIStroke.Color = Color3.fromRGB(255, 255, 255)
         UIStroke.LineJoinMode = Enum.LineJoinMode.Round
         UIStroke.Thickness = 1
         UIStroke.Transparency = 0
@@ -1110,7 +1110,7 @@ function Update:Window(text,logo,keybind)
         -- Prop --
         SliderFrame.Name = slidertitle or "SliderFrame"
         SliderFrame.Parent = MainFramePage
-        SliderFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        SliderFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
         SliderFrame.BackgroundTransparency = 1.000
         SliderFrame.BorderSizePixel = 0
         SliderFrame.Size = UDim2.new(0, 387, 0, 60)
@@ -1126,7 +1126,7 @@ function Update:Window(text,logo,keybind)
         UIStroke.Name = "UIStroke"
         UIStroke.Parent = SliderFrame_2
         UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-        UIStroke.Color = Color3.fromRGB(0, 0, 0)
+        UIStroke.Color = Color3.fromRGB(255, 255, 255)
         UIStroke.LineJoinMode = Enum.LineJoinMode.Round
         UIStroke.Thickness = 1
         UIStroke.Transparency = 0
@@ -1169,7 +1169,7 @@ function Update:Window(text,logo,keybind)
         
         SliderButton.Name = "SliderButton"
         SliderButton.Parent = SliderInput
-        SliderButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        SliderButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
         SliderButton.BackgroundTransparency = 1.000
         SliderButton.BorderSizePixel = 0
         SliderButton.Position = UDim2.new(0, 0, 0, -7)
@@ -1177,7 +1177,7 @@ function Update:Window(text,logo,keybind)
     
         SliderCount.Name = "SliderCount"
         SliderCount.Parent = SliderButton
-        SliderCount.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        SliderCount.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
         SliderCount.BackgroundTransparency = 0.3
         SliderCount.BorderSizePixel = 0
         SliderCount.Position = UDim2.new(0,start,0,0)
@@ -1186,7 +1186,7 @@ function Update:Window(text,logo,keybind)
         Title_2.Name = "Title_2"
         Title_2.Parent = SliderButton
         Title_2.AnchorPoint = Vector2.new(0, 0)
-        Title_2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        Title_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
         Title_2.AutoButtonColor = false
         Title_2.BackgroundTransparency = 1.000
         Title_2.Position = UDim2.new(0,start,0,0)
@@ -1206,7 +1206,7 @@ function Update:Window(text,logo,keybind)
         SliderStroke.Name = "SliderStroke"
         SliderStroke.Parent = BoxFrame
         SliderStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-        SliderStroke.Color = Color3.fromRGB(0, 0, 0)
+        SliderStroke.Color = Color3.fromRGB(255, 255, 255)
         SliderStroke.LineJoinMode = Enum.LineJoinMode.Round
         SliderStroke.Thickness = 1
         SliderStroke.Transparency = 0.5
@@ -1215,7 +1215,7 @@ function Update:Window(text,logo,keybind)
         
         BoxFrame.Name = "BoxFrame"
         BoxFrame.Parent = SliderFrame_2
-        BoxFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        BoxFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
         BoxFrame.BackgroundTransparency = 1.000
         BoxFrame.Size = UDim2.new(0, 50, 0, 15)
         BoxFrame.Position = UDim2.new(0, 323, 0, 8)
@@ -1428,7 +1428,7 @@ function Update:Window(text,logo,keybind)
 
         Textbox.Name = "Textbox"
         Textbox.Parent = MainFramePage
-        Textbox.BackgroundColor3 = Color3.new(0, 0, 0)
+        Textbox.BackgroundColor3 = Color3.new(255, 255, 255)
         Textbox.BackgroundTransparency = 0
         Textbox.Size = UDim2.new(0, 387, 0, 31)
 
@@ -1467,7 +1467,7 @@ function Update:Window(text,logo,keybind)
         txtbtn.Size = UDim2.new(0, 387, 0, 29)
         txtbtn.Font = Enum.Font.SourceSans
         txtbtn.Text = ""
-        txtbtn.TextColor3 = Color3.fromRGB(0, 0, 0)
+        txtbtn.TextColor3 = Color3.fromRGB(255, 255, 255)
         txtbtn.TextSize = 14.000
 
         RealTextbox.Name = "RealTextbox"
@@ -1557,7 +1557,7 @@ function Update:Window(text,logo,keybind)
         
         Textbox.Name = "Textbox"
         Textbox.Parent = MainFramePage
-        Textbox.BackgroundColor3 = Color3.new(0, 0, 0)
+        Textbox.BackgroundColor3 = Color3.new(255, 255, 255)
         Textbox.BackgroundTransparency = 0
         Textbox.Size = UDim2.new(0, 387, 0, 31)
         
@@ -1577,7 +1577,7 @@ function Update:Window(text,logo,keybind)
         
         TextboxLabel.Name = "TextboxLabel"
         TextboxLabel.Parent = Textbox
-        TextboxLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        TextboxLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
         TextboxLabel.BackgroundTransparency = 1.000
         TextboxLabel.Position = UDim2.new(0, 15, 0, 0)
         TextboxLabel.Text = text
@@ -1590,7 +1590,7 @@ function Update:Window(text,logo,keybind)
         
         txtbtn.Name = "txtbtn"
         txtbtn.Parent = Textbox
-        txtbtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        txtbtn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
         txtbtn.BackgroundTransparency = 1.000
         txtbtn.Position = UDim2.new(0, 1, 0, 1)
         txtbtn.Size = UDim2.new(0, 387, 0, 29)
@@ -2463,7 +2463,7 @@ if game.PlaceId == 2753915549 then
                             name.TextYAlignment = 'Top'
                             name.BackgroundTransparency = 1
                             name.TextStrokeTransparency = 0.5
-                            name.TextColor3 = Color3.fromRGB(0, 0, 0)
+                            name.TextColor3 = Color3.fromRGB(255, 255, 255)
                         else
                             v['NameEsp'].TextLabel.Text = (v.Name ..'   \n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' Distance')
                         end
@@ -2756,7 +2756,7 @@ function UpdateIslandESP()
                             name.TextYAlignment = 'Top'
                             name.BackgroundTransparency = 1
                             name.TextStrokeTransparency = 0.5
-                            name.TextColor3 = Color3.fromRGB(0, 0, 0)
+                            name.TextColor3 = Color3.fromRGB(255, 255, 255)
                         else
                             v['NameEsp'].TextLabel.Text = (v.Name ..'   \n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Position).Magnitude/3) ..' Distance')
                         end
@@ -3053,7 +3053,7 @@ spawn(function()
                             TextLabel.BackgroundTransparency = 1.000
                             TextLabel.Size = UDim2.new(0, 200, 0, 50)
                             TextLabel.Font = Enum.Font.GothamBold
-                            TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+                            TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
                             TextLabel.Text.Size = 35
                         end
                         local Dis = math.floor((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude)
@@ -3095,7 +3095,7 @@ spawn(function()
                             TextLabel.BackgroundTransparency = 1.000
                             TextLabel.Size = UDim2.new(0, 200, 0, 50)
                             TextLabel.Font = Enum.Font.GothamBold
-                            TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+                            TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
                             TextLabel.Text.Size = 35
                         end
                         local Dis = math.floor((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude)
@@ -3137,7 +3137,7 @@ spawn(function()
                             TextLabel.BackgroundTransparency = 1.000
                             TextLabel.Size = UDim2.new(0, 200, 0, 50)
                             TextLabel.Font = Enum.Font.GothamBold
-                            TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+                            TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
                             TextLabel.Text.Size = 35
                         end
                         local Dis = math.floor((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude)

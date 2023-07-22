@@ -10365,7 +10365,7 @@ RaceV4:AddToggle("Disabled Inf Stairs", nil, function(value)
 end)
 
  
-  RaceV4:AddButton("Teleport Trial Door"),function()
+  RaceV4:AddButton("Teleport Trial Door)",function()
   if game:GetService("Players").LocalPlayer.Data.Race.Value == "Fishman" then
   Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14895.3017578125, 102.62469482421875)
   wait(0.6)

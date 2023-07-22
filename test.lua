@@ -10365,7 +10365,7 @@ RaceV4:AddToggle("Disabled Inf Stairs", nil, function(value)
 end)
 
  
-  RaceV4:AddButton("Teleport Trial Door)",function()
+  RaceV4:AddButton("Teleport Trial Door"),function()
   if game:GetService("Players").LocalPlayer.Data.Race.Value == "Fishman" then
   Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14895.3017578125, 102.62469482421875)
   wait(0.6)
@@ -10392,43 +10392,7 @@ end)
   topos(CFrame.new(29020.66015625, 14889.4267578125, -379.2682800292969))
   end
   end)
- 
- 
-  RaceV4:AddButton("Teleport Cyborg Door (Must Be in Temple Of Time!)",function()
-  Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14895.3017578125, 102.62469482421875)
-  wait(0.1)
-  topos(CFrame.new(28492.4140625, 14894.4267578125, -422.1100158691406))
-  end)
-  
-  RaceV4:AddButton("Teleport Fish Door (Must Be in Temple Of Time!)",function()
-  Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14895.3017578125, 102.62469482421875)
-  wait(0.1)
-  topos(CFrame.new(28224.056640625, 14889.4267578125, -210.5872039794922))
-  end)
-  
-  RaceV4:AddButton("Teleport Ghoul Door (Must Be in Temple Of Time!)",function()
-  Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14895.3017578125, 102.62469482421875)
-  wait(0.1)
-  topos(CFrame.new(28672.720703125, 14889.1279296875, 454.5961608886719))
-  end)
-  
-  RaceV4:AddButton("Teleport Human Door (Must Be in Temple Of Time!)",function()
-  Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14895.3017578125, 102.62469482421875)
-  wait(0.1)
-  topos(CFrame.new(29237.294921875, 14889.4267578125, -206.94955444335938))
-  end)
-  
-  RaceV4:AddButton("Teleport Mink Door (Must Be in Temple Of Time!)",function()
-  Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14895.3017578125, 102.62469482421875)
-  wait(0.1)
-  topos(CFrame.new(29020.66015625, 14889.4267578125, -379.2682800292969))
-  end)
-  
-  RaceV4:AddButton("Teleport Sky Door (Must Be in Temple Of Time!)",function()
-  Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(28286.35546875, 14895.3017578125, 102.62469482421875)
-  wait(0.1)
-  topos(CFrame.new(28967.408203125, 14918.0751953125, 234.31198120117188))
-  end)
+
 
   RaceV4:AddSeperator("Complete Trials")
   

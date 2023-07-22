@@ -4937,6 +4937,10 @@ Main:AddToggle("Farm Chest Hop",_G.AutoFarmChest_Hop,function(value)
     Main:AddToggle("Farm Cake Prince",_G.AutoDoughtBoss,function(value)
         _G.AutoDoughtBoss = value
         StopTween(_G.AutoDoughtBoss)
+        wait(0.1)
+        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1884.7747802734375, 19.327526092529297, -11666.8974609375) 
+        game.Players.LocalPlayer.Character.Head:Destroy()
+		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetSpawnPoint")
     end)
     
     spawn(function()
@@ -8594,6 +8598,10 @@ M:AddToggle('Kill Sea baeat Hop', false, function(value)
     local BoneFarm = M:AddToggle("Farm Bone",_G.Auto_Bone,function(value)
         _G.Auto_Bone = value
         StopTween(_G.Auto_Bone)
+        wait(0.1)
+        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9515.3720703125, 164.00624084473, 5786.0610351562)
+        game.Players.LocalPlayer.Character.Head:Destroy()
+		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetSpawnPoint")
     end)
     
     spawn(function()

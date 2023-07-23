@@ -4141,38 +4141,102 @@ Main:AddToggle("Auto Kaitan",false,function(value)
         end
     end)
     
-    local Mons = {}
-    local xx = {}
+-- Check Monster
 
-    for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-        if string.find(v.Name , "Lv.") then
-            table.insert(xx, v.Name)
-        end
-    end
+if World1 then
+Mons = {
+ "Bandit [Lv. 5]","Monkey [Lv. 14]","Gorilla [Lv. 20]","Pirate [Lv. 35]","Brute [Lv. 45]","Desert Bandit [Lv. 60]","Desert Officer [Lv. 70]","Snow Bandit [Lv. 90]","Snowman [Lv. 100]","Chief Petty Officer [Lv. 120]","Sky Bandit [Lv. 150]","Dark Master [Lv. 175]","Prisoner [Lv. 190]", "Dangerous Prisoner [Lv. 210]","Toga Warrior [Lv. 250]","Gladiator [Lv. 275]","Military Soldier [Lv. 300]","Military Spy [Lv. 325]","Fishman Warrior [Lv. 375]","Fishman Commando [Lv. 400]","God's Guard [Lv. 450]","Shanda [Lv. 475]","Royal Squad [Lv. 525]","Royal Soldier [Lv. 550]","Galley Pirate [Lv. 625]","Galley Captain [Lv. 650]"
+} elseif World2 then
+Mons = {
+ "Raider [Lv. 700]","Mercenary [Lv. 725]","Swan Pirate [Lv. 775]","Factory Staff [Lv. 800]","Marine Lieutenant [Lv. 875]","Marine Captain [Lv. 900]","Zombie [Lv. 950]","Vampire [Lv. 975]","Snow Trooper [Lv. 1000]","Winter Warrior [Lv. 1050]","Lab Subordinate [Lv. 1100]","Horned Warrior [Lv. 1125]","Magma Ninja [Lv. 1175]","Lava Pirate [Lv. 1200]","Ship Deckhand [Lv. 1250]","Ship Engineer [Lv. 1275]","Ship Steward [Lv. 1300]","Ship Officer [Lv. 1325]","Arctic Warrior [Lv. 1350]","Snow Lurker [Lv. 1375]","Sea Soldier [Lv. 1425]","Water Fighter [Lv. 1450]"
+} elseif World3 then
+Mons = {
+ "Pirate Millionaire [Lv. 1500]","Dragon Crew Warrior [Lv. 1575]","Dragon Crew Archer [Lv. 1600]","Female Islander [Lv. 1625]","Giant Islander [Lv. 1650]","Marine Commodore [Lv. 1700]","Marine Rear Admiral [Lv. 1725]","Fishman Raider [Lv. 1775]","Fishman Captain [Lv. 1800]","Forest Pirate [Lv. 1825]","Mythological Pirate [Lv. 1850]","Jungle Pirate [Lv. 1900]","Musketeer Pirate [Lv. 1925]","Reborn Skeleton [Lv. 1975]","Living Zombie [Lv. 2000]","Demonic Soul [Lv. 2025]","Posessed Mummy [Lv. 2050]", "Peanut Scout [Lv. 2075]", "Peanut President [Lv. 2100]", "Ice Cream Chef [Lv. 2125]", "Ice Cream Commander [Lv. 2150]", "Cookie Crafter [Lv. 2200]", "Cake Guard [Lv. 2225]", "Baking Staff [Lv. 2250]", "Head Baker [Lv. 2275]", "Cocoa Warrior [Lv. 2300]", "Chocolate Bar Battler [Lv. 2325]", "Sweet Thief [Lv. 2350]", "Candy Rebel [Lv. 2375]", "Candy Pirate [Lv. 2400]", "Snow Demon [Lv. 2425]"
+}
 
-    for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
-        if string.find(v.Name , "Lv.") then
-            table.insert(xx, v.Name)
-        end
-    end
+end
 
-    table.sort(xx)
-    local result = {}
+spawn(function()
 
-    for key,value in ipairs(xx) do
-        if value ~=xx[key+1] then
-            table.insert(result,value)
-        end
-    end
-    for key,value in ipairs(result) do
-        table.insert(Mons, value)
-    end
+	while task.wait() do
+
+		pcall(function()
+
+			if _G.AutoFarmMob then
+
+				for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+
+					if v.Name == Mon and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 350 then
+
+						v.Humanoid.WalkSpeed = 0
+
+						v.Humanoid.JumpPower = 0
+
+						v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+
+						v.HumanoidRootPart.CanCollide = false
+
+						v.Head.CanCollide = false
+
+						v.HumanoidRootPart.CFrame = FarmPos
+
+						if v.Humanoid:FindFirstChild('Animator') then
+
+							v.Humanoid.Animator:Destroy()
+
+						end
+
+						v.Humanoid:ChangeState(11)
+
+						v.Humanoid:ChangeState(14)
+
+						sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
+
+					end
+
+				end
+
+			end
+
+		end)
+
+	end
+
+end)
+
+
+
+spawn(function()
+	while task.wait() do
+		pcall(function()
+			if SelectMonsterMagnet then
+				for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+					if v.Name == Mon and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 350 then
+						v.Humanoid.WalkSpeed = 0
+						v.Humanoid.JumpPower = 0
+						v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+						v.HumanoidRootPart.CanCollide = false
+						v.Head.CanCollide = false
+						v.HumanoidRootPart.CFrame = FarmPos
+						if v.Humanoid:FindFirstChild('Animator') then
+							v.Humanoid.Animator:Destroy()
+						end
+						v.Humanoid:ChangeState(11)
+						v.Humanoid:ChangeState(14)
+						sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
+					end
+				end
+			end
+		end)
+	end
+end)
+
     
-    local Select_M = Main:AddDropdown("Select Mob",Mons,function(value)
+    local Select_M = Main:AddDropdown("Select Monster",Mons,function(value)
         _G.SelectMob = value
     end)
     
-    Main:AddButton("Refresh Mob",function()
+    Main:AddButton("Refresh Monster",function()
      Select_M:Clear()
      local xx = {}
 	
@@ -4201,45 +4265,89 @@ Main:AddToggle("Auto Kaitan",false,function(value)
 	    end
     end)
     
-    Main:AddToggle("Farm Mob",_G.AutoFarmMob,function(value)
+    Main:AddToggle("Farm Monster",_G.AutoFarmMob,function(value)
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
         _G.AutoFarmMob = value
         StopTween(_G.AutoFarmMob)
     end)
     
-    spawn(function()
-        while wait() do
-            if _G.AutoFarmMob then
-                pcall(function()
-                    if game:GetService("Workspace").Enemies:FindFirstChild(_G.SelectMob) then
-                        for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                            if v.Name == _G.SelectMob then
-                                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                    repeat task.wait()
-                                        AutoHaki()
-                                        EquipWeapon(_G.SelectWeapon)
-                                        v.HumanoidRootPart.CanCollide = false
-                                        v.Humanoid.WalkSpeed = 0
-                                        SelectMag = true
-                                        PosMon = v.HumanoidRootPart.CFrame
-                                        v.HumanoidRootPart.Size = Vector3.new(80,80,80)                             
-                                        topos(v.HumanoidRootPart.CFrame * CFrame.new(PosX,PosY,PosZ))
-                                        game:GetService("VirtualUser"):CaptureController()
-                                        game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
-                                    until not _G.AutoFarmMob or not v.Parent or v.Humanoid.Health <= 0
-                                    SelectMag = false
-                                end
-                            end
-                        end
-                    else
-                        if game:GetService("ReplicatedStorage"):FindFirstChild(_G.SelectMob) then
-                            topos(game:GetService("ReplicatedStorage"):FindFirstChild(_G.SelectMob).HumanoidRootPart.CFrame * CFrame.new(5,10,2))
-                        end
-                    end
-                end)
-            end
-        end
-    end)
+spawn(function()
+
+ while wait() do
+
+ if _G.AutoFarmMob then
+
+ pcall(function()
+
+  checkselect(_G.SelectMob)
+
+  if game:GetService("Workspace").Enemies:FindFirstChild(SelectMonster) then
+
+  for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+
+  if v.Name == SelectMonster then
+
+  if v:FindFirstChild("Humanoid") then
+
+  if v.Humanoid.Health > 0 then
+
+  repeat game:GetService("RunService").Heartbeat:wait()
+
+  EquipWeapon(_G.Select_Weapon)
+
+  if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
+
+  local args = {
+
+   [1] = "Buso"
+
+  }
+
+  game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+
+  end
+
+  topos(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+
+  v.HumanoidRootPart.CanCollide = false
+
+  v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+
+  game:GetService("VirtualUser"):CaptureController()
+
+  game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672), game.Workspace.CurrentCamera.CFrame)
+
+  PosMonSelectMonster = v.HumanoidRootPart.CFrame
+
+  SelectMonsterMagnet = true
+
+  until not _G.AutoFarmMob or not v.Parent or v.Humanoid.Health == 0 or not game:GetService("Workspace").Enemies:FindFirstChild(v.Name)
+
+  end
+
+  end
+
+  end
+
+  end
+
+  else
+
+   checkselect(_G.SelectMob)
+
+  SelectMonsterMagnet = false
+
+  topos(CFrameMon)
+
+  end
+
+  end)
+
+ end
+
+ end
+
+end)
     
    Main:AddToggle("Farm Nearest ",_G.AutoFarmNearest,function(value)
    _G.AutoFarmNearest = value

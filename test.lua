@@ -4236,35 +4236,6 @@ end)
         _G.SelectMob = value
     end)
     
-    Main:AddButton("Refresh Monster",function()
-     Select_M:Clear()
-     local xx = {}
-	
-      for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-		    if string.find(v.Name , "Lv.") then
-			    table.insert(xx, v.Name)
-		    end
-	    end
-
-	    for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
-		    if string.find(v.Name , "Lv.") then
-			    table.insert(xx, v.Name)
-		    end
-	    end
-
-	    table.sort(xx)
-	    local result = {}
-
-	    for key,value in ipairs(xx) do
-		    if value ~=xx[key+1] then
-			    table.insert(result,value)
-		    end
-	    end
-	    for key,value in ipairs(result) do
-		    Select_M:Add(value)
-	    end
-    end)
-    
     Main:AddToggle("Farm Monster",_G.AutoFarmMob,function(value)
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
         _G.AutoFarmMob = value
@@ -4281,11 +4252,11 @@ spawn(function()
 
   checkselect(_G.SelectMob)
 
-  if game:GetService("Workspace").Enemies:FindFirstChild(SelectMonster) then
+  if game:GetService("Workspace").Enemies:FindFirstChild(_G.SelectMob) then
 
   for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 
-  if v.Name == SelectMonster then
+  if v.Name == _G.SelectMob then
 
   if v:FindFirstChild("Humanoid") then
 
@@ -4293,7 +4264,7 @@ spawn(function()
 
   repeat game:GetService("RunService").Heartbeat:wait()
 
-  EquipWeapon(_G.Select_Weapon)
+  EquipWeapon(_G.SelectWeapon)
 
   if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
 
@@ -4317,7 +4288,7 @@ spawn(function()
 
   game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672), game.Workspace.CurrentCamera.CFrame)
 
-  PosMonSelectMonster = v.HumanoidRootPart.CFrame
+  PosMonSelectMob = v.HumanoidRootPart.CFrame
 
   SelectMonsterMagnet = true
 

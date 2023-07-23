@@ -4162,7 +4162,7 @@ spawn(function()
 
 		pcall(function()
 
-			if _G.AutoFarmMob then
+			if _G.AutoFarmSelectMonster then
 
 				for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
 
@@ -4207,56 +4207,81 @@ end)
 
 
 spawn(function()
+
 	while task.wait() do
+
 		pcall(function()
+
 			if SelectMonsterMagnet then
+
 				for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+
 					if v.Name == Mon and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 350 then
+
 						v.Humanoid.WalkSpeed = 0
+
 						v.Humanoid.JumpPower = 0
+
 						v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+
 						v.HumanoidRootPart.CanCollide = false
+
 						v.Head.CanCollide = false
+
 						v.HumanoidRootPart.CFrame = FarmPos
+
 						if v.Humanoid:FindFirstChild('Animator') then
+
 							v.Humanoid.Animator:Destroy()
+
 						end
+
 						v.Humanoid:ChangeState(11)
+
 						v.Humanoid:ChangeState(14)
+
 						sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
+
 					end
+
 				end
+
 			end
+
 		end)
+
 	end
+
 end)
 
     
     local Select_M = Main:AddDropdown("Select Monster",Mons,function(value)
-        _G.SelectMob = value
+        SelectMonster = value
     end)
     
-    Main:AddToggle("Farm Monster",_G.AutoFarmMob,function(value)
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-        _G.AutoFarmMob = value
-        StopTween(_G.AutoFarmMob)
-    end)
-    
+Main:AddToggle("Farm Monster",_G.AutoFarmSelectMonster,function(vu)
+
+ _G.AutoFarmSelectMonster = vu
+
+end)
+
+
+
 spawn(function()
 
- while wait() do
+ while wait(.1) do
 
- if _G.AutoFarmMob then
+ if _G.AutoFarmSelectMonster then
 
  pcall(function()
 
-  checkselect(_G.SelectMob)
+  checkselect(SelectMonster)
 
-  if game:GetService("Workspace").Enemies:FindFirstChild(_G.SelectMob) then
+  if game:GetService("Workspace").Enemies:FindFirstChild(SelectMonster) then
 
   for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 
-  if v.Name == _G.SelectMob then
+  if v.Name == SelectMonster then
 
   if v:FindFirstChild("Humanoid") then
 
@@ -4264,7 +4289,7 @@ spawn(function()
 
   repeat game:GetService("RunService").Heartbeat:wait()
 
-  EquipWeapon(_G.SelectWeapon)
+  EquipWeapon(_G.Select_Weapon)
 
   if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
 
@@ -4288,11 +4313,11 @@ spawn(function()
 
   game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672), game.Workspace.CurrentCamera.CFrame)
 
-  PosMonSelectMob = v.HumanoidRootPart.CFrame
+  PosMonSelectMonster = v.HumanoidRootPart.CFrame
 
   SelectMonsterMagnet = true
 
-  until not _G.AutoFarmMob or not v.Parent or v.Humanoid.Health == 0 or not game:GetService("Workspace").Enemies:FindFirstChild(v.Name)
+  until not _G.AutoFarmSelectMonster or not v.Parent or v.Humanoid.Health == 0 or not game:GetService("Workspace").Enemies:FindFirstChild(v.Name)
 
   end
 
@@ -4304,7 +4329,7 @@ spawn(function()
 
   else
 
-   checkselect(_G.SelectMob)
+   checkselect(SelectMonster)
 
   SelectMonsterMagnet = false
 

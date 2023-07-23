@@ -10393,12 +10393,7 @@ end)
   end
   end)
 
-  RaceV4:AddSeperator("Complete Trials")
-  
-  RaceV4:AddButton("Buy Ancient One Quest",function(t)
-  game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer('UpgradeRace','Buy')
-  end)
-  RaceV4:AddToggle("Trail All Race V4",false,function(v)
+  RaceV4:AddToggle("Trial All Race V4",false,function(v)
   _G.AutoQuestRace = v
   StopTween(_G.AutoQuestRace)
   end)
@@ -10518,6 +10513,11 @@ spawn(function()
         end
     end)
 end)
+  
+  RaceV4:AddButton("Buy Ancient One Quest",function(t)
+  game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer('UpgradeRace','Buy')
+  end)
+  
   
  RaceV4:AddButton("Complete Angel Trial",function(t)
         topos(game.Workspace.Map.SkyTrial.Model.FinishPart.CFrame)

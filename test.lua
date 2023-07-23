@@ -277,7 +277,7 @@ function Update:Window(text,logo,keybind)
 	Logo.BackgroundTransparency = 1.000
 	Logo.Position = UDim2.new(0, -5, 0, -5)
 	Logo.Size = UDim2.new(0, 135, 0, 135)
-	Logo.Image = "rbxassetid://14094405648"
+	Logo.Image = "rbxassetid://13918363155"
     local Tab = Instance.new("Frame")
     Tab.Name = "Tab"
     Tab.Parent = Main
@@ -801,7 +801,7 @@ function Update:Window(text,logo,keybind)
         Space.Font = Enum.Font.GothamSemibold
         Space.Text = "|"
         Space.TextSize = 15.000
-        Space.TextColor3 = Color3.fromRGB(0, 0, 0)
+        Space.TextColor3 = Color3.fromRGB(255, 255, 255)
         Space.TextXAlignment = Enum.TextXAlignment.Center
 
         Title.Name = "Title"
@@ -847,7 +847,7 @@ function Update:Window(text,logo,keybind)
                     game.TweenService:Create(
                         ImageButton,
                         TweenInfo.new(0.08, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut),
-                        {ImageColor3 = Color3.fromRGB(0, 0, 0)}
+                        {ImageColor3 = Color3.fromRGB(255, 255, 255)}
                     ):Play()
                     ImageButton.ImageRectOffset = Vector2.new(4, 836)
                 else
@@ -1138,7 +1138,7 @@ function Update:Window(text,logo,keybind)
         
         ImageLabel.Name = "ImageLabel"
         ImageLabel.Parent = SliderFrame_2
-        ImageLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
         ImageLabel.BackgroundTransparency = 1.000
         ImageLabel.BorderSizePixel = 0
         ImageLabel.Position = UDim2.new(0, 7.5, 0, 7.5)
@@ -1158,7 +1158,7 @@ function Update:Window(text,logo,keybind)
                 
         SliderInput.Name = "SliderInput"
         SliderInput.Parent = SliderFrame_2
-        SliderInput.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        SliderInput.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
         SliderInput.BackgroundTransparency = 0.7
         SliderInput.BorderSizePixel = 0
         SliderInput.Position = UDim2.new(0, 8, 0, 42)
@@ -1467,7 +1467,7 @@ function Update:Window(text,logo,keybind)
         txtbtn.Size = UDim2.new(0, 387, 0, 29)
         txtbtn.Font = Enum.Font.SourceSans
         txtbtn.Text = ""
-        txtbtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+        txtbtn.TextColor3 = Color3.fromRGB(0, 0, 0)
         txtbtn.TextSize = 14.000
 
         RealTextbox.Name = "RealTextbox"
@@ -4937,10 +4937,6 @@ Main:AddToggle("Farm Chest Hop",_G.AutoFarmChest_Hop,function(value)
     Main:AddToggle("Farm Cake Prince",_G.AutoDoughtBoss,function(value)
         _G.AutoDoughtBoss = value
         StopTween(_G.AutoDoughtBoss)
-        wait(0.1)
-        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1884.7747802734375, 19.327526092529297, -11666.8974609375) 
-        game.Players.LocalPlayer.Character.Head:Destroy()
-		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetSpawnPoint")
     end)
     
     spawn(function()
@@ -8605,9 +8601,6 @@ M:AddToggle('Kill Sea baeat Hop', false, function(value)
             if _G.Auto_Bone and World3 then
                 pcall(function()
                     if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton [Lv. 1975]") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie [Lv. 2000]") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul [Lv. 2025]") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy [Lv. 2050]") then
-                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - boneframe.Position).Magnitude > 2000 then
-                        BTP(boneframe)
-                        end
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v.Name == "Reborn Skeleton [Lv. 1975]" or v.Name == "Living Zombie [Lv. 2000]" or v.Name == "Demonic Soul [Lv. 2025]" or v.Name == "Posessed Mummy [Lv. 2050]" then
                                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
@@ -10400,7 +10393,6 @@ end)
   end
   end)
 
-
   RaceV4:AddSeperator("Complete Trials")
   
   RaceV4:AddButton("Buy Ancient One Quest",function(t)
@@ -10502,7 +10494,7 @@ spawn(function()
 						end
 					end
 				elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Cyborg" then
-					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,300,0)
+					topos(CFrame.new(28654, 14898.7832, -30, 1, 0, 0, 0, 1, 0, 0, 0, 1))
 				elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Ghoul" then
 					for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
 						if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then

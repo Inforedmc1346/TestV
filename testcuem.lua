@@ -1,4 +1,4 @@
-Pos = 1--cccc
+Pos = 1--cccccc
 local P = game:GetService("Players")
 local LP = P.LocalPlayer
 local PG = LP.PlayerGui
@@ -502,7 +502,7 @@ if getgenv().NoClip and LP.Character and LP.Character:FindFirstChild("Humanoid")
         end    
     if BringMob then
                 for i,v in pairs(Enemies:GetChildren()) do
-                    if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 350 then                            
+                    if (getgenv().Kaitun or (v.Name == CheckQuest()["MobName"] or (v.Name == "Shanda" and mylevel == 1 and mylevel < 60))) V:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 350 then                            
                             v.HumanoidRootPart.CFrame = PosMon
                             v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)                                                  
                             v.HumanoidRootPart.Transparency = 1
@@ -568,7 +568,7 @@ spawn(function()
                         end
                     else
                         pcall(function()
-                            TP(CheckQuest()["Position"][CheckQuest().MobName .. tostrinh(Pos)] * CFrame.new(5, 30, 5))
+                            TP(CheckQuest()["Position"][CheckQuest().MobName .. tostring(Pos)] * CFrame.new(5, 30, 5))
                         end)
                          Pos = Pos + 1
                          wait(1.2)

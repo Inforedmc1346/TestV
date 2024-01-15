@@ -1,4 +1,4 @@
-Pos = 1
+Pos = 1--cccc
 local P = game:GetService("Players")
 local LP = P.LocalPlayer
 local PG = LP.PlayerGui
@@ -32,7 +32,7 @@ elseif y == 4442272183 then
     Sea3 = true
 end
 CameraShaker:Stop()
---RS.Assets.GUI.DamageCounter.Enabled = false
+RS.Assets.GUI.DamageCounter.Enabled = false
 --PG.Notifications.Enabled = false
 local codes = {
     "Enyo_is_Pro",
@@ -65,7 +65,6 @@ local codes = {
     "ADMIN_STRENGTH",
     "DRAGONABUSE"
 }
-
 for _, v in pairs(codes) do
     Remotes:WaitForChild("Redeem"):InvokeServer(v)
 end
@@ -132,9 +131,9 @@ function Hop()
     end
 function GetDistance(q)
     if typeof(q) == "CFrame" then
-        return LP:DistanceFromCharacter(q.Position)
+        return game.Players.LocalPlayer:DistanceFromCharacter(q.Position)
     elseif typeof(q) == "Vector3" then
-        return LP:DistanceFromCharacter(q)
+        return game.Players.LocalPlayer:DistanceFromCharacter(q)
     end
 end
 function CheckNearestTeleporter(P)
@@ -189,6 +188,7 @@ function TpEntrance(P)
     LP.Character.PrimaryPart.CFrame = CFrame.new(LP.Character.PrimaryPart.CFrame.X, LP.Character.PrimaryPart.CFrame.Y + 50, LP.Character.PrimaryPart.CFrame.Z)
     wait(0.5)
 end
+
 function TP(P)
    if LP.Character and LP.Character:FindFirstChild("Humanoid") and LP.Character.Humanoid.Health > 0 then
        if not Speed or typeof(Speed) ~= "number" then
@@ -208,6 +208,10 @@ function TP(P)
         end
         tween:Play()
      end
+end
+function RemoveLvTitle(mob)
+    mob = mob:gsub(" %pLv. %d+%p", "")
+    return mob
 end
 function CheckQuest()
     local Lvl = Data.Level.Value
@@ -246,32 +250,23 @@ function CheckQuest()
 	Quest["Position"] = MobCFrame
 	return Quest
 end
-function CoQuestKo()
-    for i, v in pairs(GuideModule["Data"]) do
-        if i == "QuestData" then
-            return true
-        end
-    end
-    return false
-end
 function QuestDungKo(mob)
-    if CoQuestKo() then
-        for i, v in pairs(GuideModule["Data"]["QuestData"]) do
-            if i == "Name" then
-                if v == mob then
-                    return true
-                else
-                    return false
-                end
-            end
-        end
+    if GuideModule["Data"]["QuestData"]["Name"] == mob then
+        return true
     end
     return false
 end
 for i, v in pairs(CheckQuest()) do
-        print(i, v)   
+    if typeof(v) ~= "table" then
+        print(i, v)
+    else
+        print(i, #v)
+    end
 end
-function MobPos(Mob)
+function GetMob()
+    
+end
+function GetPosMob(Mob)
     local CFrameTab = {}
 	if EnemySpawns:FindFirstChild(Mob) then
     	for i, v in pairs(EnemySpawns:GetChildren()) do
@@ -534,7 +529,7 @@ spawn(function()
     while wait() do
         if getgenv().Kaitun then
         local mylevel = Data.Level.Value
-        if mylevel >= 15 and mylevel < 60 then
+        if mylevel == 1 and mylevel < 60 then
             FastFarm()
         elseif mylevel >= 60 and mylevel < 300 then
             HuntPlayer()     
@@ -572,14 +567,11 @@ spawn(function()
                             end
                         end
                     else
-                        if Pos == nil or Pos == "" or Pos > #CheckQuest()["Position"] then
-                            Pos = 1
-                        end
                         pcall(function()
-                            TP(CheckQuest()["Position"][Pos] * CFrame.new(5, 30, 5))
+                            TP(CheckQuest()["Position"][CheckQuest().MobName .. tostrinh(Pos)] * CFrame.new(5, 30, 5))
                         end)
                          Pos = Pos + 1
-                         wait(2)
+                         wait(1.2)
                     end
                 end   
             else
@@ -696,10 +688,10 @@ spawn(function()
                             elseif game:GetService("ReplicatedStorage").Remotes["CommF_"]:InvokeServer("ZQuestProgress", "General") == 1 then
                                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelZou")
                             else
-                                if game.Workspace.Enemies:FindFirstChild("Don Swan [Lv. 1000] [Boss]") then
+                                if game.Workspace.Enemies:FindFirstChild("Don Swan") then
                                     for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
                                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                            if v.Name == "Don Swan [Lv. 1000] [Boss]" then
+                                            if v.Name == "Don Swan" then
                                                 repeat
                                                     task.wait()
                                                     EquipTool(getgenv().SelectedWeapon)                                                                                                                    
@@ -773,10 +765,10 @@ spawn(function()
                     else
                         if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BartiloQuestProgress", "Bartilo") == 0 then
                             if string.find(game.Players.LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Swan Pirates") and string.find(game.Players.LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "50") and game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-                                if game.Workspace.Enemies:FindFirstChild("Swan Pirate [Lv. 775]") then
+                                if game.Workspace.Enemies:FindFirstChild("Swan Pirate") then
                                     for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
                                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                            if v.Name == "Swan Pirate [Lv. 775]" then
+                                            if v.Name == "Swan Pirate" then
                                                 pcall(function()
                                                     repeat
                                                     task.wait()
@@ -813,10 +805,10 @@ spawn(function()
                                     TP(CFrame.new(-456.28952, 73.0200958, 299.895966))
                             end
                         elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BartiloQuestProgress", "Bartilo") == 1 then
-                            if game.Workspace.Enemies:FindFirstChild("Jeremy [Lv. 850] [Boss]") then
+                            if game.Workspace.Enemies:FindFirstChild("Jeremy") then
                                 for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
                                     if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                        if v.Name == "Jeremy [Lv. 850] [Boss]" then
+                                        if v.Name == "Jeremy" then
                                                 repeat
                                                     task.wait()
                                                     EquipTool(getgenv().SelectedWeapon)                                                                                                                    

@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #12.1
+--Hirimi Hub Hyper - Rewrite Fixed & Update #12.15
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -2641,6 +2641,7 @@ spawn(function()
                                 EClick()
                                 NoClip = true
                             until not v or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") and v.Humanoid.Health <= 0 or not Elite
+                            NoClip = false
                         end
                     else
                         if CheckEliteReplicated() then

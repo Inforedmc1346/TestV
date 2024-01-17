@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #10.4
+--Hirimi Hub Hyper - Rewrite Fixed & Update #10.5
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -2633,7 +2633,7 @@ spawn(function()
                                             EBuso()
                                             EWeapon(Selecttool)
                                             v.HumanoidRootPart.CanCollide = false
-                                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(PosX,PosY,PosZ))
+                                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
                                             EClick()
                                             sethiddenproperty(LP,"SimulationRadius",math.huge)
                                         until not Elite or v.Humanoid.Health <= 0 or not v.Parent

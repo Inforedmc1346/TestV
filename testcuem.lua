@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #10.1
+--Hirimi Hub Hyper - Rewrite Fixed & Update #10.2
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -1231,52 +1231,6 @@ end
 function PlayersCount()
     return #game.Players:GetChildren()
 end
-function FunctionFoldermob()
-    print("Folder Mobspawns")
-    repeat wait()
-        if game.Workspace:FindFirstChild("MobSpawns") then
-            game.Workspace.MobSpawns:Destroy()
-        end
-    until not game.Workspace:FindFirstChild("MobSpawns")
-    local K = Instance.new("Folder")
-    K.Parent = game.Workspace
-    K.Name = "MobSpawns"
-    wait()
-    repeat wait()
-    until game.Workspace:FindFirstChild("MobSpawns")
-    for r, v in pairs(WS["_WorldOrigin"].EnemySpawns:GetChildren()) do
-        local a = v:Clone()
-        a.Parent = game.Workspace.MobSpawns
-    end
-    local L = {}
-    for r, v in next, require(RS.Quests) do
-        for M, N in next, v do
-            for O, P in next, N.Task do
-                if P > 1 then
-                    table.insert(L, O)
-                end
-            end
-        end
-    end
-    if string.find(WS["_WorldOrigin"].EnemySpawns:GetChildren()[1].Name, "Lv.") then
-        for r, v in pairs(getnilinstances()) do
-            if table.find(L, tostring(v.Name:gsub(" %pLv. %d+%p", ""))) then
-                local a = v:Clone()
-                a.Parent = game.Workspace.MobSpawns
-            end
-        end
-    else
-        for r, v in pairs(getnilinstances()) do
-            if table.find(L, v.Name) then
-                local a = v:Clone()
-                if a.Parent then
-                    a.Parent = game.Workspace.MobSpawns
-                end
-            end
-        end
-    end
-end
-FunctionFoldermob()
 function GetMobSpawn(a)
     for r, v in next, EnemySpawns:GetChildren() do
         if v.Name == a then
@@ -2542,9 +2496,9 @@ spawn(function()
                             elseif not LP.Backpack:FindFirstChild("Flower 2") and not LP.Character:FindFirstChild("Flower 2") then
                                 ToTween(WS.Flower2.CFrame)
                             elseif not LP.Backpack:FindFirstChild("Flower 3") and not LP.Character:FindFirstChild("Flower 3") then
-                                if Enemies:FindFirstChild("Zombie [Lv. 950]") then
+                                if Enemies:FindFirstChild("Zombie") then
                                     for i,v in pairs(Enemies:GetChildren()) do
-                                        if v.Name == "Zombie [Lv. 950]" then
+                                        if v.Name == "Zombie" then
                                             repeat task.wait()
                                                 EBuso()
                                                 EWeapon(Selecttool)

@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #10.9
+--Hirimi Hub Hyper - Rewrite Fixed & Update #11.0
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -2656,6 +2656,8 @@ spawn(function()
                     end
                 end
             end)
+        else
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter")
         end
     end
 end)

@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #10.3
+--Hirimi Hub Hyper - Rewrite Fixed & Update #10.4
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -1443,7 +1443,7 @@ MainTab:AddDropdown({
 		DelayAttack = vDelayAttack
 	end    
 })
-DelayAttack = 0.6
+DelayAttack = 0.35
 spawn(function()
     while wait(.1) do
         if DelayAttack then
@@ -1463,7 +1463,7 @@ spawn(function()
                 if MasteryOption then
                     DelayAttack = 0.9
                 else
-                    DelayAttack = 0.4
+                    DelayAttack = 0.35
                 end
             elseif DelayAttack == "0.2" then
                 DelayAttack = 0.9
@@ -2496,9 +2496,9 @@ spawn(function()
                             elseif not LP.Backpack:FindFirstChild("Flower 2") and not LP.Character:FindFirstChild("Flower 2") then
                                 ToTween(WS.Flower2.CFrame)
                             elseif not LP.Backpack:FindFirstChild("Flower 3") and not LP.Character:FindFirstChild("Flower 3") then
-                                if Enemies:FindFirstChild("Zombie [Lv. 950]") then
+                                if Enemies:FindFirstChild("Zombie") then
                                     for i,v in pairs(Enemies:GetChildren()) do
-                                        if v.Name == "Zombie [Lv. 950]" then
+                                        if v.Name == "Zombie" then
                                             repeat task.wait()
                                                 EBuso()
                                                 EWeapon(Selecttool)

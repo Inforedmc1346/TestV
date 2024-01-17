@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #10.5
+--Hirimi Hub Hyper - Rewrite Fixed & Update #10.6
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -2629,14 +2629,15 @@ spawn(function()
                             for i,v in pairs(Enemies:GetChildren()) do
                                 if v.Name == "Diablo" or v.Name == "Deandre" or v.Name == "Urban" then
                                     if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                        repeat wait()
+                                        repeat task.wait()
                                             EBuso()
                                             EWeapon(Selecttool)
+                                            EClick()
                                             v.HumanoidRootPart.CanCollide = false
                                             ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-                                            EClick()
-                                            sethiddenproperty(LP,"SimulationRadius",math.huge)
-                                        until not Elite or v.Humanoid.Health <= 0 or not v.Parent
+                                            NoClip = true
+                                        until not Elite or v.Humanoid.Health <= 0 or v.Humanoid.Health =< 0
+                                        NoClip = true
                                     end
                                 end
                             end

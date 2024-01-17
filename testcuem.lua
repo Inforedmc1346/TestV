@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #10.2
+--Hirimi Hub Hyper - Rewrite Fixed & Update #10.3
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -2496,9 +2496,9 @@ spawn(function()
                             elseif not LP.Backpack:FindFirstChild("Flower 2") and not LP.Character:FindFirstChild("Flower 2") then
                                 ToTween(WS.Flower2.CFrame)
                             elseif not LP.Backpack:FindFirstChild("Flower 3") and not LP.Character:FindFirstChild("Flower 3") then
-                                if Enemies:FindFirstChild("Zombie") then
+                                if Enemies:FindFirstChild("Zombie [Lv. 950]") then
                                     for i,v in pairs(Enemies:GetChildren()) do
-                                        if v.Name == "Zombie" then
+                                        if v.Name == "Zombie [Lv. 950]" then
                                             repeat task.wait()
                                                 EBuso()
                                                 EWeapon(Selecttool)

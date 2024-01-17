@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #10.7
+--Hirimi Hub Hyper - Rewrite Fixed & Update #10.8
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -2632,9 +2632,13 @@ spawn(function()
                                         repeat task.wait()
                                             EBuso()
                                             EWeapon(Selecttool)
-                                            EClick()
                                             v.HumanoidRootPart.CanCollide = false
-                                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                            v.Humanoid.WalkSpeed = 0
+                                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(PosX,PosY,PosZ))
+                                            game:GetService("VirtualUser"):CaptureController()
+                                            game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
+                                            sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
                                             NoClip = true
                                         until not Elite or v.Humanoid.Health <= 0
                                         NoClip = true

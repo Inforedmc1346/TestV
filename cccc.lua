@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #12.2
+--Hirimi Hub Hyper - Rewrite Fixed & Update #12.3
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -522,18 +522,7 @@ local elitemob = {
     "Diablo"
 }
 function CheckElite()
-    for i,v in next, Enemies:GetChildren() do
-        if table.find(elitemob, v.Name) and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-            return v
-        end
-    end
-end
-function CheckEliteReplicated()
-    for i,v in next, RS:GetChildren() do
-        if table.find(elitemob, v.Name) and v:FindFirstChild("HumanoidRootPart") then
-            return v
-        end
-    end
+    return MobGet(elitemob, true)
 end
 spawn(function()
     while wait() do
@@ -1117,6 +1106,20 @@ end
 function IsWpSKillLoaded(bW)
     if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Skills:FindFirstChild(bW) then
         return true
+    end
+end
+function MobGet(tablemob, valuebb)
+    for r, v in pairs(Enemies:GetChildren()) do
+        if table.find(tablemob, v.Name) and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+            return v
+        end
+    end
+    if valuebb then
+        for r, v in pairs(RS:GetChildren()) do
+            if table.find(tablemob, v.Name) and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                return v
+            end
+        end
     end
 end
 function EquipAllWeapon()
@@ -2635,28 +2638,24 @@ local EliteToggle = ItemTab:AddToggle({
 spawn(function()
     while task.wait() do
         if Elite then
-            if CheckElite() then
-                if PG.Main.Quest.Visible == true then
-                    local v = CheckElite()
-                    if Enemies:FindFirstChild("Diablo") or Enemies:FindFirstChild("Deandre") or Enemies:FindFirstChild("Urban") then
-                        if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                            repeat task.wait()
-                                EBuso()
-                                EWeapon(Selecttool)
-                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-                                EClick()
-                                NoClip = true
-                            until not v or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") and v.Humanoid.Health <= 0 or not Elite
-                            NoClip = false
-                        end
-                    else
-                        if CheckEliteReplicated() then
-                            ToTween(CheckEliteReplicated().HumanoidRootPart.CFrame * CFrame.new(0,15,0))
-                        end
-                    end
-                else
-                    RS.Remotes.CommF_:InvokeServer("EliteHunter")
+            if not string.find(PG.Main.Quest.Container.QuestTitle.Title.Text, CheckElite().Name) or not PG.Main.Quest.Visible then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter")
+            end
+            local v = CheckElite()
+            if Enemies:FindFirstChild(v.Name) then
+                if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                    repeat task.wait()
+                        EBuso()
+                        EWeapon(Selecttool)
+                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                        EClick()
+                        NoClip = true
+                    until not v or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") and v.Humanoid.Health <= 0 or not Elite
+                    NoClip = false
                 end
+            else
+                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                NoClip = true
             end
         end
     end

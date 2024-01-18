@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #12.6
+--Hirimi Hub Hyper - Rewrite Fixed & Update #12.7
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -2647,7 +2647,7 @@ spawn(function()
 end)
 ItemTab:AddSection({Name = "Elite Hunter"})
 local EliteToggle = ItemTab:AddToggle({
-	Name = "Get Quest & Kill Elite Mon",
+	Name = "Get Quest & Kill Elite",
 	Default = false,
 	Flag = "KillElite",
 	Save = true,
@@ -2658,11 +2658,10 @@ local EliteToggle = ItemTab:AddToggle({
 }) 
 spawn(function()
     while task.wait() do
-        if Elite then
+        if Elite and not StartFarms then
             if not string.find(PG.Main.Quest.Container.QuestTitle.Title.Text, CheckElite().Name) or not PG.Main.Quest.Visible then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter")
             end
-            RS.Remotes.CommF_:InvokeServer("AbandonQuest")
             local v = CheckElite()
             if Enemies:FindFirstChild(v.Name) then
                 if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then

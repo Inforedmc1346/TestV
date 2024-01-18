@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #12.15
+--Hirimi Hub Hyper - Rewrite Fixed & Update #12.2
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -388,6 +388,12 @@ function CheckVerRace()
         return LP.Data.Race.Value .. " V2"
     end
     return LP.Data.Race.Value .. " V1"
+end
+local radius = 10
+local angle = 0
+function getNextPosition(center)
+    angle = angle + 5
+    return center + Vector3.new(math.sin(math.rad(angle)) * radius, 0, math.cos(math.rad(angle)) * radius)
 end
 spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
@@ -2038,7 +2044,7 @@ spawn(function()
                     repeat task.wait()
                         EWeapon(Selecttool)                                                                                                                    
                         EBuso()
-                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                        ToTween(getNextPosition(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0)))
                         v.HumanoidRootPart.Size = Vector3.new(50,50,50)  
                         v.HumanoidRootPart.CanCollide = false
                         PosMon = v.HumanoidRootPart.CFrame

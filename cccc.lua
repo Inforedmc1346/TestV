@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #13
+--Hirimi Hub Hyper - Rewrite Fixed & Update #14
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -2065,28 +2065,6 @@ spawn(function()
                         ToTween(CFrameCI)
                     end
                 end
-            elseif StartFarms and Elite and RS:FindFirstChild(CheckElite().Name) and (SelectFarm == "Cake Prince" or SelectFarm == "Bone" or SelectFarm == "Level") then
-                if not string.find(PG.Main.Quest.Container.QuestTitle.Title.Text, CheckElite().Name) or not PG.Main.Quest.Visible then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter")
-                elseif not string.find(PG.Main.Quest.Container.QuestTitle.Title.Text, CheckElite().Name) and PG.Main.Quest.Visible == true then
-                    RS.Remotes.CommF_:InvokeServer("AbandonQuest")
-                end
-                local v = CheckElite()
-                if Enemies:FindFirstChild(v.Name) then
-                    if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                        repeat task.wait()
-                            EBuso()
-                            EWeapon(Selecttool)
-                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-                            EClick()
-                            NoClip = true
-                        until not v or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") and v.Humanoid.Health <= 0 or not Elite
-                        NoClip = false
-                    end
-                else
-                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                    NoClip = true
-                end
             end
         end)
     end
@@ -2653,18 +2631,16 @@ local EliteToggle = ItemTab:AddToggle({
 	Save = true,
 	Callback = function(vElite)
 		Elite = vElite
+        RS.Remotes.CommF_:InvokeServer("AbandonQuest")
 		DisableTween(Elite)
 	end    
 }) 
 spawn(function()
     while task.wait() do
-        if Elite and not StartFarms then
+        if Elite then
             if not string.find(PG.Main.Quest.Container.QuestTitle.Title.Text, CheckElite().Name) or not PG.Main.Quest.Visible then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter")
-            elseif not string.find(PG.Main.Quest.Container.QuestTitle.Title.Text, CheckElite().Name) and PG.Main.Quest.Visible == true then
-                RS.Remotes.CommF_:InvokeServer("AbandonQuest")
             end
-            
             local v = CheckElite()
             if Enemies:FindFirstChild(v.Name) then
                 if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then

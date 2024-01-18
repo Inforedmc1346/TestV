@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #12.9
+--Hirimi Hub Hyper - Rewrite Fixed & Update #13
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -2065,7 +2065,7 @@ spawn(function()
                         ToTween(CFrameCI)
                     end
                 end
-            elseif StartFarms and CheckElite() and Elite and (SelectFarm == "Cake Prince" or SelectFarm == "Bone" or SelectFarm == "Level") then
+            elseif StartFarms and Elite and RS:FindFirstChild(CheckElite().Name) and (SelectFarm == "Cake Prince" or SelectFarm == "Bone" or SelectFarm == "Level") then
                 if not string.find(PG.Main.Quest.Container.QuestTitle.Title.Text, CheckElite().Name) or not PG.Main.Quest.Visible then
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter")
                 elseif not string.find(PG.Main.Quest.Container.QuestTitle.Title.Text, CheckElite().Name) and PG.Main.Quest.Visible == true then
@@ -2658,7 +2658,7 @@ local EliteToggle = ItemTab:AddToggle({
 }) 
 spawn(function()
     while task.wait() do
-        if Elite then
+        if Elite and not StartFarms then
             if not string.find(PG.Main.Quest.Container.QuestTitle.Title.Text, CheckElite().Name) or not PG.Main.Quest.Visible then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter")
             elseif not string.find(PG.Main.Quest.Container.QuestTitle.Title.Text, CheckElite().Name) and PG.Main.Quest.Visible == true then

@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #14.4
+--Hirimi Hub Hyper - Rewrite Fixed & Update #14.5
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -207,161 +207,262 @@ function ToTweenWithEntrace(Positions)
         tween:Play()
     end
 end
-function RemoveLvTitle(mob)
-    mob = mob:gsub(" %pLv. %d+%p", "")
-    return mob
-end
+local RSQQQ = require(game.ReplicatedStorage.Quests)
+local R = {"BartiloQuest", "Trainees", "MarineQuest", "CitizenQuest"}
 local function CheckQuest()
-    local Mob, MobName, QuestName, QuestLevel, LevelReq, QuestCFrame, MobCFrame
-    local Lvl = Data.Level.Value
-    local GuideModule = require(RS.GuideModule)
-    local Quests = require(RS.Quests)    
-    for i,v in pairs(GuideModule["Data"]["NPCList"]) do
-        for a,b in pairs(v["Levels"]) do
-            if Lvl >= b then
-                    if not LevelReq then
-                        LevelReq = 0
-                    end
-                    if b >= LevelReq then
-                        QuestCFrame = i["CFrame"]
-                        QuestLevel = a
-                        LevelReq = b
-                    end
-                    if #v["Levels"] == 3 and QuestLevel == 3 then
-                        QuestCFrame = i["CFrame"]
-                        QuestLevel = 2
-                        LevelReq = v["Levels"][2]
+    local T = LocalPlayerLevelValue
+    local min = 0
+    if T >= 1450 and game.PlaceId == 4442272183 then
+        Mob1 = "Water Fighter"
+        Mob2 = "ForgottenQuest"
+        Mob3 = 2
+    elseif T >= 700 and game.PlaceId == 2753915549 then
+        Mob1 = "Galley Captain"
+        Mob2 = "FountainQuest"
+        Mob3 = 2
+    elseif T >= 2075 and game.PlaceId == 7449423635
+     then
+        Mob1 = "Posessed Mummy"
+        Mob2 = "HauntedQuest2"
+        Mob3 = 2
+    else
+        for r, v in pairs(RSQQQ) do
+            for M, N in pairs(v) do
+                local U = N.LevelReq
+                for O, P in pairs(N.Task) do
+                    if T >= U and U >= min and N.Task[O] > 1 and not table.find(R, tostring(r)) then
+                        min = U
+                        Mob1 = tostring(O)
+                        Mob2 = r
+                        Mob3 = M
                     end
                 end
+            end
         end
     end
-    for i,v in pairs(Quests) do
-		for a,b in pairs(v) do
-			if b["LevelReq"] == LevelReq and i ~= "CitizenQuest" then
-				QuestName = i
-				for j,k in pairs(b["Task"]) do
-                    MobName = j
+end
+function CheckDoubleQuest()
+    local a = {}
+    for r, v in pairs(Q) do
+        for M, N in pairs(v) do
+            local U = N.LevelReq
+            for O, P in pairs(N.Task) do
+                if O == Mob1 then
+                    for _, a0 in next, v do
+                        if a0.LevelReq <= game.Players.LocalPlayer.Data.Level.Value and a0.Name ~= "Town Raid" then
+                            for a1, a2 in next, a0.Task do
+                                if a2 > 1 then
+                                    table.insert(a, a1)
+                                end
+                            end
+                        end
+                    end
                 end
-			end	
-		end
-	end
-    if QuestName == "FishmanQuest" then
-        if StartFarms and SelectFarm == "Level" and LP:DistanceFromCharacter(QuestCFrame.Position) > 1000 then
-            Remote:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
-        end
-        if QuestLevel == 1 then
-            MobCFrame = CFrame.new(60955.0625, 48.7988472, 1543.7168)
-        else
-            MobCFrame = CFrame.new(61922.6328125, 18.482830047607422, 1493.934326171875)
-        end                   
-    elseif QuestName == "SkyExp1Quest" then
-        if QuestLevel == 1 then
-           QuestCFrame = CFrame.new(-4721.88867, 843.874695, -1949.96643, 0.996191859, -0, -0.0871884301, 0, 1, -0, 0.0871884301, 0, 0.996191859)
-            if StartFarms and SelectFarm == "Level" and LP:DistanceFromCharacter(QuestCFrame.Position) > 1500 then
-                Remote:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688)) 
-            end
-        else
-           QuestCFrame = CFrame.new(-7859.09814, 5544.19043, -381.476196, -0.422592998, 0, 0.906319618, 0, 1, 0, -0.906319618, 0, -0.422592998)
-            if StartFarms and SelectFarm == "Level" and LP:DistanceFromCharacter(QuestCFrame.Position) > 1500 then
-                Remote:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))               
             end
         end
-    elseif QuestName == "SkyExp2Quest" then
-        if _G.Kaitun and LP:DistanceFromCharacter(QuestCFrame.Position) > 1500 then
-            Remote:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
+    end
+    return a
+end
+local a3 = require(game.ReplicatedStorage:WaitForChild("GuideModule"))
+function CheckQuestData()
+    for r, v in next, a3.Data do
+        if r == "QuestData" then
+            return true
         end
     end
-    if LevelReq == 0 then
-         LevelReq = 5
-        if tostring(LP.Team) == "Marines" then
-            MobName = "Trainee"
-            QuestName = "MarineQuest"
-            QuestCFrame = CFrame.new(-2709.67944, 24.5206585, 2104.24585)
-        elseif tostring(LP.Team) == "Pirates" then
-            MobName = "Bandit"
-            QuestName = "BanditQuest1"
-            QuestCFrame = CFrame.new(1059.99731, 16.9222069, 1549.28162)
+    return false
+end
+function CheckNameQuest()
+    local a
+    if CheckQuestData() then
+        for r, v in next, a3.Data.QuestData.Task do
+            a = r
         end
     end
-    Mob = (MobName .. " [Lv. " .. LevelReq .. "]")
-    local A = {}
-    if EnemySpawns:FindFirstChild(MobName) then
-        for i, v in pairs(EnemySpawns:GetChildren()) do
-	        if v:IsA("Part") and string.find(v.Name, MobName) then
-	                table.insert(A, v.CFrame)
-	        end
+    return a
+end
+function CheckNameQuest2()
+    local a
+    local a4 = {}
+    if CheckQuestData() then
+        for r, v in next, a3.Data.QuestData.Task do
+            a = r
+            table.insert(a4, r)
         end
     end
-    local NearestDistance = math.huge
-    local NearestMob
-    for _, v in pairs(A) do
-        local DistanceMob = LP:DistanceFromCharacter(v.Position)
-        if DistanceMob < NearestDistance then       
-            NearestMob = v
-            NearestDistance = DistanceMob 
+    return a4
+end
+QuestTak = true
+function CheckNextQuest()
+    CheckQuest()
+    local a5 = {}
+    if LP.Data.Level.Value >= 10 and QuestTak and CheckQuestData() and CheckNameQuest() == Mob1 and #CheckNameQuest() > 2
+     then
+        for r, v in pairs(Q) do
+            for M, N in pairs(v) do
+                for O, P in pairs(N.Task) do
+                    if tostring(O) == Mob1 then
+                        for a6, a7 in next, v do
+                            for a8, a9 in next, a7.Task do
+                                if a8 ~= Mob1 and a9 > 1 then
+                                    if a7.LevelReq <= game.Players.LocalPlayer.Data.Level.Value then
+                                        a5["Name"] = tostring(a8)
+                                        a5["NameQuest"] = r
+                                        a5["ID"] = a6
+                                    else
+                                        a5["Name"] = Mob1
+                                        a5["NameQuest"] = Mob2
+                                        a5["ID"] = Mob3
+                                    end
+                                    return a5
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    else
+        a5["Name"] = Mob1
+        a5["NameQuest"] = Mob2
+        a5["ID"] = Mob3
+        return a5
+    end
+    a5["Name"] = Mob1
+    a5["NameQuest"] = Mob2
+    a5["ID"] = Mob3
+    return a5
+end
+function CFrameQuest()
+    QuestPoses = {}
+    for r, v in pairs(getnilinstances()) do
+        if v:IsA("Model") and v:FindFirstChild("Head") and v.Head:FindFirstChild("QuestBBG") and v.Head.QuestBBG.Title.Text == "QUEST" then
+            QuestPoses[v.Name] = v.Head.CFrame * CFrame.new(0, -2, 2)
         end
     end
-    MobCFrame = NearestMob
-    return {
-        ["QuestLevel"] = QuestLevel,
-        ["QuestCFrame"] = QuestCFrame,
-        ["Mob"] = Mob,
-        ["QuestName"] = QuestName,
-        ["LevelReq"] = LevelReq,
-        ["MobName"] = MobName,
-        ["MobCFrame"] = MobCFrame
-    }
+    for r, v in pairs(game.Workspace.NPCs:GetDescendants()) do
+        if v.Name == "QuestBBG" and v.Title.Text == "QUEST" then
+            QuestPoses[v.Parent.Parent.Name] = v.Parent.Parent.Head.CFrame * CFrame.new(0, -2, 2)
+        end
+    end
+    DialoguesList = {}
+    for r, v in pairs(require(game.ReplicatedStorage.DialoguesList)) do
+        DialoguesList[v] = r
+    end
+    local V = getscriptclosure(game:GetService("Players").LocalPlayer.PlayerScripts.NPC)
+    local W = {}
+    for k, v in pairs(debug.getprotos(V)) do
+        if #debug.getconstants(v) == 1 then
+            table.insert(W, debug.getconstant(v, 1))
+        end
+    end
+    local X = false
+    local Y = {}
+    for k, v in pairs(debug.getconstants(V)) do
+        if type(v) == "string" then
+            if v == "Players" then
+                X = false
+            end
+            if not X then
+                if v == "Blox Fruit Dealer" then
+                    X = true
+                end
+            else
+            end
+            if X then
+                table.insert(Y, v)
+            end
+        end
+    end
+    local Z = {}
+    QuestPoint = {}
+    for k, v in pairs(Y) do
+        if QuestPoses[v] then
+            Z[W[k]] = Y[k]
+        end
+    end
+    for r, v in next, Z do
+        QuestPoint[r] = QuestPoses[v]
+    end
+    QuestPoint["SkyExp1Quest"] = CFrame.new(-7857.28516,5544.34033,-382.321503,-0.422592998,0,0.906319618,0,1,0,-0.906319618,0,-0.422592998)
+end
+function CheckLEVELTASK()
+    local a = {}
+    for r, v in pairs(Q) do
+        for M, N in pairs(v) do
+            local U = N.LevelReq
+            for O, P in pairs(N.Task) do
+                if O == Mob1 then
+                    for _, a0 in next, v do
+                        if a0.LevelReq <= game.Players.LocalPlayer.Data.Level.Value and a0.Name ~= "Town Raid" then
+                            for a1, a2 in next, a0.Task do
+                                if a2 > 1 then
+                                    table.insert(a, a1)
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+    return a
+end
+function MobNameQuest()
+    local aa = {}
+    for r, v in pairs(Enemies:GetChildren()) do
+        if not table.find(aa, v.Name) and v:IsA("Model") and v.Name ~= "PirateBasic" and not string.find(v.Name, "Brigade") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and v:FindFirstChild("HumanoidRootPart") then
+            table.insert(aa, v.Name)
+        end
+    end
+    for r, v in pairs(aa) do
+        local ab = v
+        v = tostring(v:gsub(" %pLv. %d+%p", ""))
+        if tostring(v) == CheckNameQuest() then
+            return tostring(ab)
+        end
+    end
+    return false
+end
+
+local ad = RS.Remotes["CommF_"]
+CFrameQuest()
+function GetQuest()
+    if PG.Main:FindFirstChild("Quest").Visible then
+        return
+    end
+    if not QuestPoint[tostring(CheckNextQuest().NameQuest)] then
+        CFrameQuest()
+        return
+    end
+    if
+        (QuestPoint[CheckNextQuest().NameQuest].Position -
+            game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 8
+     then
+        ad:InvokeServer("StartQuest", tostring(CheckNextQuest().NameQuest), CheckNextQuest().ID)
+    else
+        QuestCFrame = QuestPoint[CheckNextQuest().NameQuest]
+        ToTween(QuestCFrame)
+    end
 end
 function GetMob()
     local ae = {}
-    for r, v in pairs(game.Workspace.MobSpawns:GetChildren()) do
+    for r, v in pairs(EnemySpawns:GetChildren()) do
         if not table.find(ae, v.Name) then
             table.insert(ae, v.Name)
         end
     end
-    if string.find(WO.EnemySpawns:GetChildren()[1].Name, "Lv.") then
+    if string.find(game:GetService("Workspace")["_WorldOrigin"].EnemySpawns:GetChildren()[1].Name, "Lv.") then
         for r, v in pairs(ae) do
             local ab = v
             v = tostring(v:gsub(" %pLv. %d+%p", ""))
-            if v == CheckQuest()["MobName"] then
+            if v == CheckNameQuest() then
                 return ab
             end
         end
     else
-        return CheckQuest()["MobName"]
+        return CheckNameQuest()
     end
-end
-function GetPosMob(Mob)
-    local CFrameTab = {}
-	if EnemySpawns:FindFirstChild(Mob) then
-    	for i, v in pairs(EnemySpawns:GetChildren()) do
-    	    if v:IsA("Part") and v.Name == Mob then
-	            table.insert(CFrameTab, v.CFrame)
-	        end
-	    end
-	end
-	return CFrameTab
-end
-function NPCPos()
-    for i,v in pairs(GuideModule["Data"]["NPCList"]) do
-		if v["NPCName"] == GuideModule["Data"]["LastClosestNPC"] then
-			return i["CFrame"]
-		end
-	end
-end
-function GetQuest()
-    local Distance = GetDistance(NPCPos())
-    local questname, id = CheckQuest()["QuestName"], CheckQuest()["ID"]
-    if Distance <= 20 and LP.Character.Humanoid.Health > 0 then
-        Remote:InvokeServer("StartQuest", questname, id)
-    else
-        if Distance > 2000 then
-            BypassTele(NPCPos())
-        else
-            ToTween(NPCPos())
-        end
-    end
-    Remote:InvokeServer("SetSpawnPoint")
 end
 function HopServer(bO)
     if not bO then
@@ -954,7 +1055,7 @@ end
 spawn(function()
     while wait() do
         for i,v in pairs(Enemies:GetChildren()) do
-            if ((StartFarms and SelectFarm == "Level" and StartBring and v.Name == CheckQuest()["MobName"]) or (FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob()) or (MobArua and StartBring)) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 350 then
+            if ((StartFarms and SelectFarm == "Level" and StartBring and v.Name == MobNameQuest()) or (FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob()) or (MobArua and StartBring)) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 350 then
                 v.HumanoidRootPart.CFrame = PosMon
                 v.HumanoidRootPart.Size = Vector3.new(50,50,50)                                               
                 v.HumanoidRootPart.CanCollide = false
@@ -1906,37 +2007,26 @@ spawn(function()
     while task.wait() do
         pcall(function()
             if StartFarms and SelectFarm == "Level" then         
-                local Quest = PG.Main.Quest
-                local QuestTitle = Quest.Container.QuestTitle.Title.Text          
-                if Quest.Visible == true then
-                    if not string.find(QuestTitle, CheckQuest()["MobName"]) then
-                        Remote:InvokeServer("AbandonQuest")
-                    else       
-                        if Enemies:FindFirstChild(CheckQuest()["Mob"]) then     
-                            for i,v in pairs(Enemies:GetChildren()) do
-                                if v.Name == CheckQuest()["Mob"] and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0  then
-                                    repeat Loop:Wait()    
-                                        EWeapon(Selecttool)                                                                                                                  
-                                        EBuso()                                                                
-                                        ToTween(CheckQuest()["MobCFrame"]  * CFrame.new(2, 30,2))
-                                        v.HumanoidRootPart.CanCollide = false
-                                        v.Head.CanCollide = false                                                         
-                                        StartBring = true
-                                        NoClip = true                                                                
-                                    until not StartFarms or not SelectFarm == "Level" or v.Humanoid.Health <= 0 or not v.Parent or Quest.Visible == false                                
-                                    NoClip = false
-                                    StartBring = false
-                                end
-                            end
-                        else
-                            ToTween(CheckQuest()["MobCFrame"] * CFrame.new(2,30,2))
+                if PG.Main:FindFirstChild("Quest").Visible == true then
+                    for i,v in pairs(Enemies:GetChildren()) do
+                        if v.Name == MobNameQuest() and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                EWeapon(Selecttool)                                                                                                                    
+                                EBuso()
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)  
+                                v.HumanoidRootPart.CanCollide = false
+                                PosMon = v.HumanoidRootPart.CFrame
+                                EClick()
+                                NoClip = true
+                                StartBring = true
+                            until not StartFarms or not SelectFarm == "Level" or not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not PG.Main:FindFirstChild("Quest").Visible
+                            NoClip = false
+                            StartBring = false
                         end
-                    end   
+                    end
                 else
-                    repeat Loop:Wait()
-                        ToTween(CheckQuest()["QuestCFrame"] * CFrame.new(0, 10, 0))
-                    until LP:DistanceFromCharacter(CheckQuest()["QuestCFrame"].Position) <= 20   
-                    Remote:InvokeServer("StartQuest", CheckQuest()["QuestName"], CheckQuest()["QuestLevel"])                                 
+                    GetQuest()
                 end
             elseif StartFarms and SelectFarm == "Bone" then
                 if CheckBoneMob() then

@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #14.7
+--Hirimi Hub Hyper - Rewrite Fixed & Update #14.8
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -213,32 +213,26 @@ function RemoveLvTitle(mob)
 end
 function CheckQuest()
     local Lvl = Data.Level.Value
-    local QuestReq = require(RS.Quests)
     local IgnoreQuests = {"BartiloQuest", "Trainees", "MarineQuest", "CitizenQuest"}
     local Quest = {}
     local LevelReq = 0
-    if Lvl >= 1450 and game.PlaceId == 4442272183 then
-        Quest["MobName"] = "Water Fighter"
-        Quest["QuestName"] = "ForgottenQuest"
-        Quest["ID"] = 2
-    elseif Lvl >= 700 and game.PlaceId == 2753915549 then
+	if Lvl >= 700 and Main then
         Quest["MobName"] = "Galley Captain"
         Quest["QuestName"] = "FountainQuest"
         Quest["ID"] = 2
-    elseif Lvl >= 2075 and game.PlaceId == 7449423635 then
-        Quest["MobName"] = "Posessed Mummy"
-        Quest["QuestName"] = "HauntedQuest2"
+    elseif Lvl >= 1450 and Dressora then
+        Quest["MobName"] = "Water Fighter"
+        Quest["QuestName"] = "ForgottenQuest"
         Quest["ID"] = 2
     else
-        for i,v in pairs(QuestReq) do
+        for i,v in pairs(Quests) do
             for a,b in pairs(v) do
-                local LevelRequire = b.LevelReq
-                for j, k in pairs(b.Task) do
-                    if LevelRequire <= Lvl and LevelRequire >= LevelReq and not table.find(IgnoreQuests, tostring(i)) then		            
+                for j, k in pairs(b["Task"]) do
+                    if b["LevelReq"] <= Lvl and b["LevelReq"] >= LevelReq and not table.find(IgnoreQuests, i) and k > 1 then		            
                         Quest["QuestName"] = i
                         Quest["ID"] = a
-                        Quest["MobName"] = tostring(j)
-                        LevelReq = LevelRequire
+                        Quest["MobName"] = j
+                        LevelReq = b["LevelReq"]
                     end
                 end	
             end

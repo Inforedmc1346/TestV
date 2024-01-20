@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #14.8
+--Hirimi Hub Hyper - Rewrite Fixed & Update #14.9
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -239,12 +239,6 @@ function CheckQuest()
         end
     end
 	return Quest
-end
-function QuestDungKo(mob)
-    if GuideModule["Data"]["QuestData"]["Name"] == mob then
-        return true
-    end
-    return false
 end
 for i, v in pairs(CheckQuest()) do
     if typeof(v) ~= "table" then
@@ -1848,15 +1842,32 @@ spawn(function()
         pcall(function()
             if StartFarms and SelectFarm == "Level" then         
                 local Quest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
-                if Quest.Visible == true then
-                    if not QuestDungKo(CheckQuest()["MobName"]) then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                    else      
-                        if game.Workspace.Enemies:FindFirstChild(CheckQuest()["MobName"]) then     
-                            for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-                                if v.Name == CheckQuest()["MobName"] and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                                    if not MasteryOption then
-                                        repeat task.wait()
+                local QuestTitle = PG.Main.Quest.Container.QuestTitle.Title.Text
+                if not string.find(QuestTitle, CheckQuest()["MobName"]) then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                end
+                if Quest.Visible == true then    
+                    if game.Workspace.Enemies:FindFirstChild(CheckQuest()["MobName"]) then     
+                        for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+                            if v.Name == CheckQuest()["MobName"] and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                                if not MasteryOption then
+                                    repeat task.wait()
+                                        EWeapon(Selecttool)                                                                                                                    
+                                        EBuso()
+                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                        v.HumanoidRootPart.Size = Vector3.new(50,50,50)  
+                                        v.HumanoidRootPart.CanCollide = false
+                                        PosMon = v.HumanoidRootPart.CFrame
+                                        EClick()
+                                        NoClip = true
+                                        StartBring = true
+                                    until not StartFarms or not SelectFarm == "Level" or v.Humanoid.Health <= 0 or not v:FindFirstChild("HumanoidRootPart")
+                                    StartBring = false
+                                    NoClip = false
+                                else
+                                    Healthb = v.Humanoid.MaxHealth * HealthStop/100
+                                    repeat task.wait()
+                                        if v.Humanoid.Health > Healthb then
                                             EWeapon(Selecttool)                                                                                                                    
                                             EBuso()
                                             ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
@@ -1866,49 +1877,32 @@ spawn(function()
                                             EClick()
                                             NoClip = true
                                             StartBring = true
-                                        until not StartFarms or not SelectFarm == "Level" or v.Humanoid.Health <= 0 or not v:FindFirstChild("HumanoidRootPart")
-                                        StartBring = false
-                                        NoClip = false
-                                    else
-                                        Healthb = v.Humanoid.MaxHealth * HealthStop/100
-                                        repeat task.wait()
-                                            if v.Humanoid.Health > Healthb then
-                                                EWeapon(Selecttool)                                                                                                                    
-                                                EBuso()
+                                        elseif v.Humanoid.Health > Healthb and (LP.Backpack:FindFirstChild("Soul Guitar") or LP.Character:FindFirstChild("Soul Guitar")) then
+                                            repeat task.wait()
+                                                local va = CheckMasSkill()
                                                 ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                                                v.HumanoidRootPart.Size = Vector3.new(50,50,50)  
-                                                v.HumanoidRootPart.CanCollide = false
-                                                PosMon = v.HumanoidRootPart.CFrame
-                                                EClick()
-                                                NoClip = true
-                                                StartBring = true
-                                            elseif v.Humanoid.Health > Healthb and (LP.Backpack:FindFirstChild("Soul Guitar") or LP.Character:FindFirstChild("Soul Guitar")) then
-                                                repeat task.wait()
-                                                    local va = CheckMasSkill()
-                                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                                                    if va then
-                                                        EWeapon(va)
-                                                        SendKeyEvents("Z")
-                                                        SendKeyEvents("X")
-                                                        NoClip = true
-                                                        task.wait(.2)
-                                                    end
-                                                    SkillAim = true
-                                                    AimbotPos = v.HumanoidRootPart.Position
-                                                until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0
-                                                SkillAim = false
-                                                AimbotPos = nil
-                                            else
-                                                KillAtMas()
-                                            end
-                                        until not StartFarms or not SelectFarm == "Level" or v.Humanoid.Health <= 0 or not v:FindFirstChild("HumanoidRootPart")
-                                        StartBring = false
-                                        NoClip = false
-                                    end
+                                                if va then
+                                                    EWeapon(va)
+                                                    SendKeyEvents("Z")
+                                                    SendKeyEvents("X")
+                                                    NoClip = true
+                                                    task.wait(.2)
+                                                end
+                                                SkillAim = true
+                                                AimbotPos = v.HumanoidRootPart.Position
+                                            until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0
+                                            SkillAim = false
+                                            AimbotPos = nil
+                                        else
+                                            KillAtMas()
+                                        end
+                                    until not StartFarms or not SelectFarm == "Level" or v.Humanoid.Health <= 0 or not v:FindFirstChild("HumanoidRootPart")
+                                    StartBring = false
+                                    NoClip = false
                                 end
                             end
                         end
-                    end   
+                    end  
                 else
                     GetQuest()
                 end

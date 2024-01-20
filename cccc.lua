@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #14.9
+--Hirimi Hub Hyper - Rewrite Fixed & Update #15.0
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -2236,6 +2236,81 @@ spawn(function()
                 changesword()
             elseif v09 < 600 then
                 
+            end
+        end
+    end
+end)
+local Boss = {}
+for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
+    if string.find(v.Name, "Boss") then
+        if v.Name == "Ice Admiral" then
+            else
+            table.insert(Boss, v.Name)
+        end
+    end
+end
+local BossTable = {}
+local bossNames = { "The Gorilla King", "Bobby", "The Saw", "Yeti", "Mob Leader", "Vice Admiral", "Warden", "Chief Warden", "Swan", "Saber Expert", "Magma Admiral", "Fishman Lord", "Wysper", "Thunder God", "Cyborg", "Greybeard", "Diamond", "Jeremy", "Fajita", "Don Swan", "Smoke Admiral", "Awakened Ice Admiral", "Tide Keeper", "Order", "Darkbeard", "Cursed Captain", "Stone", "Island Empress", "Kilo Admiral", "Captain Elephant", "Beautiful Pirate", "Longma", "Cake Queen", "Soul Reaper", "Rip_Indra", "Cake Prince", "Dough King" }
+if Main or Dressora or Zou then
+    for _, bossName in pairs(bossNames) do
+        if RS:FindFirstChild(bossName) then
+            table.insert(BossTable, bossName)
+        end
+    end
+end
+for _, name in pairs(Boss) do
+    table.insert(bossCheck, name)
+end
+local DropDownBoss = MainTab:AddDropdown({Name = "Select Boss", Default = "", Options = BossTable, Callback = function(vSelectBoss)
+    SelectBoss = vSelectBoss
+end    
+})
+MainTab:AddButton({Name = "Refresh Boss", Callback = function()
+    DropDownBoss:Refresh(NewPlayerList)
+  	end    
+})
+for i, v in pairs(RS:GetChildren()) do
+    if (v.Name == "rip_indra" or v.Name == "Ice Admiral") or (v.Name == "Saber Expert" or v.Name == "The Saw" or v.Name == "Greybeard" or v.Name == "Mob Leader" or v.Name == "The Gorilla King" or v.Name == "Bobby" or v.Name == "Yeti" or v.Name == "Vice Admiral" or v.Name == "Warden" or v.Name == "Chief Warden" or v.Name == "Swan" or v.Name == "Magma Admiral" or v.Name == "Fishman Lord" or v.Name == "Wysper" or v.Name == "Thunder God" or v.Name == "Cyborg") or (v.Name == "Don Swan" or v.Name == "Diamond" or v.Name == "Jeremy" or v.Name == "Fajita" or v.Name == "Smoke Admiral" or v.Name == "Awakened Ice Admiral" or v.Name == "Tide Keeper" or v.Name == "Order" or v.Name == "Darkbeard") or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
+        DropDownBoss:Add(v.Name)
+    end
+end
+MainTab:AddToggle({Name = "Kill Boss", Default = false, Callback = function(vKillBoss)
+    KillBoss = vKillBoss
+    DisableTween(KillBoss)
+end    
+})
+spawn(function()
+    while wait() do
+        if KillBoss then
+            if Enemies:FindFirstChild(SelectBoss) then
+                for i,v in pairs(Enemies:GetChildren()) do
+                    if v.Name == SelectBoss then
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                EBuso()
+                                EWeapon(Selecttool)
+                                v.HumanoidRootPart.CanCollide = false                       
+                                ToTween(v.HumanoidRootPart.CFrame * 0,30,0)
+                                EClick()
+                                sethiddenproperty(LP,"SimulationRadius",math.huge)
+                                NoClip = true
+                            until not KillBoss or not v.Parent or v.Humanoid.Health <= 0
+                            NoClip = false
+                        end
+                    end
+                end
+            elseif RS:FindFirstChild(SelectBoss) then
+                if ((RS:FindFirstChild(SelectBoss).HumanoidRootPart.CFrame).Position - LP.Character.HumanoidRootPart.Position).magnitude <= 1500 then
+                    ToTweenWithEntrace(RS:FindFirstChild(SelectBoss).HumanoidRootPart.CFrame)
+                    NoClip = true
+                else
+                    if BypassTP then
+                        BypassTele(RS:FindFirstChild(SelectBoss).HumanoidRootPart.CFrame)
+                    else
+                        ToTweenWithEntrace(RS:FindFirstChild(SelectBoss).HumanoidRootPart.CFrame)
+                        NoClip = true
+                    end
+                end
             end
         end
     end

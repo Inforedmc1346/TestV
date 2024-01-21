@@ -1,4 +1,4 @@
-local P = game:GetService("Players")--ccccc
+local P = game:GetService("Players")--conchim
 local LP = P.LocalPlayer
 local PG = LP.PlayerGui
 local RS = game:GetService("ReplicatedStorage")
@@ -2006,7 +2006,8 @@ local FarmLevel = A:AddToggle("Farm Level", {Title = "Farm Level", Callback = fu
 bypasstp:SetValue(true)
 spawn(function()
     while task.wait() do
-        if FarmLevel then         
+        if FarmLevel then   
+            CheckQuest()      
             local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
             if not string.find(QuestTitle, NameMon) then
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")

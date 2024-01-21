@@ -1,4 +1,4 @@
-local P = game:GetService("Players")
+local P = game:GetService("Players")--ccc
 local LP = P.LocalPlayer
 local PG = LP.PlayerGui
 local RS = game:GetService("ReplicatedStorage")
@@ -1845,6 +1845,13 @@ A:AddButton({
         end
     end
 })
+A:AddButton({
+    Title = "Hop Server",
+    Description = "",
+    Callback = function()
+        HopServer()
+    end
+})
 local selectttolll = A:AddDropdown("SelectTool",{Title = "Select Tool", Values = {"Melee","Sword"}, Multi = false, Callback = function(vSelecttool)
     Selecttool = vSelecttool
     end
@@ -3591,4 +3598,3 @@ end)
 --     HopServer()
 -- end    
 -- })
-HirimiHub:Init()

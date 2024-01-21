@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #15.3
+--Hirimi Hub Hyper - Rewrite Fixed & Update #15.5
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -1911,8 +1911,12 @@ spawn(function()
                             end
                         end
                     else
-                        if RS:FindFirstChild(CheckQuest()["MobName"]) then
-                            ToTween(RS:FindFirstChild(CheckQuest()["MobName"]).HumanoidRootPart.CFrame * CFrame.new(0,15,0))
+                        if EnemySpawns:FindFirstChild(CheckQuest()["MobName"]) then
+                            for i,v in pairs(EnemySpawns:GetChildren()) do
+                                if v.Name == CheckQuest()["MobName"] then
+                                    ToTween(v.CFrame * CFrame.new(0,15,0))
+                                end
+                            end
                         end
                     end  
                 else

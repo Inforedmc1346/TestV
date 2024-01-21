@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #15.5
+--Hirimi Hub Hyper - Rewrite Fixed & Update #15.6
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -760,25 +760,6 @@ loadstring(
 	end)
 ]]
 )()
-function KillAtMas()
-    for i,v in pairs(Enemies:GetChildren()) do
-        repeat task.wait()
-            local va,ve = CheckMasSkill()
-            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 10, 0))
-            v.HumanoidRootPart.CanCollide = false
-            AimbotPos = v.HumanoidRootPart.Position
-            SkillAim = true
-            if va and ve then
-                EquipWeaponName(va)
-                SendKeyEvents(ve)
-                NoClip = true
-                task.wait(.2)
-            end
-        until v.Humanoid.Health > Healthb or not MasteryOption or v.Humanoid.Health <= 0 or not v:FindFirstChild("HumanoidRootPart")
-        SkillAim = false
-        AimbotPos = nil
-    end
-end
 function TTemplateT()
     TempleTime()
     local args = {[1] = "RaceV4Progress", [2] = "Check"}
@@ -1858,34 +1839,28 @@ spawn(function()
                     if game.Workspace.Enemies:FindFirstChild(CheckQuest()["MobName"]) then     
                         for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
                             if v.Name == CheckQuest()["MobName"] and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                                if not MasteryOption then
-                                    repeat task.wait()
-                                        EWeapon()                                                                                                                    
-                                        EBuso()
-                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                                        v.HumanoidRootPart.Size = Vector3.new(50,50,50)  
-                                        v.HumanoidRootPart.CanCollide = false
-                                        PosMon = v.HumanoidRootPart.CFrame
-                                        EClick()
-                                        NoClip = true
-                                        StartBring = true
-                                    until not StartFarms or not SelectFarm == "Level" or v.Humanoid.Health <= 0 or not v:FindFirstChild("HumanoidRootPart")
-                                    StartBring = false
-                                    NoClip = false
-                                else
-                                    Healthb = v.Humanoid.MaxHealth * HealthStop/100
-                                    repeat task.wait()
-                                        if v.Humanoid.Health > Healthb then
-                                            EWeapon()                                                                                                                    
-                                            EBuso()
-                                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)  
-                                            v.HumanoidRootPart.CanCollide = false
-                                            PosMon = v.HumanoidRootPart.CFrame
-                                            EClick()
-                                            NoClip = true
-                                            StartBring = true
-                                        elseif v.Humanoid.Health > Healthb and (LP.Backpack:FindFirstChild("Soul Guitar") or LP.Character:FindFirstChild("Soul Guitar")) then
+                                repeat task.wait()
+                                    EWeapon()                                                                                                                    
+                                    EBuso()
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                    if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
+                                        HealthM = v.Humanoid.Health <= v.Humanoid.MaxHealth * HealthStop / 100
+                                        if HealthM then
+                                            repeat task.wait()
+                                                local va,ve = CheckMasSkill()
+                                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                                if va and ve then
+                                                    EquipWeaponName(va)
+                                                    SendKeyEvents(ve)
+                                                    NoClip = true
+                                                    task.wait(.2)
+                                                end
+                                                SkillAim = true
+                                                AimbotPos = v.HumanoidRootPart.Position
+                                            until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0
+                                            SkillAim = false
+                                            AimbotPos = nil
+                                        elseif HealthM and (LP.Backpack:FindFirstChild("Soul Guitar") or LP.Character:FindFirstChild("Soul Guitar")) then
                                             repeat task.wait()
                                                 local va = CheckMasSkill()
                                                 ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
@@ -1902,12 +1877,19 @@ spawn(function()
                                             SkillAim = false
                                             AimbotPos = nil
                                         else
-                                            KillAtMas()
+                                            EClick()
                                         end
-                                    until not StartFarms or not SelectFarm == "Level" or v.Humanoid.Health <= 0 or not v:FindFirstChild("HumanoidRootPart")
-                                    StartBring = false
-                                    NoClip = false
-                                end
+                                    else
+                                        EClick()
+                                    end
+                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)  
+                                    v.HumanoidRootPart.CanCollide = false
+                                    PosMon = v.HumanoidRootPart.CFrame
+                                    NoClip = true
+                                    StartBring = true
+                                until not StartFarms or not SelectFarm == "Level" or v.Humanoid.Health <= 0 or not v:FindFirstChild("HumanoidRootPart")
+                                StartBring = false
+                                NoClip = false
                             end
                         end
                     else
@@ -2252,74 +2234,6 @@ spawn(function()
                 changesword()
             elseif v09 < 600 then
                 
-            end
-        end
-    end
-end)
-local Boss = {}
-for i, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
-    if string.find(v.Name, "Boss") then
-        if v.Name == "Ice Admiral" then
-            else
-            table.insert(Boss, v.Name)
-        end
-    end
-end
-local BossTable = {}
-local bossNames = { "The Gorilla King", "Bobby", "The Saw", "Yeti", "Mob Leader", "Vice Admiral", "Warden", "Chief Warden", "Swan", "Saber Expert", "Magma Admiral", "Fishman Lord", "Wysper", "Thunder God", "Cyborg", "Greybeard", "Diamond", "Jeremy", "Fajita", "Don Swan", "Smoke Admiral", "Awakened Ice Admiral", "Tide Keeper", "Order", "Darkbeard", "Cursed Captain", "Stone", "Island Empress", "Kilo Admiral", "Captain Elephant", "Beautiful Pirate", "Longma", "Cake Queen", "Soul Reaper", "Rip_Indra", "Cake Prince", "Dough King" }
-if Main or Dressora or Zou then
-    for _, bossName in pairs(bossNames) do
-        if RS:FindFirstChild(bossName) then
-            table.insert(BossTable, bossName)
-        end
-    end
-end
-for _, name in pairs(Boss) do
-    table.insert(bossCheck, name)
-end
-local DropDownBoss = MainTab:AddDropdown({Name = "Select Boss", Default = "", Options = BossTable, Callback = function(vSelectBoss)
-    SelectBoss = vSelectBoss
-end    
-})
-MainTab:AddButton({Name = "Refresh Boss", Callback = function()
-    DropDownBoss:Refresh()
-end    
-})
-for i, v in pairs(RS:GetChildren()) do
-    if (v.Name == "rip_indra" or v.Name == "Ice Admiral") or (v.Name == "Saber Expert" or v.Name == "The Saw" or v.Name == "Greybeard" or v.Name == "Mob Leader" or v.Name == "The Gorilla King" or v.Name == "Bobby" or v.Name == "Yeti" or v.Name == "Vice Admiral" or v.Name == "Warden" or v.Name == "Chief Warden" or v.Name == "Swan" or v.Name == "Magma Admiral" or v.Name == "Fishman Lord" or v.Name == "Wysper" or v.Name == "Thunder God" or v.Name == "Cyborg") or (v.Name == "Don Swan" or v.Name == "Diamond" or v.Name == "Jeremy" or v.Name == "Fajita" or v.Name == "Smoke Admiral" or v.Name == "Awakened Ice Admiral" or v.Name == "Tide Keeper" or v.Name == "Order" or v.Name == "Darkbeard") or (v.Name == "Stone" or v.Name == "Island Empress" or v.Name == "Kilo Admiral" or v.Name == "Captain Elephant" or v.Name == "Beautiful Pirate" or v.Name == "Cake Queen" or v.Name == "rip_indra True Form" or v.Name == "Longma" or v.Name == "Soul Reaper" or v.Name == "Cake Prince" or v.Name == "Dough King") then
-        DropDownBoss:Set(v.Name)
-    end
-end
-MainTab:AddToggle({Name = "Kill Boss", Default = false, Callback = function(vKillBoss)
-    KillBoss = vKillBoss
-    DisableTween(KillBoss)
-end    
-})
-spawn(function()
-    while wait() do
-        if KillBoss then
-            if Enemies:FindFirstChild(SelectBoss) then
-                for i,v in pairs(Enemies:GetChildren()) do
-                    if v.Name == SelectBoss then
-                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            repeat task.wait()
-                                EBuso()
-                                EWeapon()
-                                v.HumanoidRootPart.CanCollide = false                       
-                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-                                EClick()
-                                sethiddenproperty(LP,"SimulationRadius",math.huge)
-                                NoClip = true
-                            until not KillBoss or not v.Parent or v.Humanoid.Health <= 0
-                            NoClip = false
-                        end
-                    end
-                end
-            elseif RS:FindFirstChild(SelectBoss) then
-                if ((RS:FindFirstChild(SelectBoss).HumanoidRootPart.CFrame).Position - LP.Character.HumanoidRootPart.Position).magnitude <= 1500 then
-                    ToTweenWithEntrace(RS:FindFirstChild(SelectBoss).HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-                    NoClip = true
-                end
             end
         end
     end
@@ -5810,25 +5724,3 @@ MiscTab:AddButton({
   	end    
 })
 OrionLib:Init()
---execute log
-local P = {2753915549,4442272183,7449423635};
-for i,v in pairs(P) do
-	if v == game.PlaceId then
-		local url =
-			"https://discord.com/api/webhooks/1165245628331335750/6GWRPxusJoB77oF58DkldyEfAR0He_SHev9IhK3GktNLTolU6tp_0v6J5GD-KfsnamNr"
-		local data = {
-            ["content"] = "Execute Information Player Hyper Ver",
-			["embeds"] = {
-				{
-					["description"] = "Exploit: " .. identifyexecutor() .. "\nUsername: " .. LP.Name .. "\nHardware: " .. game:GetService("RbxAnalyticsService"):GetClientId(),["inline"] = true,},
-					["color"] = 16711751,
-			},
-		}
-		local newdata = game:GetService("HttpService"):JSONEncode(data)
-
-		local headers = {["content-type"] = "application/json"}
-		request = http_request or request or HttpPost or syn.request
-		local R = {Url = url, Body = newdata, Method = "POST", Headers = headers}
-		request(R)
-	end
-end

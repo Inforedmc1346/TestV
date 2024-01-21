@@ -1,4 +1,4 @@
-local P = game:GetService("Players")--conchimccbeoccc
+local P = game:GetService("Players")--khongmup
 local LP = P.LocalPlayer
 local PG = LP.PlayerGui
 local RS = game:GetService("ReplicatedStorage")
@@ -2058,7 +2058,7 @@ spawn(function()
                         end
                     end
                 end
-            if StartFarms and SelectFarm == "Bone" then
+            elseif StartFarms and SelectFarm == "Bone" then
                 if CheckBoneMob() then
                     v = CheckBoneMob()
                     if v then

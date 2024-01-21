@@ -1,4 +1,4 @@
-local P = game:GetService("Players")--conchimccbeo
+local P = game:GetService("Players")--conchimccbeoccc
 local LP = P.LocalPlayer
 local PG = LP.PlayerGui
 local RS = game:GetService("ReplicatedStorage")
@@ -1322,7 +1322,7 @@ spawn(function()
     while wait() do
         for i,v in pairs(Enemies:GetChildren()) do
             CheckQuest()
-            if ((StartFarms and SelectFarm == "Level" and StartBring and v.Name == NameMon) or (FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob())) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 300 then
+            if ((StartFarms and SelectFarm == "Level" and StartBring and v.Name == Mon) or (FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob())) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 300 then
                 v.HumanoidRootPart.CFrame = PosMon
                 v.HumanoidRootPart.Size = Vector3.new(1,1,1)                                               
                 v.HumanoidRootPart.CanCollide = false
@@ -1995,15 +1995,20 @@ local bypasstp = A:AddToggle("Enable Bypass Teleport", {Title = "Enable Bypass T
     BypassTP = vBTP
     end 
 })
-local FarmLevel = A:AddToggle("Farm Level", {Title = "Farm Level", Callback = function(vFarmLevel)
-    FarmLevel = vFarmLevel
+bypasstp:SetValue(true)
+local Selectmodef = A:AddDropdown("Select Mode Farm",{Title = "Select Mode Farm", Values = {"Level", "Bone", "Cake Prince"}, Multi = false, Callback = function(vSFarm)
+    SelectFarm = vSFarm
+    end
+})
+local FarmStart = A:AddToggle("Start Farm", {Title = "Start Farm", Callback = function(StartFarmsv)
+    StartFarms = StartFarmsv
+    DisableTween(StartFarms)
     end 
 })
-bypasstp:SetValue(true)
 spawn(function()
-    while task.wait() do
-        if FarmLevel then   
-            pcall(function()    
+    while wait() do
+        pcall(function()
+            if StartFarms and SelectFarm == "Level" then
                 local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, NameMon) then
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
@@ -2028,25 +2033,19 @@ spawn(function()
                         for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                             if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                                 if v.Name == Mon then
-                                    if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
-                                        repeat task.wait()
-                                            EWeapon(Selecttool)                                                                                                        
-                                            EBuso()                                         
-                                            PosMon = v.HumanoidRootPart.CFrame
-                                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(PosX,PosY,PosZ))
-                                            v.HumanoidRootPart.CanCollide = false
-                                            v.Humanoid.WalkSpeed = 0
-                                            EClick()
-                                            NoClip = true
-                                            StartBring = true
-                                        until not FarmLevel or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
-                                        NoClip = false
-                                        StartBring = false
-                                    else
+                                    repeat task.wait()
+                                        EWeapon(Selecttool)                                                                                                        
+                                        EBuso()                                         
+                                        PosMon = v.HumanoidRootPart.CFrame
+                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(PosX,PosY,PosZ))
+                                        v.HumanoidRootPart.CanCollide = false
+                                        v.Humanoid.WalkSpeed = 0
+                                        EClick()
                                         NoClip = true
-                                        StartBring = false
-                                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                                    end
+                                        StartBring = true
+                                    until not StartFarms or not SelectFarm == "Level" or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
+                                    NoClip = false
+                                    StartBring = false
                                 end
                             end
                         end
@@ -2059,22 +2058,6 @@ spawn(function()
                         end
                     end
                 end
-            end)
-        end
-    end
-end)
-local Selectmodef = A:AddDropdown("Select Mode Farm",{Title = "Select Mode Farm", Values = {"Bone", "Cake Prince"}, Multi = false, Callback = function(vSFarm)
-    SelectFarm = vSFarm
-    end
-})
-local FarmStart = A:AddToggle("Start Farm", {Title = "Start Farm", Callback = function(StartFarmsv)
-    StartFarms = StartFarmsv
-    DisableTween(StartFarms)
-    end 
-})
-spawn(function()
-    while wait() do
-        pcall(function()
             if StartFarms and SelectFarm == "Bone" then
                 if CheckBoneMob() then
                     v = CheckBoneMob()

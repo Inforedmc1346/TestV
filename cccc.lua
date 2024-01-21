@@ -1,4 +1,4 @@
-local P = game:GetService("Players")--conchim
+local P = game:GetService("Players")--conchimcc
 local LP = P.LocalPlayer
 local PG = LP.PlayerGui
 local RS = game:GetService("ReplicatedStorage")
@@ -2007,11 +2007,6 @@ bypasstp:SetValue(true)
 spawn(function()
     while task.wait() do
         if FarmLevel then   
-            CheckQuest()      
-            local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
-            if not string.find(QuestTitle, NameMon) then
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-            end
             if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
                 CheckQuest()
                 if BypassTP then

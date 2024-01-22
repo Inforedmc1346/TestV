@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #16
+--Hirimi Hub Hyper - Rewrite Fixed & Update #16.1
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -1450,6 +1450,12 @@ MainTab:AddButton({
         StopTween()
   	end    
 })
+MainTab:AddButton({
+	Name = "Disable Spam Skill If Not Auto Turn Off",
+	Callback = function()
+        DisableSpamSkill()
+  	end    
+})
 MainTab:AddSection({Name = "Select Mode"})
 MainTab:AddDropdown({
 	Name = "Select Tool",
@@ -2376,6 +2382,12 @@ elseif Zou then
         end    
     }) 
 end
+function DisableSpamSkill()
+    if not KillTrials then
+        chodienspamhirimixienchetcuchungmay = false
+        SpamSkill = false
+    end
+end
 ItemTab:AddSection({Name = "EVO Race"})
 local UpgradeRaceToggle2 = ItemTab:AddToggle({Name = "Upgrade Race V2", Default = false, Flag = "EvoV2", Save = true, Callback = function(vV2Up)
 	    UpgradeRacev2 = vV2Up
@@ -3141,6 +3153,8 @@ local SeaEventToggle = SeaTab:AddToggle({
     Save = false,
     Callback = function(vSeaEvent)
         SeaEvent = vSeaEvent
+        DisableTween(SeaEvent)
+        DisableSpamSkill()
     end    
 }) 
 spawn(function()
@@ -3365,6 +3379,8 @@ spawn(function()
                 elseif (CheckSeaBeast() or CheckPirateBoat() or game:GetService("Workspace").Enemies:FindFirstChild("Shark") or game:GetService("Workspace").Enemies:FindFirstChild("Piranha") or game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") or game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") or game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") or game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Rough Sea")) and not checkboat() then
                     if (Vector3Boat - LP.Character.HumanoidRootPart.Position).Magnitude > 2000 then
                         BypassTele(CFrameBoat)
+                    else
+                        ToTween(CFrameBoat)
                     end
                 end
             end)
@@ -3406,19 +3422,19 @@ game:GetService("RunService").RenderStepped:Connect(function()
 end)
 SeaTab:AddSection({Name = "Spam Skill"})
 SeaTab:AddToggle({Name = "Spam Melee", Default = true, Callback = function(Value)
-	SpamMelees = Value
+	SpamMelees = vSpamMelees
 end    
 }) 
 SeaTab:AddToggle({Name = "Spam Sword", Default = true, Callback = function(Value)
-	SpamSwords = Value
+	SpamSwords = vSpamSwords
 end    
 }) 
 SeaTab:AddToggle({Name = "Spam Gun", Default = true, Callback = function(Value)
-	SpamGuns = Value
+	SpamGuns = vSpamGuns
 end    
 }) 
 SeaTab:AddToggle({Name = "Spam Devil Fruit", Default = false, Callback = function(Value)
-	SpamDFs = Value
+	SpamDFs = vSpamDFs
 end    
 })
 ItemTab:AddSection({Name = "Rip Indra - Dark Dagger"})
@@ -5173,17 +5189,9 @@ if Zou then
         Callback = function(vKillTrials)
             KillTrials = vKillTrials
             DisableTween(KillTrials)
+            DisableSpamSkill()
         end    
     }) 
-    function EquipMelee()
-        for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-            if v:IsA("Tool") then
-                if v.ToolTip == "Melee" then
-                    game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
-                end
-            end
-        end
-    end
     task.spawn(function()
         while task.wait() do
             if KillTrials then

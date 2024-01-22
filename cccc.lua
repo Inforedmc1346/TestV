@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #16.1
+--Hirimi Hub Hyper - Rewrite Fixed & Update #16.2
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -1448,12 +1448,6 @@ MainTab:AddButton({
 	Name = "Stop Tween",
 	Callback = function()
         StopTween()
-  	end    
-})
-MainTab:AddButton({
-	Name = "Disable Spam Skill If Not Auto Turn Off",
-	Callback = function()
-        DisableSpamSkill()
   	end    
 })
 MainTab:AddSection({Name = "Select Mode"})
@@ -5056,194 +5050,187 @@ spawn(function()
         end
     end)
 end)
-if Main or Dressora then
-  V4Tab:AddLabel("Need To ThirdSea")
-  V4Tab:AddLabel("[VN] Đến Sea 3")
-end
-if Zou then
-    V4Tab:AddSection({Name = "Temple Of Time"})
-    V4Tab:AddButton({
-        Name = "Telelport Temple Of Time",
-        Callback = function()
-            TTemplateT()
-        end    
-    }) 
-    V4Tab:AddButton({
-        Name = "Teleport To Lever Pull",
-        Callback = function()
-            TTemplateT()
-            ToTween(CFrame.new(28575.181640625, 14936.6279296875, 72.31636810302734))
-        end    
-    }) 
-    V4Tab:AddButton({
-        Name = "TP Acient One",
-        Callback = function()
-            TTemplateT()
-            ToTween(CFrame.new(28981.552734375, 14888.4267578125, -120.245849609375))
-        end    
-    }) 
-    V4Tab:AddToggle({
-        Name = "Disable Inf Stairs",
-        Default = false,
-        Callback = function(Value)
-            LP.Character.InfiniteStairs.Disabled = Value
-        end    
-    }) 
-    V4Tab:AddButton({
-        Name = "Teleport Trial Door",
-        Callback = function()
-            TTemplateT()
-            local raceval = LP.Data.Race.Value
-            if raceval == "Fishman" then
-                ToTween(CFrame.new(28224.056640625, 14889.4267578125, -210.5872039794922))
-            elseif raceval == "Human" then
-                ToTween(CFrame.new(29237.294921875, 14889.4267578125, -206.94955444335938))
-            elseif raceval == "Cyborg" then
-                ToTween(CFrame.new(28492.4140625, 14894.4267578125, -422.1100158691406))
-            elseif raceval == "Skypiea" then
-                ToTween(CFrame.new(28967.408203125, 14918.0751953125, 234.31198120117188))
-            elseif raceval == "Ghoul" then
-                ToTween(CFrame.new(28672.720703125, 14889.1279296875, 454.5961608886719))
-            elseif raceval == "Mink" then
-                ToTween(CFrame.new(29020.66015625, 14889.4267578125, -379.2682800292969))
-            end
-        end    
-    }) 
-    V4Tab:AddSection({Name = "Trial V4"})
-    V4Tab:AddToggle({
-        Name = "Finish Trial Race",
-        Default = false,
-        Callback = function(vRaceTrial)
-            RaceTrial = vRaceTrial
-            DisableTween(RaceTrial)
-        end    
-    }) 
-    task.spawn(function()
-        while task.wait() do
-            if RaceTrial then
-                pcall(function()
-                    local RaceAC = Data.Race.Value
-                    if RaceAC == "Human" then
-                        for i,v in pairs(Enemies:GetDescendants()) do
-                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                repeat wait(.1)
-                                    v.Humanoid.Health = 0
-                                    v.HumanoidRootPart.CanCollide = false
-                                    sethiddenproperty(LP, "SimulationRadius", math.huge)
-                                until not RaceTrial or v.Humanoid.Health <= 0
-                            end
-                        end
-                    elseif RaceAC == "Skypiea" then
-                        for i,v in pairs(WS.Map.SkyTrial.Model:GetDescendants()) do
-                            if v.Name ==  "snowisland_Cylinder.081" then
-                                ToTween(v.CFrame* CFrame.new(0,0,0))
-                            end
-                        end
-                    elseif RaceAC == "Fishman" then
-                        for i,v in pairs(WS.SeaBeasts.SeaBeast1:GetDescendants()) do
-                            if v.Name ==  "HumanoidRootPart" then
-                                repeat task.wait()
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,400,0))
-                                    chodienspamhirimixienchetcuchungmay = true
-                                    NoClip = true
-                                    getgenv().psskill = CheckSeaBeastTrial().HumanoidRootPart.CFrame
-                                until not RaceTrial or v.Humanoid.Health <= 0
-                                getgenv().psskill = nil
-                                chodienspamhirimixienchetcuchungmay = false
-                            end
-                        end
-                    elseif RaceAC == "Cyborg" then
-                        ToTween(CFrame.new(28654, 14898.7832, -30, 1, 0, 0, 0, 1, 0, 0, 0, 1))
-                        NoClip = true
-                    elseif RaceAC == "Ghoul" then
-                        for i,v in pairs(Enemies:GetDescendants()) do
-                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                repeat wait(.1)
-                                    v.Humanoid.Health = 0
-                                    v.HumanoidRootPart.CanCollide = false
-                                    sethiddenproperty(LP, "SimulationRadius", math.huge)
-                                until not RaceTrial or v.Humanoid.Health <= 0
-                            end
-                        end
-                    elseif RaceAC == "Mink" then
-                        for i,v in pairs(WS:GetDescendants()) do
-                            if v.Name == "StartPoint" then
-                                ToTween(v.CFrame* CFrame.new(0,10,0))
-                                NoClip = true
-                            end
-                        end
-                    end
-                end)
-            end
+V4Tab:AddSection({Name = "Temple Of Time"})
+V4Tab:AddButton({
+    Name = "Telelport Temple Of Time",
+    Callback = function()
+        TTemplateT()
+    end    
+}) 
+V4Tab:AddButton({
+    Name = "Teleport To Lever Pull",
+    Callback = function()
+        TTemplateT()
+        ToTween(CFrame.new(28575.181640625, 14936.6279296875, 72.31636810302734))
+    end    
+}) 
+V4Tab:AddButton({
+    Name = "TP Acient One",
+    Callback = function()
+        TTemplateT()
+        ToTween(CFrame.new(28981.552734375, 14888.4267578125, -120.245849609375))
+    end    
+}) 
+V4Tab:AddToggle({
+    Name = "Disable Inf Stairs",
+    Default = false,
+    Callback = function(Value)
+        LP.Character.InfiniteStairs.Disabled = Value
+    end    
+}) 
+V4Tab:AddButton({
+    Name = "Teleport Trial Door",
+    Callback = function()
+        TTemplateT()
+        local raceval = LP.Data.Race.Value
+        if raceval == "Fishman" then
+            ToTween(CFrame.new(28224.056640625, 14889.4267578125, -210.5872039794922))
+        elseif raceval == "Human" then
+            ToTween(CFrame.new(29237.294921875, 14889.4267578125, -206.94955444335938))
+        elseif raceval == "Cyborg" then
+            ToTween(CFrame.new(28492.4140625, 14894.4267578125, -422.1100158691406))
+        elseif raceval == "Skypiea" then
+            ToTween(CFrame.new(28967.408203125, 14918.0751953125, 234.31198120117188))
+        elseif raceval == "Ghoul" then
+            ToTween(CFrame.new(28672.720703125, 14889.1279296875, 454.5961608886719))
+        elseif raceval == "Mink" then
+            ToTween(CFrame.new(29020.66015625, 14889.4267578125, -379.2682800292969))
         end
-    end)
-    V4Tab:AddButton({
-        Name = "Buy Acient One Quest",
-        Callback = function()
-            RS.Remotes.CommF_:InvokeServer('UpgradeRace','Buy')
-        end    
-    }) 
-    V4Tab:AddToggle({
-        Name = "Kill Player After Trails",
-        Default = false,
-        Callback = function(vKillTrials)
-            KillTrials = vKillTrials
-            DisableTween(KillTrials)
-            DisableSpamSkill()
-        end    
-    }) 
-    task.spawn(function()
-        while task.wait() do
-            if KillTrials then
-                for i,v in pairs(WS.Characters:GetChildren()) do
-                    magnitude = (LP.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude
-                    if magnitude <= 300 and v ~= game.Players.LocalPlayer then
-                        repeat task.wait()
-                            EBuso()
-                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,8,2))
-                            if SpamSkillAllWeapon then
-                                chodienspamhirimixienchetcuchungmay = true
-                                SpamSkill = false
-                            else
-                                EWeapon()
-                                SpamSkill = true
-                                chodienspamhirimixienchetcuchungmay = false
-                            end
-                            EClick()
-                            NoClip = true
-                        until not KillTrials or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid")
-                        NoClip = false
+    end    
+}) 
+V4Tab:AddSection({Name = "Trial V4"})
+V4Tab:AddToggle({
+    Name = "Finish Trial Race",
+    Default = false,
+    Callback = function(vRaceTrial)
+        RaceTrial = vRaceTrial
+        DisableTween(RaceTrial)
+    end    
+}) 
+task.spawn(function()
+    while task.wait() do
+        if RaceTrial then
+            pcall(function()
+                local RaceAC = Data.Race.Value
+                if RaceAC == "Human" then
+                    for i,v in pairs(Enemies:GetDescendants()) do
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            repeat wait(.1)
+                                v.Humanoid.Health = 0
+                                v.HumanoidRootPart.CanCollide = false
+                                sethiddenproperty(LP, "SimulationRadius", math.huge)
+                            until not RaceTrial or v.Humanoid.Health <= 0
+                        end
                     end
+                elseif RaceAC == "Skypiea" then
+                    for i,v in pairs(WS.Map.SkyTrial.Model:GetDescendants()) do
+                        if v.Name ==  "snowisland_Cylinder.081" then
+                            ToTween(v.CFrame* CFrame.new(0,0,0))
+                        end
+                    end
+                elseif RaceAC == "Fishman" then
+                    for i,v in pairs(WS.SeaBeasts.SeaBeast1:GetDescendants()) do
+                        if v.Name ==  "HumanoidRootPart" then
+                            repeat task.wait()
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,400,0))
+                                chodienspamhirimixienchetcuchungmay = true
+                                NoClip = true
+                                getgenv().psskill = CheckSeaBeastTrial().HumanoidRootPart.CFrame
+                            until not RaceTrial or v.Humanoid.Health <= 0
+                            getgenv().psskill = nil
+                            chodienspamhirimixienchetcuchungmay = false
+                        end
+                    end
+                elseif RaceAC == "Cyborg" then
+                    ToTween(CFrame.new(28654, 14898.7832, -30, 1, 0, 0, 0, 1, 0, 0, 0, 1))
+                    NoClip = true
+                elseif RaceAC == "Ghoul" then
+                    for i,v in pairs(Enemies:GetDescendants()) do
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            repeat wait(.1)
+                                v.Humanoid.Health = 0
+                                v.HumanoidRootPart.CanCollide = false
+                                sethiddenproperty(LP, "SimulationRadius", math.huge)
+                            until not RaceTrial or v.Humanoid.Health <= 0
+                        end
+                    end
+                elseif RaceAC == "Mink" then
+                    for i,v in pairs(WS:GetDescendants()) do
+                        if v.Name == "StartPoint" then
+                            ToTween(v.CFrame* CFrame.new(0,10,0))
+                            NoClip = true
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
+V4Tab:AddButton({
+    Name = "Buy Acient One Quest",
+    Callback = function()
+        RS.Remotes.CommF_:InvokeServer('UpgradeRace','Buy')
+    end    
+}) 
+V4Tab:AddToggle({
+    Name = "Kill Player After Trails",
+    Default = false,
+    Callback = function(vKillTrials)
+        KillTrials = vKillTrials
+        DisableTween(KillTrials)
+    end    
+}) 
+task.spawn(function()
+    while task.wait() do
+        if KillTrials then
+            for i,v in pairs(WS.Characters:GetChildren()) do
+                magnitude = GetDistance(v.HumanoidRootPart.Position)
+                if magnitude <= 200 and v ~= game.Players.LocalPlayer then
+                    repeat task.wait()
+                        EBuso()
+                        if SpamSkillAllWeapon then
+                            chodienspamhirimixienchetcuchungmay = true
+                            SpamSkill = false
+                        else
+                            EWeapon()
+                            SpamSkill = true
+                            chodienspamhirimixienchetcuchungmay = false
+                        end
+                        EClick()
+                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,8,0))
+                        NoClip = true
+                    until not KillTrials or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid")
+                    NoClip = false
                 end
             end
         end
-    end)
-    spawn(function()
-        while task.wait() do
-            if SpamSkill then
-                game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game)
-                game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game)
-                game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game)
-                game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game)
-                game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game)
-                game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game)
-            end
+    end
+end)
+spawn(function()
+    while task.wait() do
+        if SpamSkill then
+            game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game)
+            game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game)
+            game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game)
+            game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game)
+            game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game)
+            game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game)
         end
-    end)
-    V4Tab:AddToggle({
-        Name = "Spam Skill All Weapon [Option]",
-        Default = false,
-        Callback = function(vSpamSkillAllWeapon)
-            SpamSkillAllWeapon = vSpamSkillAllWeapon
-        end    
-    }) 
-    V4Tab:AddButton({
-        Name = "Stop Spam Skill When Not Auto Turn Off",
-        Callback = function()
-            chodienspamhirimixienchetcuchungmay = false
-        end
-    })
-end 
+    end
+end)
+V4Tab:AddToggle({
+    Name = "Spam Skill All Weapon [Option]",
+    Default = false,
+    Callback = function(vSpamSkillAllWeapon)
+        SpamSkillAllWeapon = vSpamSkillAllWeapon
+    end    
+}) 
+V4Tab:AddButton({
+    Name = "Disable Spam Skill If Not Auto Turn Off",
+    Callback = function()
+        DisableSpamSkill()
+    end    
+}) 
 ListChip = {}
 RaidsModule = require(RS.Raids)
 for r, v in pairs(RaidsModule.raids) do

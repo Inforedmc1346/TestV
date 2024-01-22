@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #16.2
+--Hirimi Hub Hyper - Rewrite Fixed & Update #16.7
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -5173,7 +5173,7 @@ V4Tab:AddButton({
     end    
 }) 
 V4Tab:AddToggle({
-    Name = "Kill Player After Trails",
+    Name = "Kill Player After Trail",
     Default = false,
     Callback = function(vKillTrials)
         KillTrials = vKillTrials
@@ -5185,7 +5185,7 @@ task.spawn(function()
         if KillTrials then
             for i,v in pairs(WS.Characters:GetChildren()) do
                 magnitude = GetDistance(v.HumanoidRootPart.Position)
-                if magnitude <= 200 and v ~= game.Players.LocalPlayer then
+                if magnitude <= 200 and v ~= LP.Character then
                     repeat task.wait()
                         EBuso()
                         if SpamSkillAllWeapon then

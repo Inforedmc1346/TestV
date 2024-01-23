@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #17
+--Hirimi Hub Hyper - Rewrite Fixed & Update #17.1
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -1467,7 +1467,7 @@ MainTab:AddDropdown({
 		DelayAttack = vDelayAttack
 	end    
 })
-DelayAttack = 0.35
+DelayAttack = 0.175
 spawn(function()
     while wait(.1) do
         if DelayAttack then
@@ -1481,13 +1481,13 @@ spawn(function()
                 if MasteryOption then
                     DelayAttack = 0.9
                 else
-                    DelayAttack = 0.16
+                    DelayAttack = 0.15
                 end
             elseif DelayAttack == "0.175" then
                 if MasteryOption then
                     DelayAttack = 0.9
                 else
-                    DelayAttack = 0.185
+                    DelayAttack = 0.175
                 end
             elseif DelayAttack == "0.2" then
                 DelayAttack = 0.4
@@ -1658,12 +1658,10 @@ task.spawn(function()
 end)
 spawn(function()
     while wait() do
-        if DelayAttack then
-            FastAttackDelay = 0.9
-            wait(9)
-            FastAttackDelay = DelayAttack
-            wait(9)
-        end
+        FastAttackDelay = DelayAttack
+        wait(9)
+        FastAttackDelay = 0.9
+        wait(9)
     end
 end)
 function FastAttack()

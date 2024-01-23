@@ -1,4 +1,4 @@
---Hirimi Hub Hyper - Rewrite Fixed & Update #17.1
+--Hirimi Hub Hyper - Rewrite Fixed & Update #17.2
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>HIRIMI HUB HYPER<Color=/>"):Display()
@@ -1573,7 +1573,7 @@ FastAttack = function()
 end
 bs = tick()
 task.spawn(function()
-	while task.wait(FastAttackDelay) do
+	while task.wait(DelayAttack) do
 		if EnableFastAttack then
 			FastI = true
 			if bs - tick() > 0.75 then
@@ -1582,8 +1582,8 @@ task.spawn(function()
 			end
 			pcall(function()
 				for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-					if v.Humanoid.Health > 0 then
-						if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 2 then
+					if not MasteryOption and v.Humanoid.Health > 0 then
+						if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
 							FastAttack()
 							task.wait()
 							Boost()
@@ -1655,14 +1655,6 @@ task.spawn(function()
 			end
 		end)
 	end
-end)
-spawn(function()
-    while wait() do
-        FastAttackDelay = DelayAttack
-        wait(9)
-        FastAttackDelay = 0.9
-        wait(9)
-    end
 end)
 function FastAttack()
 	local plr = game.Players.LocalPlayer

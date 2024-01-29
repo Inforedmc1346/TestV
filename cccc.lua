@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #27.3
+--Memories Hub Hyper - Rewrite Fixed & Update #27.5
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -312,12 +312,7 @@ function GetQuest()
     end
     Remote:InvokeServer("SetSpawnPoint")
 end
-if RS.Effect.Container:FindFirstChild("Death") then
-    RS.Effect.Container.Death:Destroy()
-end
-if RS.Effect.Container:FindFirstChild("Respawn") then
-    RS.Effect.Container.Respawn:Destroy()
-end
+
 function HopServer(bO)
     if not bO then
         bO = 10
@@ -2769,17 +2764,16 @@ task.spawn(function()
                         game:GetService("Players").LocalPlayer.Character.Humanoid.Sit = false
                     end
                     local v = CheckSeaBeast()
-                    repeat
-                        task.wait()
+                    repeat task.wait()
                         if game.Players.LocalPlayer.Character.Humanoid.Health > 8000 then
-                            TeleportSeabeast(v)
+                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,300,0))
                             NoClip = true
                         elseif game.Players.LocalPlayer.Character.Humanoid.Health <= healthlow then
                             if YTween then
                                 ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,600,0))
                                 NoClip = true
                             else
-                                TeleportSeabeast(v)
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,300,0))
                                 NoClip = true
                             end
                         end
@@ -2930,6 +2924,19 @@ task.spawn(function()
                         BypassTele(CFrameBoat)
                     else
                         ToTween(CFrameBoat)
+                    end
+                elseif (CheckSeaBeast() or CheckPirateBoat() or game:GetService("Workspace").Enemies:FindFirstChild("Shark") or game:GetService("Workspace").Enemies:FindFirstChild("Piranha") or game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") or game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") or game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") or game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Rough Sea")) and checkboat() and WO.Locations:FindFirstChild("Rough Sea") then
+                    if LP.Character.Humanoid.Sit then
+                        LP.Character.Humanoid.Sit = false
+                    end
+                    if (checkboat().VehicleSeat.Position - Vector3Boat).Magnitude > 50 then
+                        checkboat().VehicleSeat.CFrame = CFrame.new(-28464.876953125, 12.553319931030273, 6896.8076171875)
+                    end
+                    if not game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
+                        NoClip = true
+                        ToTween(checkboat().VehicleSeat.CFrame)
+                    else
+                        NoClip = false
                     end
                 end
             end)

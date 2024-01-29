@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #24.2
+--Memories Hub Hyper - Rewrite Fixed & Update #24.3
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -1019,7 +1019,7 @@ function NameSword()
 end
 function checkskillDF()
     if not LP.PlayerGui.Main.Skills:FindFirstChild(LP.Data.DevilFruit.Value) then
-        EWeaponSelect(LP.Data.DevilFruit.Value)
+        equipweapon(LP.Data.DevilFruit.Value)
         return false
     end
     for r, v in next, LP.PlayerGui.Main.Skills[LP.Data.DevilFruit.Value]:GetChildren() do
@@ -1035,7 +1035,7 @@ function checkskillSword()
         return
     end
     if not LP.PlayerGui.Main.Skills:FindFirstChild(NameSword()) then
-        EWeaponSelect(NameSword())
+        equipweapon(NameSword())
         return false
     end
     for r, v in next, LP.PlayerGui.Main.Skills[NameSword()]:GetChildren() do
@@ -1059,7 +1059,7 @@ function checkskillGun()
         return nil
     end
     if not LP.PlayerGui.Main.Skills:FindFirstChild(NameGun()) then
-        EWeaponSelect(NameGun())
+        equipweapon(NameGun())
         return false
     end
     for r, v in next, LP.PlayerGui.Main.Skills[NameGun()]:GetChildren() do
@@ -1070,9 +1070,17 @@ function checkskillGun()
         end
     end
 end
+function equipweapon(aq)
+    local c6 = tostring(aq)
+    local c7 = LP.Backpack:FindFirstChild(c6)
+    local c8 = LP.Character:FindFirstChild("Humanoid") or LP.Character:WaitForChild("Humanoid")
+    if c7 then
+        c8:EquipTool(c7)
+    end
+end
 function checkskillMelee()
     if not LP.PlayerGui.Main.Skills:FindFirstChild(NameMelee()) then
-        EWeaponSelect(NameMelee())
+        equipweapon(NameMelee())
         return false
     end
     for r, v in next, LP.PlayerGui.Main.Skills[NameMelee()]:GetChildren() do

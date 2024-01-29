@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #22.7
+--Memories Hub Hyper - Rewrite Fixed & Update #22.8
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -1168,118 +1168,57 @@ spawn(function()
         end
     end
 end)
-function getnameweapon(M)
-    for _, Q in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do 
-        if Q.ToolTip == M then 
-            return Q
-        end 
-    end 
-    for _, Q in pairs(game.Players.LocalPlayer.Character:GetChildren()) do 
-        if Q:IsA("Tool") and Q.ToolTip == M then 
-            return Q
-        end 
-    end 
+function GetNameWeaponIII(v00name)
+    for r, v in next, LP.Backpack:GetChildren() do
+        if v:IsA("Tool") and v.ToolTip == v00name then
+            return v.Name
+        end
+    end
+    for r, v in next, LP.Character:GetChildren() do
+        if v:IsA("Tool") and v.ToolTip == v00name then
+            return v.Name
+        end
+    end
 end
-function UU(Q, L) 
-    O = getnameweapon(Q) 
-    V = game.Players.LocalPlayer.PlayerGui.Main.Skills
-    if O and V:FindFirstChild(O.Name) then
-        if V[O.Name]:FindFirstChild(L) then
-            if V[O.Name][L].Cooldown.AbsoluteSize.X > 0 then
-                return false
-            else 
-                return true
-            end
-        else 
+function GetSkillWeapon(lp11)
+    function GetSkillWeapon(lp11)
+        if not GetNameWeaponIII("Melee") or not GetNameWeaponIII("Sword") or not GetNameWeaponIII("Blox Fruit") or not GetNameWeaponIII("Gun") then
+            return
+        end
+        if not PG.Main.Skills:FindFirstChild(lp11) then
+            EWeaponSelect(lp11)
             return false
-        end 
-    else 
-        return false
-    end 
-end
-function equip(tooltip)
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-    for _, item in pairs(player.Backpack:GetChildren()) do 
-        if item:IsA("Tool") and item.ToolTip == tooltip then
-            local humanoid = character:FindFirstChildOfClass("Humanoid")
-            if humanoid and not humanoid:IsDescendantOf(item) then
-                if not game.Players.LocalPlayer.Character:FindFirstChild(item.Name) then
-                    game.Players.LocalPlayer.Character.Humanoid:EquipTool(item)
-                    return item
+        end
+        for r, v in next, PG.Main.Skills[lp11]:GetChildren() do
+            if v:IsA("Frame") then
+                if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1) then
+                    return v.Name
                 end
             end
-        end 
-    end 
-end
-function MeleeGet()
-    return getnameweapon("Melee")
-end
-function SwordGet()
-    return getnameweapon("Sword")
-end
-function DFGet()
-    return getnameweapon("Blox Fruit")
-end
-function GunGet()
-    return getnameweapon("Gun")
+        end
+    end
 end
 spawn(function()
     while task.wait() do 
-        if chodienspamhirimixienchetcuchungmay then 
-            EBuso()
-            for dm,aa in pairs(LP.Backpack:GetChildren()) do
-                if aa:IsA("Tool") and aa.ToolTip == "Melee" or aa.ToolTip == "Sword" or aa.ToolTip == "Gun" or aa.ToolTip == "Blox Fruit" then
-                    if SpamMelees then
-                        equip(MeleeGet())
-                    end
-                    if SpamSwords then
-                        equip(SwordGet())
-                    end
-                    if SpamDFs then
-                        equip(DFGet())
-                    end
-                    if SpamGuns then
-                        equip(GunGet())
-                    end
-                else
-                    for i, v in pairs(LP.Character:GetChildren()) do 
-                        if v:IsA("Tool") and v.ToolTip == "Melee" and SpamMelees then
-                            if UU(v.ToolTip,"Z") then    
-                                SendKeyEvents("Z")
-                            elseif UU(v.ToolTip,"X") then    
-                                SendKeyEvents("X")
-                            elseif UU(v.ToolTip,"C") then    
-                                SendKeyEvents("C")
-                            end
-                        elseif v:IsA("Tool") and v.ToolTip == "Gun" and SpamGuns then
-                            if UU(v.ToolTip,"Z") then    
-                                SendKeyEvents("Z")
-                            elseif UU(v.ToolTip,"X") then    
-                                SendKeyEvents("X")
-                            end
-                        elseif v:IsA("Tool") and v.ToolTip == "Sword" and SpamSwords then
-                            if UU(v.ToolTip,"Z") then    
-                                SendKeyEvents("Z")
-                            elseif UU(v.ToolTip,"X") then    
-                                SendKeyEvents("X")
-                            end
-                        elseif v:IsA("Tool") and v.ToolTip == "Blox Fruit" and SpamDFs then
-                            if UU(v.ToolTip,"Z") then    
-                                SendKeyEvents("Z")
-                            elseif UU(v.ToolTip,"X") then    
-                                SendKeyEvents("X")
-                            elseif UU(v.ToolTip,"C") then    
-                                SendKeyEvents("C")
-                            elseif UU(v.ToolTip,"V") then    
-                                SendKeyEvents("V")
-                            elseif UU(v.ToolTip,"F") then    
-                                SendKeyEvents("F")
-                            end
-                        end
-                    end
-                end
+        if chodienspamhirimixienchetcuchungmay then
+            local meleeweapon = GetSkillWeapon(GetNameWeaponIII("Melee"))
+            local swordweapon = GetSkillWeapon(GetNameWeaponIII("Sword"))
+            local fruitweapon = GetSkillWeapon(GetNameWeaponIII("Blox Fruit"))
+            local gunweapon = GetSkillWeapon(GetNameWeaponIII("Gun"))
+            if meleeweapon and SpamMelees then
+                EWeaponSelect(GetNameWeaponIII("Melee"))
+                SendKeyEvents(GetSkillWeapon(GetNameWeaponIII("Melee")))
+            elseif swordweapon and SpamSwords then
+                EWeaponSelect(GetNameWeaponIII("Sword"))
+                SendKeyEvents(GetSkillWeapon(GetNameWeaponIII("Sword")))
+            elseif fruitweapon and SpamDFs and not string.find(Data.DevilFruit.Value, "Portal") then
+                EWeaponSelect(GetNameWeaponIII("Blox Fruit"))
+                SendKeyEvents(GetSkillWeapon(GetNameWeaponIII("Blox Fruit")))
+            elseif gunweapon and SpamGuns then
+                EWeaponSelect(GetNameWeaponIII("Gun"))
+                SendKeyEvents(GetSkillWeapon(GetNameWeaponIII("Gun")))
             end
+            EBuso()
         end
     end
 end)

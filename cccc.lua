@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #23.6
+--Memories Hub Hyper - Rewrite Fixed & Update #23.7
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -44,7 +44,7 @@ LoadF.AnchorPoint = Vector2.new(0.5, 0.5)
 LoadF.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 LoadF.BorderColor3 = Color3.fromRGB(0, 0, 0)
 LoadF.BorderSizePixel = 0
-LoadF.Position = UDim2.new(0.102885479, 0, 0.335341364, 0)
+LoadF.Position = UDim2.new(0.002885479, 0, 0.435341364, 0)
 LoadF.Selectable = false
 LoadF.Size = UDim2.new(0, 30, 0, 30)
 LoadF.Image = "rbxassetid://16147783761"
@@ -868,6 +868,22 @@ function BlueGear()
             end
         end
     end
+end
+TargetKillPlayerT = nil
+function targettrial()
+    if TargetKillPlayerT ~= nil then return end
+    local a = nil
+    local b = 250
+    for i,v in pairs(game.Players:GetChildren()) do
+        c = GetDistance(v.Character.HumanoidRootPart.Position)
+        if c <= b and v ~= game.Players.LocalPlayer then
+            b = c 
+            a = v
+        end
+    end
+    if a == nil then return end
+    if TargetKillPlayerT ~= nil then return end
+    TargetKillPlayerT = a
 end
 function TimBlueGearDitmemay()
     BlueGear = BlueGear()
@@ -4534,44 +4550,42 @@ V4Tab:AddToggle({
     end    
 }) 
 task.spawn(function()
-    while task.wait() do
-        if KillTrials then
-            for i,v in pairs(WS.Characters:GetChildren()) do
-                magnitude = GetDistance(v.HumanoidRootPart.Position)
-                if v ~= LP.Character and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and magnitude <= 200 then
+    while task.wait() do 
+        pcall(function()
+            if KillTrials then
+                for i,v in pairs(WS.Character:GetChildren()) do
                     repeat task.wait()
-                        DelayAttack = 0.02
-                        EBuso()
-                        if SpamSkillAllWeapon then
-                            chodienspamhirimixienchetcuchungmay = true
-                            aim = true 
-                            CFrameHunt = v.HumanoidRootPart.CFrame 
-                            SpamSkill = false
-                        else
+                        targettrial()
+                        if TargetKillPlayerT ~= nil and TargetKillPlayerT.Character.Humanoid.Health < 0 then
+                            TargetKillPlayerT = nil
+                            targettrial()
+                        end
+                        if TargetKillPlayerT ~= nil then
+                            DelayAttack = 0.02
+                            EBuso()
                             EWeapon()
                             SpamSkill = true
-                            aim = false
-                            chodienspamhirimixienchetcuchungmay = false
+                            aim = true
+                            CFrameHunt = v.HumanoidRootPart.CFrame 
+                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
+                            v.HumanoidRootPart.CanCollide = false
+                            v.Head.CanCollide = false
+                            v.Humanoid.WalkSpeed = 0
+                            v.HumanoidRootPart.Size = Vector3.new(100,100,100)
+                            EClick()
+                            NoClip = true
+                            EnableButtonKen = true
+                            EnableFastAttack = true
                         end
-                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
-                        v.HumanoidRootPart.CanCollide = false
-                        v.Head.CanCollide = false
-                        v.Humanoid.WalkSpeed = 0
-                        v.HumanoidRootPart.Size = Vector3.new(100,100,100)
-                        EClick()
-                        NoClip = true
-                        EnableButtonKen = false
-                        EnableFastAttack = true
                     until not KillTrials or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
+                    aim = false
                     EnableFastAttack = false
                     SpamSkill = false
                     NoClip = false
-                    chodienspamhirimixienchetcuchungmay = false
                     EnableButtonKen = false
-                    DelayAttack = vDelayAttack/1000
                 end
             end
-        end
+        end)
     end
 end)
 spawn(function()
@@ -4604,14 +4618,7 @@ spawn(function()
             until PG.ScreenGui:FindFirstChild("ImageLabel") or not EnableButtonKen
         end
     end
-end)
-V4Tab:AddToggle({
-    Name = "Spam Skill All Weapon [Option]",
-    Default = false,
-    Callback = function(vSpamSkillAllWeapon)
-        SpamSkillAllWeapon = vSpamSkillAllWeapon
-    end    
-}) 
+end) 
 V4Tab:AddButton({
     Name = "Disable Spam Skill If Not Auto Turn Off",
     Callback = function()

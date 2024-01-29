@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #26
+--Memories Hub Hyper - Rewrite Fixed & Update #27
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -669,6 +669,23 @@ function CheckMasSkill()
         return SMasWeapon, nil
     end
 end
+local h = {
+    ["CDAAT"] = 80,
+    ["TimeWait"] = 10
+}
+local Aaaaaaaaa = "memaybeohub/Function-Scripts/main/test2.lua"
+FastAttackConnector = loadstring(game:HttpGet("https://raw.githubusercontent.com/" .. Aaaaaaaaa))()
+spawn(function()
+    while wait() do
+        if UseAttack or NoCD then
+            FastAttackConnector:InputSetting(h)
+            FastAttackConnector:InputValue(h["CDAAT"], h["TimeWait"])
+            FastAttackConnector:Attack(true)
+        else
+            FastAttackConnector:Attack(false)
+        end
+    end
+end)
 function CheckSwan()
     for r, v in pairs(Enemies:GetChildren()) do
         if v.Name == "Swan Pirate" and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
@@ -1636,6 +1653,10 @@ MainTab:AddToggle({
 		BypassTP = vBTP
 	end    
 }) 
+MainTab:AddToggle({Name = "No CD", Default = true, Flag = "No CD", Save = true, Callback = function(vNoCD)
+	NoCD = vNoCD
+end    
+})
 local ToggleRaceV4 = MainTab:AddToggle({
 	Name = "Turn On Race V4",
 	Default = false,
@@ -4676,39 +4697,40 @@ task.spawn(function()
         if KillTrials then
             for i,v in pairs(WS.Characters:GetChildren()) do
                 magnitude = GetDistance(v.HumanoidRootPart.Position)
-                if v.Name ~= LP.Name and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and magnitude <= 300 then
-                    TargetI = v
-                    repeat task.wait()
-                        FastDelay = 0.02
-                        EBuso()
-                        if SpamSkillAllWeapon then
-                            chodienspamhirimixienchetcuchungmay = true
-                            SpamSkill = false
-                            aim = true
-                            CFrameHunt = TargetI.HumanoidRootPart.CFrame 
-                        else
-                            EWeapon()
-                            SpamSkill = true
-                            chodienspamhirimixienchetcuchungmay = false
-                        end
-                        ToTween(TargetI.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
-                        TargetI.HumanoidRootPart.CanCollide = false
-                        TargetI.Head.CanCollide = false
-                        TargetI.Humanoid.WalkSpeed = 0
-                        TargetI.HumanoidRootPart.Size = Vector3.new(100,100,100)
-                        EClick()
-                        NoClip = true
-                        EnableButtonKen = true
-                        EnableFastAttack = true
-                    until not KillTrials or not TargetI:FindFirstChild("HumanoidRootPart") or not TargetI:FindFirstChild("Humanoid") or TargetI.Humanoid.Health <= 0
-                    aim = false
-                    EnableFastAttack = false
-                    SpamSkill = false
-                    NoClip = false
-                    EnableButtonKen = false
-                    FastDelay = vFastDelay
-                elseif v.Humanoid.Health <= 0 or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") then
-                    TargetI = nil
+                if v.Name ~= LP.Name and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and PG.Main.Timer.Visible == true then
+                    if magnitude <= 300 then
+                        TargetI = v
+                        repeat task.wait()
+                            FastDelay = 0.02
+                            EBuso()
+                            if SpamSkillAllWeapon then
+                                chodienspamhirimixienchetcuchungmay = true
+                                SpamSkill = false
+                                aim = true
+                                CFrameHunt = TargetI.HumanoidRootPart.CFrame 
+                            else
+                                EWeapon()
+                                SpamSkill = true
+                                chodienspamhirimixienchetcuchungmay = false
+                            end
+                            ToTween(TargetI.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
+                            TargetI.HumanoidRootPart.CanCollide = false
+                            TargetI.Head.CanCollide = false
+                            TargetI.Humanoid.WalkSpeed = 0
+                            TargetI.HumanoidRootPart.Size = Vector3.new(100,100,100)
+                            EClick()
+                            NoClip = true
+                            EnableButtonKen = true
+                            EnableFastAttack = true
+                        until not KillTrials or not TargetI:FindFirstChild("HumanoidRootPart") or not TargetI:FindFirstChild("Humanoid") or TargetI.Humanoid.Health <= 0
+                        TargetI = nil
+                        aim = false
+                        EnableFastAttack = false
+                        SpamSkill = false
+                        NoClip = false
+                        EnableButtonKen = false
+                        FastDelay = vFastDelay
+                    end
                 end
             end
         else

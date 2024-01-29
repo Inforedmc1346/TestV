@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #24.9
+--Memories Hub Hyper - Rewrite Fixed & Update #25
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -2680,7 +2680,7 @@ oldNamecall = hookmetamethod(game, "__namecall", newcclosure(function(...)
     end 
     return oldNamecall(unpack(Arguments)) 
 end))
-spawn(function()
+task.spawn(function()
     while task.wait() do
         if SeaEvent then
             pcall(function()
@@ -2769,7 +2769,7 @@ spawn(function()
                     chodienspamhirimixienchetcuchungmay = false
                     NoClip = false
                     aim = false
-                elseif game:GetService("Workspace").Enemies:FindFirstChild("Shark") and GetDistance(checkboat().VehicleSeat.Position) <= 500 then
+                elseif game:GetService("Workspace").Enemies:FindFirstChild("Shark") and GetDistance(checkboat().VehicleSeat.Position) <= 1200 then
                     if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
                         game:GetService("Players").LocalPlayer.Character.Humanoid.Sit = false
                     end
@@ -2796,7 +2796,7 @@ spawn(function()
                             end)
                         end
                     end
-                elseif game:GetService("Workspace").Enemies:FindFirstChild("Piranha") and GetDistance(checkboat().VehicleSeat.Position) <= 500 then
+                elseif game:GetService("Workspace").Enemies:FindFirstChild("Piranha") and GetDistance(checkboat().VehicleSeat.Position) <= 1200 then
                     if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
                         game:GetService("Players").LocalPlayer.Character.Humanoid.Sit = false
                     end
@@ -2826,7 +2826,7 @@ spawn(function()
                             end)
                         end
                     end
-                elseif game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") and GetDistance(checkboat().VehicleSeat.Position) <= 500 then
+                elseif game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") and GetDistance(checkboat().VehicleSeat.Position) <= 1200 then
                     if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
                         game:GetService("Players").LocalPlayer.Character.Humanoid.Sit = false
                     end
@@ -2855,7 +2855,7 @@ spawn(function()
                             end)
                         end
                     end
-                elseif game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and GetDistance(checkboat().VehicleSeat.Position) <= 500 then
+                elseif game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and GetDistance(checkboat().VehicleSeat.Position) <= 1200 then
                     if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
                         game:GetService("Players").LocalPlayer.Character.Humanoid.Sit = false
                     end
@@ -2877,7 +2877,7 @@ spawn(function()
                             end)
                         end
                     end
-                elseif not game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and GetDistance(checkboat().VehicleSeat.Position) <= 500 then
+                elseif not game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and GetDistance(checkboat().VehicleSeat.Position) <= 1200 then
                     if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
                         game:GetService("Players").LocalPlayer.Character.Humanoid.Sit = false
                     end

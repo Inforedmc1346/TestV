@@ -1,9 +1,9 @@
---Memories Hub Hyper - Rewrite Fixed & Update #24.3
+--Memories Hub Hyper - Rewrite Fixed & Update #24.4
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
 notis.new("<Color=Blue>Founder: deforehirimx<Color=/>"):Display() 
-notis.new("<Color=Blue>Developer: terutheerut<Color=/>"):Display() 
+notis.new("<Color=Green>Developer: terutheerut<Color=/>"):Display() 
 notis.new("<Color=Red>Discord: https://discord.gg/RtWeughmYp<Color=/>"):Display() 
 notis.new("<Color=Yellow>Exploit Use:<Color=/> ".. identifyexecutor()):Display() 
 local memaythangskidocnguloz = "\104\116\116\112\115://\114\97\119.\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116.\99\111\109/\72\105\114\105\109\105\105/\102\52\99\107\121\111\117/\109\97\105\110\47\99\99\108\117\97"
@@ -1268,28 +1268,28 @@ spawn(function()
                 EquipWeaponName(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
                 local condimebeo = checkskillDF()
                 if condimebeo then
-                    SendKey(condimebeo)
+                    SendKeyEvents(condimebeo)
                 end
             elseif checkskillMelee() and SpamMelees then
                 print("Spam Status: Melee")
                 EquipWeaponName(NameMelee())
                 local condimebeo = checkskillMelee()
                 if condimebeo then
-                    SendKey(condimebeo)
+                    SendKeyEvents(condimebeo)
                 end
             elseif checkskillSword() and SpamSwords then
                 print("Spam Status: Sword")
                 EquipWeaponName(NameSword())
                 local condimebeo = checkskillSword()
                 if condimebeo then
-                    SendKey(condimebeo)
+                    SendKeyEvents(condimebeo)
                 end
             elseif checkskillGun() and SpamGuns then
                 print("Spam Status: Gun")
                 local condimebeo = checkskillGun()
                 EquipWeaponName(NameGun())
                 if condimebeo then
-                    SendKey(condimebeo)
+                    SendKeyEvents(condimebeo)
                 end
             else
                 EquipAllWeapon()
@@ -4698,7 +4698,7 @@ task.spawn(function()
                     SpamSkill = false
                     NoClip = false
                     EnableButtonKen = false
-                elseif v.Humanoid.Health <= 0 then
+                elseif v.Humanoid.Health <= 0 or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") then
                     TargetI = nil
                 end
             end

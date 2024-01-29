@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #27
+--Memories Hub Hyper - Rewrite Fixed & Update #27.1
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -671,7 +671,7 @@ function CheckMasSkill()
 end
 local h = {
     ["CDAAT"] = 80,
-    ["TimeWait"] = 10
+    ["TimeWait"] = 1
 }
 local Aaaaaaaaa = "memaybeohub/Function-Scripts/main/test2.lua"
 FastAttackConnector = loadstring(game:HttpGet("https://raw.githubusercontent.com/" .. Aaaaaaaaa))()
@@ -1612,7 +1612,7 @@ task.spawn(function()
         end)
     end
 end)
-MainTab:AddToggle({Name = "Enable Fast Attack", Default = true, Flag = "FastAttack", Save = true, Callback = function(vfastchange)
+MainTab:AddToggle({Name = "Enable Fast Attack", Default = false, Flag = "FastAttack", Save = true, Callback = function(vfastchange)
 	EnableFastAttack = vfastchange
 end    
 })
@@ -1653,7 +1653,7 @@ MainTab:AddToggle({
 		BypassTP = vBTP
 	end    
 }) 
-MainTab:AddToggle({Name = "No CD", Default = true, Flag = "No CD", Save = true, Callback = function(vNoCD)
+MainTab:AddToggle({Name = "No CD", Default = false, Flag = "No CD", Save = true, Callback = function(vNoCD)
 	NoCD = vNoCD
 end    
 })

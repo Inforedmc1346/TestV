@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #24.7
+--Memories Hub Hyper - Rewrite Fixed & Update #24.8
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -858,21 +858,6 @@ function InstantChooseGear()
     else
         game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Memories Hub", Text = "You Hadn't Gear", Duration = 30})
         task.wait(30)
-    end
-end
-function BlueGear()
-    if WS.Map:FindFirstChild("MysticIsland") then
-        for r, v in pairs(game.workspace.Map.MysticIsland:GetChildren()) do
-            if v:IsA("MeshPart") and v.MeshId == "rbxassetid://10153114969" then
-                return v
-            end
-        end
-    end
-end
-function TimBlueGearDitmemay()
-    BlueGear = BlueGear()
-    if BlueGear then
-        ToTween(BlueGear.CFrame)
     end
 end
 function FindPosBring(positionList)
@@ -2331,12 +2316,28 @@ elseif Zou then
             FindAdvancedDealer()
         end    
     }) 
-    ItemTab:AddButton({
+    ItemTab:AddToggle({
         Name = "Find Blue Gear",
-        Callback = function()
-            TimBlueGearDitmemay()
+        Default = false,
+        Callback = function(vFindBlueGear)
+            FindBlueGear = vFindBlueGear
         end    
     }) 
+    spawn(function()
+        while task.wait() do
+            if FindBlueGear then
+                if WS.Map:FindFirstChild("MysticIsland") then
+                    for i, v in pairs(WS.Map.MysticIsland:GetChildren()) do
+                        if v:IsA("MeshPart") then
+                            if v.Material == Enum.Material.Neon then
+                                ToTween(v.CFrame)
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end)
 end
 function DisableSpamSkill()
     if not KillTrials then
@@ -3884,7 +3885,7 @@ SettingTab:AddToggle({
 SettingTab:AddButton({
 	Name = "Remove Fog",
 	Callback = function()
-      game.Lighting.Sky:Destroy()
+        NoFog()
   	end    
 })
 SettingTab:AddToggle({

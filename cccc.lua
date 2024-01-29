@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #23.7
+--Memories Hub Hyper - Rewrite Fixed & Update #23.9
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -44,10 +44,10 @@ LoadF.AnchorPoint = Vector2.new(0.5, 0.5)
 LoadF.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 LoadF.BorderColor3 = Color3.fromRGB(0, 0, 0)
 LoadF.BorderSizePixel = 0
-LoadF.Position = UDim2.new(0.002885479, 0, 0.435341364, 0)
+LoadF.Position = UDim2.new(0.005885479, 0, 0.135341364, 0)
 LoadF.Selectable = false
 LoadF.Size = UDim2.new(0, 30, 0, 30)
-LoadF.Image = "rbxassetid://16147783761"
+LoadF.Image = "rbxassetid://16161703575"
 LoadF.MouseButton1Click:Connect(function()
 	game:GetService("VirtualInputManager"):SendKeyEvent(true,"RightShift",false,game)
 end)
@@ -119,7 +119,7 @@ function Notify(G, H, I)
     if type(I) ~= "number" then
         I = 10
     end
-    OrionLib:MakeNotification({Name = G, Content = H, Image = "rbxassetid://16147783761", Time = I})
+    OrionLib:MakeNotification({Name = G, Content = H, Image = "rbxassetid://16161703575", Time = I})
 end
 function CheckNearestTeleporter(P)
     local min = math.huge
@@ -869,22 +869,6 @@ function BlueGear()
         end
     end
 end
-TargetKillPlayerT = nil
-function targettrial()
-    if TargetKillPlayerT ~= nil then return end
-    local a = nil
-    local b = 250
-    for i,v in pairs(game.Players:GetChildren()) do
-        c = GetDistance(v.Character.HumanoidRootPart.Position)
-        if c <= b and v ~= game.Players.LocalPlayer then
-            b = c 
-            a = v
-        end
-    end
-    if a == nil then return end
-    if TargetKillPlayerT ~= nil then return end
-    TargetKillPlayerT = a
-end
 function TimBlueGearDitmemay()
     BlueGear = BlueGear()
     if BlueGear then
@@ -1215,7 +1199,7 @@ function BypassTele(PosSelect)
     end
 end
 local Window = OrionLib:MakeWindow({Name = "Memories Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "HyperVersion"})
-local SettingsTab = Window:MakeTab({Name = "Developer", Icon = "rbxassetid://16147783761", PremiumOnly = false})
+local SettingsTab = Window:MakeTab({Name = "Developer", Icon = "rbxassetid://16161703575", PremiumOnly = false})
 local MainTab = Window:MakeTab({Name = "Main", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local SettingTab = Window:MakeTab({Name = "Setting", Icon = "rbxassetid://11446835336", PremiumOnly = false})
 local ItemTab = Window:MakeTab({Name = "Item", Icon = "rbxassetid://9606626859", PremiumOnly = false})
@@ -1235,7 +1219,7 @@ SettingsTab:AddButton({
 	Name = "Copy Link Youtube",
 	Callback = function()
         setclipboard("https://www.youtube.com/@Memo09011")
-        OrionLib:MakeNotification({Name = "Memories Hub", Content = "Copied!", Image = "rbxassetid://16147783761",Time = 5})
+        OrionLib:MakeNotification({Name = "Memories Hub", Content = "Copied!", Image = "rbxassetid://16161703575",Time = 5})
   	end    
 })
 SettingsTab:AddLabel("Join For Discord") 
@@ -1244,7 +1228,7 @@ SettingsTab:AddButton({
 	Name = "Copy Link Invite Discord",
 	Callback = function()
         setclipboard("https://discord.gg/RtWeughmYp")
-        OrionLib:MakeNotification({Name = "Memories Hub", Content = "Copied!", Image = "rbxassetid://16147783761",Time = 5})
+        OrionLib:MakeNotification({Name = "Memories Hub", Content = "Copied!", Image = "rbxassetid://16161703575",Time = 5})
   	end    
 })
 SettingsTab:AddLabel("I From VIETNAM") 
@@ -4549,43 +4533,41 @@ V4Tab:AddToggle({
         DisableTween(KillTrials)
     end    
 }) 
+local TargetI = nil
 task.spawn(function()
-    while task.wait() do 
-        pcall(function()
-            if KillTrials then
-                for i,v in pairs(WS.Character:GetChildren()) do
+    while task.wait() do
+        if KillTrials then
+            for i,v in pairs(WS.Characters:GetChildren()) do
+                magnitude = GetDistance(v.HumanoidRootPart.Position)
+                if v ~= LP.Character and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and magnitude <= 200 then
+                    TargetI = v
                     repeat task.wait()
-                        targettrial()
-                        if TargetKillPlayerT ~= nil and TargetKillPlayerT.Character.Humanoid.Health < 0 then
-                            TargetKillPlayerT = nil
-                            targettrial()
-                        end
-                        if TargetKillPlayerT ~= nil then
-                            DelayAttack = 0.02
-                            EBuso()
-                            EWeapon()
-                            SpamSkill = true
-                            aim = true
-                            CFrameHunt = v.HumanoidRootPart.CFrame 
-                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
-                            v.HumanoidRootPart.CanCollide = false
-                            v.Head.CanCollide = false
-                            v.Humanoid.WalkSpeed = 0
-                            v.HumanoidRootPart.Size = Vector3.new(100,100,100)
-                            EClick()
-                            NoClip = true
-                            EnableButtonKen = true
-                            EnableFastAttack = true
-                        end
-                    until not KillTrials or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
+                        DelayAttack = 0.02
+                        EBuso()
+                        EWeapon()
+                        SpamSkill = true
+                        aim = true
+                        CFrameHunt = TargetI.HumanoidRootPart.CFrame 
+                        ToTween(TargetI.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
+                        TargetI.HumanoidRootPart.CanCollide = false
+                        TargetI.Head.CanCollide = false
+                        TargetI.Humanoid.WalkSpeed = 0
+                        TargetI.HumanoidRootPart.Size = Vector3.new(100,100,100)
+                        EClick()
+                        NoClip = true
+                        EnableButtonKen = true
+                        EnableFastAttack = true
+                    until not KillTrials or not TargetI:FindFirstChild("HumanoidRootPart") or not TargetI:FindFirstChild("Humanoid") or TargetI.Humanoid.Health <= 0
                     aim = false
                     EnableFastAttack = false
                     SpamSkill = false
                     NoClip = false
                     EnableButtonKen = false
+                elseif v.Humanoid.Health <= 0 then
+                    TargetI = nil
                 end
             end
-        end)
+        end
     end
 end)
 spawn(function()

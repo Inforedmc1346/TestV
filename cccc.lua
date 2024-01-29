@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #23
+--Memories Hub Hyper - Rewrite Fixed & Update #23.2
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -1155,105 +1155,32 @@ function GetNameWeaponIII(v00name)
         end
     end
 end
-function GetSkillDF()
-    if not LP.PlayerGui.Main.Skills:FindFirstChild(LP.Data.DevilFruit.Value) then
-        EWeaponSelect(LP.Data.DevilFruit.Value)
-        return false
-    end
-    for r, v in next, LP.PlayerGui.Main.Skills[LP.Data.DevilFruit.Value]:GetChildren() do
-        if v:IsA("Frame") then
-            if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1)then
-                return v.Name
-            end
-        end
-    end
-end
-function GetSkillSword()
-    if not GetNameWeaponIII("Sword") then
-        return
-    end
-    if not LP.PlayerGui.Main.Skills:FindFirstChild(GetNameWeaponIII("Sword")) then
-        EWeaponSelect(GetNameWeaponIII("Sword"))
-        return false
-    end
-    for r, v in next, LP.PlayerGui.Main.Skills[GetNameWeaponIII("Sword")]:GetChildren() do
-        if v:IsA("Frame") then
-            if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1) then
-                return v.Name
-            end
-        end
-    end
-end
-function GetSkillMelee()
-    if not LP.PlayerGui.Main.Skills:FindFirstChild(GetNameWeaponIII("Melee")) then
-        EWeaponSelect(GetNameWeaponIII("Melee"))
-        return false
-    end
-    for r, v in next, LP.PlayerGui.Main.Skills[GetNameWeaponIII("Melee")]:GetChildren() do
-        if v:IsA("Frame") then
-            if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1) then
-                return v.Name
-            end
-        end
-    end
-end
-function GetSkillGun()
-    if not GetNameWeaponIII("Gun") then
-        return nil
-    end
-    if not LP.PlayerGui.Main.Skills:FindFirstChild(GetNameWeaponIII("Gun")) then
-        equipweapon(GetNameWeaponIII("Gun"))
-        return false
-    end
-    for r, v in next, LP.PlayerGui.Main.Skills[GetNameWeaponIII("Gun")]:GetChildren() do
-        if v:IsA("Frame") then
-            if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1) then
-                return v.Name
-            end
-        end
-    end
-end
-function GetSkillWeapon(lp11)
-    function GetSkillWeapon(lp11)
-        if not GetNameWeaponIII("Melee") or not GetNameWeaponIII("Sword") or not GetNameWeaponIII("Blox Fruit") or not GetNameWeaponIII("Gun") then
-            return
-        end
-        if not PG.Main.Skills:FindFirstChild(lp11) then
-            EWeaponSelect(lp11)
-            return false
-        end
-        for r, v in next, PG.Main.Skills[lp11]:GetChildren() do
-            if v:IsA("Frame") then
-                if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1) then
-                    return v.Name
-                end
-            end
-        end
-    end
-end
 spawn(function()
     while task.wait() do 
         if chodienspamhirimixienchetcuchungmay then
-            local meleeweapon = GetSkillWeapon(GetNameWeaponIII("Melee"))
-            local swordweapon = GetSkillWeapon(GetNameWeaponIII("Sword"))
-            local fruitweapon = GetSkillWeapon(GetNameWeaponIII("Blox Fruit"))
-            local gunweapon = GetSkillWeapon(GetNameWeaponIII("Gun"))
-            if meleeweapon and SpamMelees then
+            if SpamMelees then
                 EWeaponSelect(GetNameWeaponIII("Melee"))
-                SendKeyEvents(GetSkillMelee())
-            elseif swordweapon and SpamSwords then
-                EWeaponSelect(GetNameWeaponIII("Sword"))
-                SendKeyEvents(GetSkillSword())
-            elseif fruitweapon and SpamDFs and not string.find(Data.DevilFruit.Value, "Portal") then
-                EWeaponSelect(GetNameWeaponIII("Blox Fruit"))
-                SendKeyEvents(GetSkillDF())
-            elseif gunweapon and SpamGuns then
-                EWeaponSelect(GetNameWeaponIII("Gun"))
-                SendKeyEvents(GetSkillGun())
+                SendKeyEvents("Z")
+                SendKeyEvents("X")
+                SendKeyEvents("C")
             end
-            EBuso()
-        else
-            EAllWeapon()
+            if SpamSwords then
+                EWeaponSelect(GetNameWeaponIII("Sword"))
+                SendKeyEvents("Z")
+                SendKeyEvents("X")
+            end
+            if SpamDFs then
+                EWeaponSelect(GetNameWeaponIII("Blox Fruit"))
+                SendKeyEvents("Z")
+                SendKeyEvents("X")
+                SendKeyEvents("C")
+                SendKeyEvents("V")
+            end
+            if SpamGuns then
+                EWeaponSelect(GetNameWeaponIII("Gun"))
+                SendKeyEvents("Z")
+                SendKeyEvents("X")
+            end
         end
     end
 end)
@@ -1767,7 +1694,7 @@ spawn(function()
                                 repeat task.wait()
                                     EWeapon()                                                                                                                    
                                     EBuso()
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                    ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))
                                     if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
                                         HealthM = v.Humanoid.Health <= v.Humanoid.MaxHealth * HealthStop / 100
                                         if HealthM then
@@ -1846,10 +1773,10 @@ spawn(function()
                                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
                                     end
                                 elseif ClaimQuest and game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                    ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))
                                 end
                             else
-                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))
                             end
                             if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
                                 HealthM = v.Humanoid.Health <= v.Humanoid.MaxHealth * HealthStop / 100
@@ -1916,7 +1843,7 @@ spawn(function()
                             EWeapon()                                                                                                                    
                             EBuso()
                             if not ClaimQuest then
-                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))
                             else
                                 questt = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                                 if not string.find(questt, "Cookie Crafter") then
@@ -1930,7 +1857,7 @@ spawn(function()
                                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
                                     end
                                 elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                    ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))
                                 end
                             end
                             if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
@@ -2024,7 +1951,7 @@ spawn(function()
                             repeat task.wait()
                                 EWeapon()                                                                                                                    
                                 EBuso()
-                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))               
+                                ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))               
                                 PosMon = v.HumanoidRootPart.CFrame                                                                       
                                 v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
                                 v.HumanoidRootPart.CanCollide = false
@@ -2059,7 +1986,7 @@ spawn(function()
                                     EWeapon()
                                     EBuso()	   
                                     NoClip = true         
-                                    ToTween(v.Character.HumanoidRootPart.CFrame * CFrame.new(5, 10, 5))
+                                    ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))
                                     EClick()
                                 until not FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
                             end
@@ -2465,7 +2392,7 @@ spawn(function()
                     repeat task.wait()
                         EBuso()
                         EWeapon()
-                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                        ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))
                         EClick()
                         NoClip = true
                     until not v or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") and v.Humanoid.Health <= 0 or not Elite

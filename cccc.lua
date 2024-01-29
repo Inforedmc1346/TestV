@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #24.6
+--Memories Hub Hyper - Rewrite Fixed & Update #24.7
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -2302,10 +2302,11 @@ elseif Zou then
         end    
     })
     spawn(function()
-        while wait() do
+        while task.wait() do
             if TMysticIsland then
                 if WS.Map:FindFirstChild("MysticIsland") then
                     ToTween(CFrame.new(WS.Map.MysticIsland.Center.Position.X,500,WS.Map.MysticIsland.Center.Position.Z))
+                    NoClip = true
                 end
             end
         end

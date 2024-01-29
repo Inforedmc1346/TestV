@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #25
+--Memories Hub Hyper - Rewrite Fixed & Update #26
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -1512,7 +1512,7 @@ end
 
 bs = tick()
 task.spawn(function()
-    while task.wait(DelayAttack) do
+    while task.wait(FastDelay) do
         if EnableFastAttack then
             FastI = true
             if bs - tick() > 0.75 then
@@ -3669,8 +3669,8 @@ local bonec = StatusTab:AddLabel("Bone: N/A")
 local killcake = StatusTab:AddLabel("Cake Remaining Kills: N/A")
 local elitec = StatusTab:AddLabel("Elite Status: N/A")
 local elitea = StatusTab:AddLabel("Elite Kill Progress: N/A")
-spawn(function()
-    while wait() do
+task.spawn(function()
+    while task.wait() do
         if Zou then
             bonec:Set("Bone: "..(RS.Remotes.CommF_:InvokeServer("Bones","Check")))
             if string.len(RS.Remotes.CommF_:InvokeServer("CakePrinceSpawner")) == 88 then
@@ -3736,7 +3736,7 @@ spawn(function()
                 local CFrameBoss = CFrame.new(-5496.17432, 313.768921, -2841.53027, 0.924894512, 7.37058015e-09, 0.380223751, 3.5881019e-08, 1, -1.06665446e-07, -0.380223751, 1.12297109e-07, 0.924894512)
                 if (CFrame.new(-5539.3115234375, 313.800537109375, -2972.372314453125).Position - LP.Character.HumanoidRootPart.Position).Magnitude <= 500 then
                     for i,v in pairs(Enemies:GetChildren()) do
-                        if _G.RaidPirate and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                        if RaidPirate and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                             if (v.HumanoidRootPart.Position - LP.Character.HumanoidRootPart.Position).Magnitude < 2000 then
                                 repeat wait()
                                     EBuso()
@@ -4676,10 +4676,10 @@ task.spawn(function()
         if KillTrials then
             for i,v in pairs(WS.Characters:GetChildren()) do
                 magnitude = GetDistance(v.HumanoidRootPart.Position)
-                if v.Name ~= LP.Name and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and magnitude <= 200 then
+                if v.Name ~= LP.Name and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and magnitude <= 300 then
                     TargetI = v
                     repeat task.wait()
-                        DelayAttack = 0.02
+                        FastDelay = 0.02
                         EBuso()
                         if SpamSkillAllWeapon then
                             chodienspamhirimixienchetcuchungmay = true
@@ -4706,6 +4706,7 @@ task.spawn(function()
                     SpamSkill = false
                     NoClip = false
                     EnableButtonKen = false
+                    FastDelay = vFastDelay
                 elseif v.Humanoid.Health <= 0 or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") then
                     TargetI = nil
                 end

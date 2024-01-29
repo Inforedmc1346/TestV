@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #27.5
+--Memories Hub Hyper - Rewrite Fixed & Update #27.6
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -2721,19 +2721,6 @@ task.spawn(function()
                         else
                             NoClip = false
                         end
-                    elseif checkboat() and WO.Locations:FindFirstChild("Rough Sea") then
-                        if LP.Character.Humanoid.Sit then
-                            LP.Character.Humanoid.Sit = false
-                        end
-                        if (checkboat().VehicleSeat.Position - Vector3Boat).Magnitude > 50 then
-                            checkboat().VehicleSeat.CFrame = CFrame.new(-28464.876953125, 12.553319931030273, 6896.8076171875)
-                        end
-                        if not game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
-                            NoClip = true
-                            ToTween(checkboat().VehicleSeat.CFrame)
-                        else
-                            NoClip = false
-                        end
                     elseif not checkboat() and WO.Locations:FindFirstChild("Rough Sea") then
                         if (Vector3Boat - LP.Character.HumanoidRootPart.Position).Magnitude > 2000 then
                             BypassTele(CFrameBoat)
@@ -2920,7 +2907,7 @@ task.spawn(function()
                         end
                     end
                 elseif (CheckSeaBeast() or CheckPirateBoat() or game:GetService("Workspace").Enemies:FindFirstChild("Shark") or game:GetService("Workspace").Enemies:FindFirstChild("Piranha") or game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") or game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") or game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") or game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Rough Sea")) and not checkboat() then
-                    if (Vector3Boat - LP.Character.HumanoidRootPart.Position).Magnitude > 2000 then
+                    if GetDistance(Vector3Boat) > 2000 then
                         BypassTele(CFrameBoat)
                     else
                         ToTween(CFrameBoat)
@@ -2929,7 +2916,20 @@ task.spawn(function()
                     if LP.Character.Humanoid.Sit then
                         LP.Character.Humanoid.Sit = false
                     end
-                    if (checkboat().VehicleSeat.Position - Vector3Boat).Magnitude > 50 then
+                    if (checkboat().VehicleSeat.Position - LP.Character.HumanoidRootPart.Position).Magnitude > 50 then
+                        checkboat().VehicleSeat.CFrame = CFrame.new(-28464.876953125, 12.553319931030273, 6896.8076171875)
+                    end
+                    if not game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
+                        NoClip = true
+                        ToTween(checkboat().VehicleSeat.CFrame)
+                    else
+                        NoClip = false
+                    end
+                elseif checkboat() and WO.Locations:FindFirstChild("Rough Sea") then
+                    if LP.Character.Humanoid.Sit then
+                        LP.Character.Humanoid.Sit = false
+                    end
+                    if (checkboat().VehicleSeat.Position - LP.Character.HumanoidRootPart.Position).Magnitude > 50 then
                         checkboat().VehicleSeat.CFrame = CFrame.new(-28464.876953125, 12.553319931030273, 6896.8076171875)
                     end
                     if not game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then

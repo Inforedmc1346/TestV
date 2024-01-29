@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #23.2
+--Memories Hub Hyper - Rewrite Fixed & Update #23.3
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -317,6 +317,12 @@ function GetQuest()
         end
     end
     Remote:InvokeServer("SetSpawnPoint")
+end
+if RS.Effect.Container:FindFirstChild("Death") then
+    RS.Effect.Container.Death:Destroy()
+end
+if RS.Effect.Container:FindFirstChild("Respawn") then
+    RS.Effect.Container.Respawn:Destroy()
 end
 function HopServer(bO)
     if not bO then
@@ -923,7 +929,7 @@ spawn(function()
                 BringPos = FindPosBring(BringList)
                 if BringPos == nil then return end
                 for j, k in pairs(Enemies:GetChildren()) do
-                    if checkfunc(k) and v.Name == k.Name and (k.HumanoidRootPart.Position - BringPos).Magnitude <= 350 then
+                    if checkfunc(k) and v.Name == k.Name and (k.HumanoidRootPart.Position - BringPos).Magnitude <= 380 then
                         k.PrimaryPart.Position = BringPos
                         k.PrimaryPart.CFrame = CFrame.new(BringPos)
                         k.HumanoidRootPart.CFrame = CFrame.new(BringPos)
@@ -1158,29 +1164,7 @@ end
 spawn(function()
     while task.wait() do 
         if chodienspamhirimixienchetcuchungmay then
-            if SpamMelees then
-                EWeaponSelect(GetNameWeaponIII("Melee"))
-                SendKeyEvents("Z")
-                SendKeyEvents("X")
-                SendKeyEvents("C")
-            end
-            if SpamSwords then
-                EWeaponSelect(GetNameWeaponIII("Sword"))
-                SendKeyEvents("Z")
-                SendKeyEvents("X")
-            end
-            if SpamDFs then
-                EWeaponSelect(GetNameWeaponIII("Blox Fruit"))
-                SendKeyEvents("Z")
-                SendKeyEvents("X")
-                SendKeyEvents("C")
-                SendKeyEvents("V")
-            end
-            if SpamGuns then
-                EWeaponSelect(GetNameWeaponIII("Gun"))
-                SendKeyEvents("Z")
-                SendKeyEvents("X")
-            end
+            if SpamMelees then for a,b in pairs(game.Players.LocalPlayer.Backpack:GetChildren())do if b:IsA("Tool")then if b.ToolTip=="Melee"then game.Players.LocalPlayer.Character.Humanoid:EquipTool(b)end end end;game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)wait(.2)game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)wait(.2)game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)end;if SpamDFs then for a,b in pairs(game.Players.LocalPlayer.Backpack:GetChildren())do if b:IsA("Tool")then if b.ToolTip=="Blox Fruit"then game.Players.LocalPlayer.Character.Humanoid:EquipTool(b)end end end;game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)wait(.2)game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)wait(.2)game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)wait(0.5)end;if SpamSwords then for a,b in pairs(game.Players.LocalPlayer.Backpack:GetChildren())do if b:IsA("Tool")then if b.ToolTip=="Sword"then game.Players.LocalPlayer.Character.Humanoid:EquipTool(b)end end end;game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)wait(.2)game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)wait(.2)game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)wait(0.5)end;if SpamGuns then for a,b in pairs(game.Players.LocalPlayer.Backpack:GetChildren())do if b:IsA("Tool")then if b.ToolTip=="Gun"then game.Players.LocalPlayer.Character.Humanoid:EquipTool(b)end end end;game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)wait(.2)game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)wait(.2)game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)end
         end
     end
 end)

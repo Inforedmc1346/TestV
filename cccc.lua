@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #27.6
+--Memories Hub Hyper - Rewrite Fixed & Update #27.7
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -2643,7 +2643,6 @@ local SeaEventToggle = SeaTab:AddToggle({
     Callback = function(vSeaEvent)
         SeaEvent = vSeaEvent
         DisableTween(SeaEvent)
-        DisableSpamSkill()
     end    
 }) 
 spawn(function()
@@ -2777,25 +2776,23 @@ task.spawn(function()
                     end
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v.Name == "Shark" then
-                            pcall(function()
-                                repeat task.wait()
-                                    EBuso()
-                                    EWeapon()
-                                    if game.Players.LocalPlayer.Character.Humanoid.Health > 8000 then
+                            repeat task.wait()
+                                EBuso()
+                                EWeapon()
+                                if game.Players.LocalPlayer.Character.Humanoid.Health > 6000 then
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                    EClick()
+                                elseif game.Players.LocalPlayer.Character.Humanoid.Health <= healthlow then
+                                    if YTween then
+                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,600,0))
+                                    else
                                         ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-                                        Click()
-                                    elseif game.Players.LocalPlayer.Character.Humanoid.Health <= healthlow then
-                                        if YTween then
-                                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,600,0))
-                                        else
-                                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-                                            Click()
-                                        end
+                                        EClick()
                                     end
-                                    NoClip = true
-                                until not game:GetService("Workspace").Enemies:FindFirstChild("Shark") or v.Humanoid.Health <= 0 or not SeaEvent
-                                NoClip = false
-                            end)
+                                end
+                                NoClip = true
+                            until not game:GetService("Workspace").Enemies:FindFirstChild("Shark") or v.Humanoid.Health <= 0 or not SeaEvent
+                            NoClip = false
                         end
                     end
                 elseif game:GetService("Workspace").Enemies:FindFirstChild("Piranha") and GetDistance(checkboat().VehicleSeat.Position) <= 1200 then
@@ -2803,29 +2800,27 @@ task.spawn(function()
                         game:GetService("Players").LocalPlayer.Character.Humanoid.Sit = false
                     end
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            pcall(function()
-                                if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
-                                    game:GetService("Players").LocalPlayer.Character.Humanoid.Sit = false
-                                end
-                                repeat task.wait()
-                                    EBuso()
-                                    EWeapon()
-                                    if game.Players.LocalPlayer.Character.Humanoid.Health > 8000 then
+                        if v.Name == "Piranha" and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
+                                game:GetService("Players").LocalPlayer.Character.Humanoid.Sit = false
+                            end
+                            repeat task.wait()
+                                EBuso()
+                                EWeapon()
+                                if game.Players.LocalPlayer.Character.Humanoid.Health > 8000 then
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                    EClick()
+                                elseif game.Players.LocalPlayer.Character.Humanoid.Health <= healthlow then
+                                    if YTween then
+                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,600,0))
+                                    else
                                         ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-                                        Click()
-                                    elseif game.Players.LocalPlayer.Character.Humanoid.Health <= healthlow then
-                                        if YTween then
-                                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,600,0))
-                                        else
-                                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-                                            Click()
-                                        end
+                                        EClick()
                                     end
-                                    NoClip = true
-                                until not game:GetService("Workspace").Enemies:FindFirstChild("Piranha") or v.Humanoid.Health <= 0 or not SeaEvent
-                                NoClip = false
-                            end)
+                                end
+                                NoClip = true
+                            until not game:GetService("Workspace").Enemies:FindFirstChild("Piranha") or v.Humanoid.Health <= 0 or not SeaEvent
+                            NoClip = false
                         end
                     end
                 elseif game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") and GetDistance(checkboat().VehicleSeat.Position) <= 1200 then
@@ -2833,28 +2828,24 @@ task.spawn(function()
                         game:GetService("Players").LocalPlayer.Character.Humanoid.Sit = false
                     end
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                            pcall(function()
-                                repeat task.wait()
-                                    EBuso()
-                                    EWeapon()
-                                    NoClip = true
-                                    if game.Players.LocalPlayer.Character.Humanoid.Health > 8000 then
+                        if v.Name == "Terrorshark" and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                EBuso()
+                                EWeapon()
+                                if game.Players.LocalPlayer.Character.Humanoid.Health > 8000 then
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,40,0))
+                                    EClick()
+                                elseif game.Players.LocalPlayer.Character.Humanoid.Health <= healthlow then
+                                    if YTween then
+                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,600,0))
+                                    else
                                         ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,40,0))
-                                        game:GetService("VirtualUser"):CaptureController()
-                                        game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
-                                    elseif game.Players.LocalPlayer.Character.Humanoid.Health <= healthlow then
-                                        if YTween then
-                                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,600,0))
-                                        else
-                                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,40,0))
-                                            game:GetService("VirtualUser"):CaptureController()
-                                            game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
-                                        end
+                                        EClick()
                                     end
-                                until not game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") or v.Humanoid.Health <= 0 or not SeaEvent
-                                NoClip = false
-                            end)
+                                end
+                                NoClip = true
+                            until not game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") or v.Humanoid.Health <= 0 or not SeaEvent
+                            NoClip = false
                         end
                     end
                 elseif game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and GetDistance(checkboat().VehicleSeat.Position) <= 1200 then
@@ -2863,20 +2854,18 @@ task.spawn(function()
                     end
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v:FindFirstChild("VehicleSeat") then
-                            pcall(function()
-                                repeat task.wait()
-                                    ToTween(v.VehicleSeat.CFrame * CFrame.new(0, -10, 0))
-                                    game:GetService("VirtualUser"):CaptureController()
-                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
-                                    aim = true 
-                                    CFrameHunt = v.VehicleSeat.CFrame 
-                                    chodienspamhirimixienchetcuchungmay = true
-                                    NoClip = true
-                                until not v or not v.Parent or v.Health.Value <= 0 or not game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") or not SeaEvent
-                                chodienspamhirimixienchetcuchungmay = false
-                                NoClip = false
-                                aim = false
-                            end)
+                            repeat task.wait()
+                                ToTween(v.VehicleSeat.CFrame * CFrame.new(0, -10, 0))
+                                game:GetService("VirtualUser"):CaptureController()
+                                game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
+                                aim = true 
+                                CFrameHunt = v.VehicleSeat.CFrame 
+                                chodienspamhirimixienchetcuchungmay = true
+                                NoClip = true
+                            until not v or not v.Parent or v.Health.Value <= 0 or not game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") or not SeaEvent
+                            chodienspamhirimixienchetcuchungmay = false
+                            NoClip = false
+                            aim = false
                         end
                     end
                 elseif not game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and GetDistance(checkboat().VehicleSeat.Position) <= 1200 then
@@ -2885,25 +2874,23 @@ task.spawn(function()
                     end
                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                         if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Fish Crew Member") and v.Humanoid.Health > 0 then
-                            pcall(function()
-                                repeat task.wait()
-                                    EBuso()
-                                    EWeapon()
-                                    NoClip = true
-                                    if game.Players.LocalPlayer.Character.Humanoid.Health > 8000 then
+                            repeat task.wait()
+                                EBuso()
+                                EWeapon()
+                                NoClip = true
+                                if game.Players.LocalPlayer.Character.Humanoid.Health > 8000 then
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,40,0))
+                                    EClick()
+                                elseif game.Players.LocalPlayer.Character.Humanoid.Health <= healthlow then
+                                    if YTween then
+                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,600,0))
+                                    else
                                         ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,40,0))
-                                        Click()
-                                    elseif game.Players.LocalPlayer.Character.Humanoid.Health <= healthlow then
-                                        if YTween then
-                                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,600,0))
-                                        else
-                                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,40,0))
-                                            Click()
-                                        end
+                                        EClick()
                                     end
-                                until not game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") or v.Humanoid.Health <= 0 or not SeaEvent
-                                NoClip = false
-                            end)
+                                end
+                            until not game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") or v.Humanoid.Health <= 0 or not SeaEvent
+                            NoClip = false
                         end
                     end
                 elseif (CheckSeaBeast() or CheckPirateBoat() or game:GetService("Workspace").Enemies:FindFirstChild("Shark") or game:GetService("Workspace").Enemies:FindFirstChild("Piranha") or game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") or game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") or game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") or game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Rough Sea")) and not checkboat() then
@@ -2940,8 +2927,6 @@ task.spawn(function()
                     end
                 end
             end)
-        else
-            NoClip = false
         end
     end
 end)

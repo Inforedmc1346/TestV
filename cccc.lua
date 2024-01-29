@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #23.3
+--Memories Hub Hyper - Rewrite Fixed & Update #23.4
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -37,6 +37,48 @@ local RigControllerR = debug.getupvalues(require(game:GetService("Players").Loca
 local Client = game:GetService("Players").LocalPlayer
 local DMG = require(Client.PlayerScripts.CombatFramework.Particle.Damage)
 CameraShaker:Stop()
+local function MakeDraggable(topbarobject, object)
+    local Dragging = nil
+    local DragInput = nil
+    local DragStart = nil
+    local StartPosition = nil
+    
+    local function Update(input)
+        local Delta = input.Position - DragStart
+        local pos = UDim2.new(StartPosition.X.Scale, StartPosition.X.Offset + Delta.X, StartPosition.Y.Scale, StartPosition.Y.Offset + Delta.Y)
+        local TweenFs = TweenService:Create(object, TweenInfo.new(0.15), {
+        Position = pos
+        })
+        TweenFs:Play()
+    end
+    topbarobject.InputBegan:Connect(
+        function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                Dragging = true
+                DragStart = input.Position
+                StartPosition = object.Position
+    
+                input.Changed:Connect(
+                    function()
+                        if input.UserInputState == Enum.UserInputState.End then
+                            Dragging = false
+                        end
+                    end
+                )
+             end
+        end
+    )
+    topbarobject.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            DragInput = input
+        end
+    end)
+    UserInputService.InputChanged:Connect(function(input)
+        if input == DragInput and Dragging then
+            Update(input)
+        end
+    end)
+end 
 Toggle.Name = "Toggle"
 Toggle.Parent = LP:WaitForChild("PlayerGui")
 Toggle.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -50,9 +92,8 @@ LoadF.BorderColor3 = Color3.fromRGB(0, 0, 0)
 LoadF.BorderSizePixel = 0
 LoadF.Position = UDim2.new(0.202885479, 0, 0.335341364, 0)
 LoadF.Selectable = false
-LoadF.Size = UDim2.new(0, 50, 0, 50)
-LoadF.Image = "rbxassetid://16146029230"
-LoadF.Draggable = true
+LoadF.Size = UDim2.new(0, 30, 0, 30)
+LoadF.Image = "rbxassetid://16147783761"
 LoadF.MouseButton1Click:Connect(function()
 	game:GetService("VirtualInputManager"):SendKeyEvent(true,"RightShift",false,game)
 end)
@@ -65,7 +106,7 @@ MainStroke.Thickness = 1
 MainStroke.Transparency = 0
 MainStroke.Enabled = true
 MainStroke.Archivable = true
-
+MakeDraggable(LoadF, LoadF)  
 UICorner.CornerRadius = UDim.new(0, 15)
 UICorner.Parent = LoadF
 if game.PlaceId == 2753915549 then
@@ -125,7 +166,7 @@ function Notify(G, H, I)
     if type(I) ~= "number" then
         I = 10
     end
-    OrionLib:MakeNotification({Name = G, Content = H, Image = "rbxassetid://16146029230", Time = I})
+    OrionLib:MakeNotification({Name = G, Content = H, Image = "rbxassetid://16147783761", Time = I})
 end
 function CheckNearestTeleporter(P)
     local min = math.huge
@@ -1205,7 +1246,7 @@ function BypassTele(PosSelect)
     end
 end
 local Window = OrionLib:MakeWindow({Name = "Memories Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "HyperVersion"})
-local SettingsTab = Window:MakeTab({Name = "Developer", Icon = "rbxassetid://16146029230", PremiumOnly = false})
+local SettingsTab = Window:MakeTab({Name = "Developer", Icon = "rbxassetid://16147783761", PremiumOnly = false})
 local MainTab = Window:MakeTab({Name = "Main", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local SettingTab = Window:MakeTab({Name = "Setting", Icon = "rbxassetid://11446835336", PremiumOnly = false})
 local ItemTab = Window:MakeTab({Name = "Item", Icon = "rbxassetid://9606626859", PremiumOnly = false})
@@ -1225,7 +1266,7 @@ SettingsTab:AddButton({
 	Name = "Copy Link Youtube",
 	Callback = function()
         setclipboard("https://www.youtube.com/@Memo09011")
-        OrionLib:MakeNotification({Name = "Memories Hub", Content = "Copied!", Image = "rbxassetid://16146029230",Time = 5})
+        OrionLib:MakeNotification({Name = "Memories Hub", Content = "Copied!", Image = "rbxassetid://16147783761",Time = 5})
   	end    
 })
 SettingsTab:AddLabel("Join For Discord") 
@@ -1234,7 +1275,7 @@ SettingsTab:AddButton({
 	Name = "Copy Link Invite Discord",
 	Callback = function()
         setclipboard("https://discord.gg/RtWeughmYp")
-        OrionLib:MakeNotification({Name = "Memories Hub", Content = "Copied!", Image = "rbxassetid://16146029230",Time = 5})
+        OrionLib:MakeNotification({Name = "Memories Hub", Content = "Copied!", Image = "rbxassetid://16147783761",Time = 5})
   	end    
 })
 SettingsTab:AddLabel("I From VIETNAM") 

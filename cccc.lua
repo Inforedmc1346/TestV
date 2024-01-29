@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #27.1
+--Memories Hub Hyper - Rewrite Fixed & Update #27.2
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -4692,12 +4692,13 @@ V4Tab:AddToggle({
     end    
 }) 
 local TargetI = nil
+local PlayerChecked = {}
 task.spawn(function()
     while task.wait() do
         if KillTrials then
             for i,v in pairs(WS.Characters:GetChildren()) do
                 magnitude = GetDistance(v.HumanoidRootPart.Position)
-                if v.Name ~= LP.Name and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and PG.Main.Timer.Visible == true then
+                if v.Name ~= LP.Name and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and PG.Main.Timer.Visible == true and not table.find(PlayerChecked, v) then
                     if magnitude <= 300 then
                         TargetI = v
                         repeat task.wait()
@@ -4713,28 +4714,28 @@ task.spawn(function()
                                 SpamSkill = true
                                 chodienspamhirimixienchetcuchungmay = false
                             end
-                            ToTween(TargetI.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
-                            TargetI.HumanoidRootPart.CanCollide = false
-                            TargetI.Head.CanCollide = false
-                            TargetI.Humanoid.WalkSpeed = 0
-                            TargetI.HumanoidRootPart.Size = Vector3.new(100,100,100)
+                            ToTween(TargetI.HumanoidRootPart.CFrame * CFrame.new(0,4,-2))
                             EClick()
                             NoClip = true
                             EnableButtonKen = true
                             EnableFastAttack = true
+                            UseAttack = true
                         until not KillTrials or not TargetI:FindFirstChild("HumanoidRootPart") or not TargetI:FindFirstChild("Humanoid") or TargetI.Humanoid.Health <= 0
+                        table.insert(PlayerChecked, PlayerI)
                         TargetI = nil
                         aim = false
                         EnableFastAttack = false
                         SpamSkill = false
                         NoClip = false
                         EnableButtonKen = false
+                        UseAttack = false
                         FastDelay = vFastDelay
                     end
                 end
             end
         else
             TargetI = nil
+            PlayerChecked = {}
         end
     end
 end)

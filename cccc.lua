@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #24.8
+--Memories Hub Hyper - Rewrite Fixed & Update #24.9
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -2686,7 +2686,7 @@ spawn(function()
             pcall(function()
                 if not CheckSeaBeast() and not CheckPirateBoat() and not game:GetService("Workspace").Enemies:FindFirstChild("Shark") and not game:GetService("Workspace").Enemies:FindFirstChild("Piranha") and not game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") and not game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and not game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and not game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Rough Sea") then
                     if not checkboat() then
-                        if (Vector3Boat - LP.Character.HumanoidRootPart.Position).Magnitude > 2000 then
+                        if (Vector3Boat - LP.Character.HumanoidRootPart.Position).Magnitude >= 2000 then
                             BypassTele(CFrameBoat)
                         else
                             ToTween(CFrameBoat)
@@ -2743,7 +2743,7 @@ spawn(function()
                             end)
                         end
                     end
-                elseif CheckSeaBeast() then
+                elseif CheckSeaBeast() and GetDistance(checkboat().VehicleSeat.Position) <= 500 then
                     if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
                         game:GetService("Players").LocalPlayer.Character.Humanoid.Sit = false
                     end
@@ -2751,14 +2751,14 @@ spawn(function()
                     repeat
                         task.wait()
                         if game.Players.LocalPlayer.Character.Humanoid.Health > 8000 then
-                            spawn(TeleportSeabeast(v), 1)
+                            TeleportSeabeast(v)
                             NoClip = true
                         elseif game.Players.LocalPlayer.Character.Humanoid.Health <= healthlow then
                             if YTween then
                                 ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,600,0))
                                 NoClip = true
                             else
-                                spawn(TeleportSeabeast(v), 1)
+                                TeleportSeabeast(v)
                                 NoClip = true
                             end
                         end
@@ -2769,7 +2769,7 @@ spawn(function()
                     chodienspamhirimixienchetcuchungmay = false
                     NoClip = false
                     aim = false
-                elseif game:GetService("Workspace").Enemies:FindFirstChild("Shark") then
+                elseif game:GetService("Workspace").Enemies:FindFirstChild("Shark") and GetDistance(checkboat().VehicleSeat.Position) <= 500 then
                     if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
                         game:GetService("Players").LocalPlayer.Character.Humanoid.Sit = false
                     end
@@ -2796,7 +2796,7 @@ spawn(function()
                             end)
                         end
                     end
-                elseif game:GetService("Workspace").Enemies:FindFirstChild("Piranha") then
+                elseif game:GetService("Workspace").Enemies:FindFirstChild("Piranha") and GetDistance(checkboat().VehicleSeat.Position) <= 500 then
                     if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
                         game:GetService("Players").LocalPlayer.Character.Humanoid.Sit = false
                     end
@@ -2826,7 +2826,7 @@ spawn(function()
                             end)
                         end
                     end
-                elseif game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") then
+                elseif game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") and GetDistance(checkboat().VehicleSeat.Position) <= 500 then
                     if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
                         game:GetService("Players").LocalPlayer.Character.Humanoid.Sit = false
                     end
@@ -2855,7 +2855,7 @@ spawn(function()
                             end)
                         end
                     end
-                elseif game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") then
+                elseif game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and GetDistance(checkboat().VehicleSeat.Position) <= 500 then
                     if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
                         game:GetService("Players").LocalPlayer.Character.Humanoid.Sit = false
                     end
@@ -2877,7 +2877,7 @@ spawn(function()
                             end)
                         end
                     end
-                elseif not game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") then
+                elseif not game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and GetDistance(checkboat().VehicleSeat.Position) <= 500 then
                     if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then
                         game:GetService("Players").LocalPlayer.Character.Humanoid.Sit = false
                     end

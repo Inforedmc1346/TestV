@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #27.2
+--Memories Hub Hyper - Rewrite Fixed & Update #27.3
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -4698,7 +4698,7 @@ task.spawn(function()
         if KillTrials then
             for i,v in pairs(WS.Characters:GetChildren()) do
                 magnitude = GetDistance(v.HumanoidRootPart.Position)
-                if v.Name ~= LP.Name and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and PG.Main.Timer.Visible == true and not table.find(PlayerChecked, v) then
+                if v.Name ~= LP.Name and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and not table.find(PlayerChecked, v) then
                     if magnitude <= 300 then
                         TargetI = v
                         repeat task.wait()
@@ -4714,7 +4714,7 @@ task.spawn(function()
                                 SpamSkill = true
                                 chodienspamhirimixienchetcuchungmay = false
                             end
-                            ToTween(TargetI.HumanoidRootPart.CFrame * CFrame.new(0,4,-2))
+                            ToTween(TargetI.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
                             EClick()
                             NoClip = true
                             EnableButtonKen = true

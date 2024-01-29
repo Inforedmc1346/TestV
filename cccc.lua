@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #23.9
+--Memories Hub Hyper - Rewrite Fixed & Update #24.2
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -44,7 +44,7 @@ LoadF.AnchorPoint = Vector2.new(0.5, 0.5)
 LoadF.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 LoadF.BorderColor3 = Color3.fromRGB(0, 0, 0)
 LoadF.BorderSizePixel = 0
-LoadF.Position = UDim2.new(0.005885479, 0, 0.135341364, 0)
+LoadF.Position = UDim2.new(0.1005885479, 0, 0.135341364, 0)
 LoadF.Selectable = false
 LoadF.Size = UDim2.new(0, 30, 0, 30)
 LoadF.Image = "rbxassetid://16161703575"
@@ -993,6 +993,96 @@ function GetFruitBelow1M()
     end
     return ab
 end
+function NameMelee()
+    for r, v in next, LP.Backpack:GetChildren() do
+        if v:IsA("Tool") and v.ToolTip == "Melee" then
+            return v.Name
+        end
+    end
+    for r, v in next, LP.Character:GetChildren() do
+        if v:IsA("Tool") and v.ToolTip == "Melee" then
+            return v.Name
+        end
+    end
+end
+function NameSword()
+    for r, v in next, LP.Backpack:GetChildren() do
+        if v:IsA("Tool") and v.ToolTip == "Sword" then
+            return v.Name
+        end
+    end
+    for r, v in next, LP.Character:GetChildren() do
+        if v:IsA("Tool") and v.ToolTip == "Sword" then
+            return v.Name
+        end
+    end
+end
+function checkskillDF()
+    if not LP.PlayerGui.Main.Skills:FindFirstChild(LP.Data.DevilFruit.Value) then
+        EWeaponSelect(LP.Data.DevilFruit.Value)
+        return false
+    end
+    for r, v in next, LP.PlayerGui.Main.Skills[LP.Data.DevilFruit.Value]:GetChildren() do
+        if v:IsA("Frame") then
+            if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1)then
+                return v.Name
+            end
+        end
+    end
+end
+function checkskillSword()
+    if not NameSword() then
+        return
+    end
+    if not LP.PlayerGui.Main.Skills:FindFirstChild(NameSword()) then
+        EWeaponSelect(NameSword())
+        return false
+    end
+    for r, v in next, LP.PlayerGui.Main.Skills[NameSword()]:GetChildren() do
+        if v:IsA("Frame") then
+            if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1) then
+                return v.Name
+            end
+        end
+    end
+end
+function NameGun()
+    dick = LP.Backpack or LP.Character
+    for r, v in pairs(dick:GetChildren()) do
+        if v:IsA("Tool") and v.ToolTip == "Gun" then
+            return v.Name
+        end
+    end
+end
+function checkskillGun()
+    if not NameGun() then
+        return nil
+    end
+    if not LP.PlayerGui.Main.Skills:FindFirstChild(NameGun()) then
+        EWeaponSelect(NameGun())
+        return false
+    end
+    for r, v in next, LP.PlayerGui.Main.Skills[NameGun()]:GetChildren() do
+        if v:IsA("Frame") then
+            if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1) then
+                return v.Name
+            end
+        end
+    end
+end
+function checkskillMelee()
+    if not LP.PlayerGui.Main.Skills:FindFirstChild(NameMelee()) then
+        EWeaponSelect(NameMelee())
+        return false
+    end
+    for r, v in next, LP.PlayerGui.Main.Skills[NameMelee()]:GetChildren() do
+        if v:IsA("Frame") then
+            if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1) then
+                return v.Name
+            end
+        end
+    end
+end
 function EquipWeaponName(m)
     if not m then
         return
@@ -1056,6 +1146,39 @@ function TeleportSeabeast(c5)
         NoClip = false
     end
 end
+function GetWeapon(bh)
+    s = ""
+    for r, v in pairs(LP.Backpack:GetChildren()) do
+        if v:IsA("Tool") and v.ToolTip == bh then
+            s = v.Name
+        end
+    end
+    for r, v in pairs(LP.Character:GetChildren()) do
+        if v:IsA("Tool") and v.ToolTip == bh then
+            s = v.Name
+        end
+    end
+    return s
+end
+function IsWpSKillLoaded(bW)
+    if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Skills:FindFirstChild(bW) then
+        return true
+    end
+end
+function EquipAllWeapon()
+    u3 = {"Melee", "Blox Fruit", "Sword", "Gun"}
+    u3_2 = {}
+    for r, v in pairs(u3) do
+        u3_3 = GetWeapon(v)
+        table.insert(u3_2, u3_3)
+    end
+    for r, v in pairs(u3_2) do
+        if not IsWpSKillLoaded(v) then
+            print(v)
+            EquipWeaponName(v)
+        end
+    end
+end
 function MobGet(tablemob, valuebb)
     for r, v in pairs(Enemies:GetChildren()) do
         if table.find(tablemob, v.Name) and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
@@ -1068,24 +1191,6 @@ function MobGet(tablemob, valuebb)
                 return v
             end
         end
-    end
-end
-function EAllWeapon()
-    u3 = {"Melee", "Blox Fruit", "Sword", "Gun"}
-    u3_2 = {}
-    for r, v in pairs(u3) do
-        u3_3 = GetNameWeaponIII(v)
-        table.insert(u3_2, u3_3)
-    end
-    for r, v in pairs(u3_2) do
-        if not IsWpSKillLoaded(v) then
-            EWeaponSelect(v)
-        end
-    end
-end
-function IsWpSKillLoaded(bW)
-    if PG.Main.Skills:FindFirstChild(bW) then
-        return true
     end
 end
 function function7()
@@ -1143,22 +1248,44 @@ spawn(function()
         end
     end
 end)
-function GetNameWeaponIII(v00name)
-    for r, v in next, LP.Backpack:GetChildren() do
-        if v:IsA("Tool") and v.ToolTip == v00name then
-            return v.Name
-        end
-    end
-    for r, v in next, LP.Character:GetChildren() do
-        if v:IsA("Tool") and v.ToolTip == v00name then
-            return v.Name
-        end
-    end
-end
 spawn(function()
-    while task.wait() do 
+    while task.wait() do
         if chodienspamhirimixienchetcuchungmay then
-            if SpamMelees then for a,b in pairs(game.Players.LocalPlayer.Backpack:GetChildren())do if b:IsA("Tool")then if b.ToolTip=="Melee"then game.Players.LocalPlayer.Character.Humanoid:EquipTool(b)end end end;game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)wait(.2)game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)wait(.2)game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)end;if SpamDFs then for a,b in pairs(game.Players.LocalPlayer.Backpack:GetChildren())do if b:IsA("Tool")then if b.ToolTip=="Blox Fruit"then game.Players.LocalPlayer.Character.Humanoid:EquipTool(b)end end end;game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)wait(.2)game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)wait(.2)game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)wait(0.5)end;if SpamSwords then for a,b in pairs(game.Players.LocalPlayer.Backpack:GetChildren())do if b:IsA("Tool")then if b.ToolTip=="Sword"then game.Players.LocalPlayer.Character.Humanoid:EquipTool(b)end end end;game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)wait(.2)game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)wait(.2)game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)wait(0.5)end;if SpamGuns then for a,b in pairs(game.Players.LocalPlayer.Backpack:GetChildren())do if b:IsA("Tool")then if b.ToolTip=="Gun"then game.Players.LocalPlayer.Character.Humanoid:EquipTool(b)end end end;game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)wait(.2)game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)wait(.2)game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game.Players.LocalPlayer.Character.HumanoidRootPart)end
+            sword = checkskillSword()
+            meele = checkskillMelee()
+            df = checkskillDF()
+            gun = checkskillGun()
+            if df and SpamDFs and not string.find(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value, "Portal") and df ~= "F" then
+                print("Spam Status: Devil Fruit")
+                EquipWeaponName(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
+                local condimebeo = checkskillDF()
+                if condimebeo then
+                    SendKey(condimebeo)
+                end
+            elseif checkskillMelee() and SpamMelees then
+                print("Spam Status: Melee")
+                EquipWeaponName(NameMelee())
+                local condimebeo = checkskillMelee()
+                if condimebeo then
+                    SendKey(condimebeo)
+                end
+            elseif checkskillSword() and SpamSwords then
+                print("Spam Status: Sword")
+                EquipWeaponName(NameSword())
+                local condimebeo = checkskillSword()
+                if condimebeo then
+                    SendKey(condimebeo)
+                end
+            elseif checkskillGun() and SpamGuns then
+                print("Spam Status: Gun")
+                local condimebeo = checkskillGun()
+                EquipWeaponName(NameGun())
+                if condimebeo then
+                    SendKey(condimebeo)
+                end
+            else
+                EquipAllWeapon()
+            end
         end
     end
 end)
@@ -2812,19 +2939,19 @@ game:GetService("RunService").RenderStepped:Connect(function()
     end
 end)
 SeaTab:AddSection({Name = "Spam Skill"})
-SeaTab:AddToggle({Name = "Spam Melee", Default = true, Callback = function(Value)
+SeaTab:AddToggle({Name = "Spam Melee", Default = true, Callback = function(vSpamMelees)
 	SpamMelees = vSpamMelees
 end    
 }) 
-SeaTab:AddToggle({Name = "Spam Sword", Default = true, Callback = function(Value)
+SeaTab:AddToggle({Name = "Spam Sword", Default = true, Callback = function(vSpamSwords)
 	SpamSwords = vSpamSwords
 end    
 }) 
-SeaTab:AddToggle({Name = "Spam Gun", Default = true, Callback = function(Value)
+SeaTab:AddToggle({Name = "Spam Gun", Default = true, Callback = function(vSpamGuns)
 	SpamGuns = vSpamGuns
 end    
 }) 
-SeaTab:AddToggle({Name = "Spam Devil Fruit", Default = false, Callback = function(Value)
+SeaTab:AddToggle({Name = "Spam Devil Fruit", Default = false, Callback = function(vSpamDFs)
 	SpamDFs = vSpamDFs
 end    
 })
@@ -4567,6 +4694,8 @@ task.spawn(function()
                     TargetI = nil
                 end
             end
+        else
+            TargetI = nil
         end
     end
 end)

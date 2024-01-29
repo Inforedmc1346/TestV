@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #23.4
+--Memories Hub Hyper - Rewrite Fixed & Update #23.6
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -11,6 +11,7 @@ local OrionLib = loadstring(game:HttpGet((memaythangskidocnguloz)))()
 local Mouse = game.Players.LocalPlayer:GetMouse()
 local Toggle = Instance.new("ScreenGui")
 local LoadF = Instance.new("ImageButton")
+local LoadF2 = Instance.new("Frame")
 local UICorner = Instance.new("UICorner")
 local MainStroke = Instance.new("UIStroke")
 local P = game:GetService("Players")
@@ -31,54 +32,7 @@ local CameraShaker = require(RS.Util.CameraShaker)
 local GuideModule = require(RS.GuideModule)
 local Quests = require(RS.Quests)
 local VIM = game:service("VirtualInputManager")
-local CurveFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
-local VirtualUser = game:GetService("VirtualUser")
-local RigControllerR = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.RigController))[2]
-local Client = game:GetService("Players").LocalPlayer
-local DMG = require(Client.PlayerScripts.CombatFramework.Particle.Damage)
 CameraShaker:Stop()
-local function MakeDraggable(topbarobject, object)
-    local Dragging = nil
-    local DragInput = nil
-    local DragStart = nil
-    local StartPosition = nil
-    
-    local function Update(input)
-        local Delta = input.Position - DragStart
-        local pos = UDim2.new(StartPosition.X.Scale, StartPosition.X.Offset + Delta.X, StartPosition.Y.Scale, StartPosition.Y.Offset + Delta.Y)
-        local TweenFs = TweenService:Create(object, TweenInfo.new(0.15), {
-        Position = pos
-        })
-        TweenFs:Play()
-    end
-    topbarobject.InputBegan:Connect(
-        function(input)
-            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-                Dragging = true
-                DragStart = input.Position
-                StartPosition = object.Position
-    
-                input.Changed:Connect(
-                    function()
-                        if input.UserInputState == Enum.UserInputState.End then
-                            Dragging = false
-                        end
-                    end
-                )
-             end
-        end
-    )
-    topbarobject.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-            DragInput = input
-        end
-    end)
-    UserInputService.InputChanged:Connect(function(input)
-        if input == DragInput and Dragging then
-            Update(input)
-        end
-    end)
-end 
 Toggle.Name = "Toggle"
 Toggle.Parent = LP:WaitForChild("PlayerGui")
 Toggle.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -90,7 +44,7 @@ LoadF.AnchorPoint = Vector2.new(0.5, 0.5)
 LoadF.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 LoadF.BorderColor3 = Color3.fromRGB(0, 0, 0)
 LoadF.BorderSizePixel = 0
-LoadF.Position = UDim2.new(0.202885479, 0, 0.335341364, 0)
+LoadF.Position = UDim2.new(0.102885479, 0, 0.335341364, 0)
 LoadF.Selectable = false
 LoadF.Size = UDim2.new(0, 30, 0, 30)
 LoadF.Image = "rbxassetid://16147783761"
@@ -105,8 +59,7 @@ MainStroke.LineJoinMode = Enum.LineJoinMode.Round
 MainStroke.Thickness = 1
 MainStroke.Transparency = 0
 MainStroke.Enabled = true
-MainStroke.Archivable = true
-MakeDraggable(LoadF, LoadF)  
+MainStroke.Archivable = true 
 UICorner.CornerRadius = UDim.new(0, 15)
 UICorner.Parent = LoadF
 if game.PlaceId == 2753915549 then

@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #22.9
+--Memories Hub Hyper - Rewrite Fixed & Update #23
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -1155,6 +1155,64 @@ function GetNameWeaponIII(v00name)
         end
     end
 end
+function GetSkillDF()
+    if not LP.PlayerGui.Main.Skills:FindFirstChild(LP.Data.DevilFruit.Value) then
+        EWeaponSelect(LP.Data.DevilFruit.Value)
+        return false
+    end
+    for r, v in next, LP.PlayerGui.Main.Skills[LP.Data.DevilFruit.Value]:GetChildren() do
+        if v:IsA("Frame") then
+            if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1)then
+                return v.Name
+            end
+        end
+    end
+end
+function GetSkillSword()
+    if not GetNameWeaponIII("Sword") then
+        return
+    end
+    if not LP.PlayerGui.Main.Skills:FindFirstChild(GetNameWeaponIII("Sword")) then
+        EWeaponSelect(GetNameWeaponIII("Sword"))
+        return false
+    end
+    for r, v in next, LP.PlayerGui.Main.Skills[GetNameWeaponIII("Sword")]:GetChildren() do
+        if v:IsA("Frame") then
+            if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1) then
+                return v.Name
+            end
+        end
+    end
+end
+function GetSkillMelee()
+    if not LP.PlayerGui.Main.Skills:FindFirstChild(GetNameWeaponIII("Melee")) then
+        EWeaponSelect(GetNameWeaponIII("Melee"))
+        return false
+    end
+    for r, v in next, LP.PlayerGui.Main.Skills[GetNameWeaponIII("Melee")]:GetChildren() do
+        if v:IsA("Frame") then
+            if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1) then
+                return v.Name
+            end
+        end
+    end
+end
+function GetSkillGun()
+    if not GetNameWeaponIII("Gun") then
+        return nil
+    end
+    if not LP.PlayerGui.Main.Skills:FindFirstChild(GetNameWeaponIII("Gun")) then
+        equipweapon(GetNameWeaponIII("Gun"))
+        return false
+    end
+    for r, v in next, LP.PlayerGui.Main.Skills[GetNameWeaponIII("Gun")]:GetChildren() do
+        if v:IsA("Frame") then
+            if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1) then
+                return v.Name
+            end
+        end
+    end
+end
 function GetSkillWeapon(lp11)
     function GetSkillWeapon(lp11)
         if not GetNameWeaponIII("Melee") or not GetNameWeaponIII("Sword") or not GetNameWeaponIII("Blox Fruit") or not GetNameWeaponIII("Gun") then
@@ -1173,23 +1231,6 @@ function GetSkillWeapon(lp11)
         end
     end
 end
-function CheckSkillName(Objectv, L) 
-    O = GetNameWeaponIII(Objectv) 
-    V = PG.Main.Skills
-    if O and V:FindFirstChild(O.Name) then
-        if V[O.Name]:FindFirstChild(L) then
-            if V[O.Name][L].Cooldown.AbsoluteSize.X > 0 then
-                return false
-            else 
-                return true
-            end
-        else 
-            return false
-        end 
-    else 
-        return false
-    end 
-end
 spawn(function()
     while task.wait() do 
         if chodienspamhirimixienchetcuchungmay then
@@ -1199,38 +1240,16 @@ spawn(function()
             local gunweapon = GetSkillWeapon(GetNameWeaponIII("Gun"))
             if meleeweapon and SpamMelees then
                 EWeaponSelect(GetNameWeaponIII("Melee"))
-                if CheckSkillName(GetNameWeaponIII("Melee"), "Z") then
-                    SendKeyEvents("Z")
-                elseif CheckSkillName(GetNameWeaponIII("Melee"), "X") then
-                    SendKeyEvents("X")
-                elseif CheckSkillName(GetNameWeaponIII("Melee"), "C") then 
-                    SendKeyEvents("C")
-                end
+                SendKeyEvents(GetSkillMelee())
             elseif swordweapon and SpamSwords then
                 EWeaponSelect(GetNameWeaponIII("Sword"))
-                if CheckSkillName(GetNameWeaponIII("Sword"), "Z") then 
-                    SendKeyEvents("Z")
-                elseif CheckSkillName(GetNameWeaponIII("Sword"), "X") then 
-                    SendKeyEvents("X")
-                end
+                SendKeyEvents(GetSkillSword())
             elseif fruitweapon and SpamDFs and not string.find(Data.DevilFruit.Value, "Portal") then
                 EWeaponSelect(GetNameWeaponIII("Blox Fruit"))
-                if CheckSkillName(GetNameWeaponIII("Blox Fruit"), "Z") then 
-                    SendKeyEvents("Z")
-                elseif CheckSkillName(GetNameWeaponIII("Blox Fruit"), "X") then 
-                    SendKeyEvents("X")
-                elseif CheckSkillName(GetNameWeaponIII("Blox Fruit"), "C") then 
-                    SendKeyEvents("C")
-                elseif CheckSkillName(GetNameWeaponIII("Blox Fruit"), "V") and not string.find(Data.DevilFruit.Value, "Kitsune") and not string.find(Data.DevilFruit.Value, "Venom") and not string.find(Data.DevilFruit.Value, "Leopard") then 
-                    SendKeyEvents("V")
-                end
+                SendKeyEvents(GetSkillDF())
             elseif gunweapon and SpamGuns then
                 EWeaponSelect(GetNameWeaponIII("Gun"))
-                if CheckSkillName(GetNameWeaponIII("Gun"), "Z") then 
-                    SendKeyEvents("Z")
-                elseif CheckSkillName(GetNameWeaponIII("Gun"), "X") then 
-                    SendKeyEvents("X")
-                end
+                SendKeyEvents(GetSkillGun())
             end
             EBuso()
         else

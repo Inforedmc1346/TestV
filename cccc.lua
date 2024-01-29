@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #22.8
+--Memories Hub Hyper - Rewrite Fixed & Update #22.9
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -993,14 +993,6 @@ function GetFruitBelow1M()
     end
     return ab
 end
-function equipweapon(aq)
-    local c6 = tostring(aq)
-    local c7 = LP.Backpack:FindFirstChild(c6)
-    local c8 = LP.Character:FindFirstChild("Humanoid") or LP.Character:WaitForChild("Humanoid")
-    if c7 then
-        c8:EquipTool(c7)
-    end
-end
 function EquipWeaponName(m)
     if not m then
         return
@@ -1078,22 +1070,21 @@ function MobGet(tablemob, valuebb)
         end
     end
 end
-function EquipAllWeapon()
+function EAllWeapon()
     u3 = {"Melee", "Blox Fruit", "Sword", "Gun"}
     u3_2 = {}
     for r, v in pairs(u3) do
-        u3_3 = GetWeapon(v)
+        u3_3 = GetNameWeaponIII(v)
         table.insert(u3_2, u3_3)
     end
     for r, v in pairs(u3_2) do
         if not IsWpSKillLoaded(v) then
-            print(v)
-            EquipWeaponName(v)
+            EWeaponSelect(v)
         end
     end
 end
 function IsWpSKillLoaded(bW)
-    if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Skills:FindFirstChild(bW) then
+    if PG.Main.Skills:FindFirstChild(bW) then
         return true
     end
 end
@@ -1142,22 +1133,6 @@ end
 function PlayersCount()
     return #game.Players:GetChildren()
 end
-function GetMobSpawn(a)
-    for r, v in next, EnemySpawns:GetChildren() do
-        if v.Name == a then
-            return v
-        end
-    end
-end
-function GetMobSpawnList(a)
-    k = {}
-    for r, v in next, EnemySpawns:GetChildren() do
-        if v.Name == a then
-            table.insert(k, v)
-        end
-    end
-    return k
-end
 spawn(function()
     while wait() do
         if KillStart then
@@ -1198,6 +1173,23 @@ function GetSkillWeapon(lp11)
         end
     end
 end
+function CheckSkillName(Objectv, L) 
+    O = GetNameWeaponIII(Objectv) 
+    V = PG.Main.Skills
+    if O and V:FindFirstChild(O.Name) then
+        if V[O.Name]:FindFirstChild(L) then
+            if V[O.Name][L].Cooldown.AbsoluteSize.X > 0 then
+                return false
+            else 
+                return true
+            end
+        else 
+            return false
+        end 
+    else 
+        return false
+    end 
+end
 spawn(function()
     while task.wait() do 
         if chodienspamhirimixienchetcuchungmay then
@@ -1207,18 +1199,42 @@ spawn(function()
             local gunweapon = GetSkillWeapon(GetNameWeaponIII("Gun"))
             if meleeweapon and SpamMelees then
                 EWeaponSelect(GetNameWeaponIII("Melee"))
-                SendKeyEvents(GetSkillWeapon(GetNameWeaponIII("Melee")))
+                if CheckSkillName(GetNameWeaponIII("Melee"), "Z") then
+                    SendKeyEvents("Z")
+                elseif CheckSkillName(GetNameWeaponIII("Melee"), "X") then
+                    SendKeyEvents("X")
+                elseif CheckSkillName(GetNameWeaponIII("Melee"), "C") then 
+                    SendKeyEvents("C")
+                end
             elseif swordweapon and SpamSwords then
                 EWeaponSelect(GetNameWeaponIII("Sword"))
-                SendKeyEvents(GetSkillWeapon(GetNameWeaponIII("Sword")))
+                if CheckSkillName(GetNameWeaponIII("Sword"), "Z") then 
+                    SendKeyEvents("Z")
+                elseif CheckSkillName(GetNameWeaponIII("Sword"), "X") then 
+                    SendKeyEvents("X")
+                end
             elseif fruitweapon and SpamDFs and not string.find(Data.DevilFruit.Value, "Portal") then
                 EWeaponSelect(GetNameWeaponIII("Blox Fruit"))
-                SendKeyEvents(GetSkillWeapon(GetNameWeaponIII("Blox Fruit")))
+                if CheckSkillName(GetNameWeaponIII("Blox Fruit"), "Z") then 
+                    SendKeyEvents("Z")
+                elseif CheckSkillName(GetNameWeaponIII("Blox Fruit"), "X") then 
+                    SendKeyEvents("X")
+                elseif CheckSkillName(GetNameWeaponIII("Blox Fruit"), "C") then 
+                    SendKeyEvents("C")
+                elseif CheckSkillName(GetNameWeaponIII("Blox Fruit"), "V") and not string.find(Data.DevilFruit.Value, "Kitsune") and not string.find(Data.DevilFruit.Value, "Venom") and not string.find(Data.DevilFruit.Value, "Leopard") then 
+                    SendKeyEvents("V")
+                end
             elseif gunweapon and SpamGuns then
                 EWeaponSelect(GetNameWeaponIII("Gun"))
-                SendKeyEvents(GetSkillWeapon(GetNameWeaponIII("Gun")))
+                if CheckSkillName(GetNameWeaponIII("Gun"), "Z") then 
+                    SendKeyEvents("Z")
+                elseif CheckSkillName(GetNameWeaponIII("Gun"), "X") then 
+                    SendKeyEvents("X")
+                end
             end
             EBuso()
+        else
+            EAllWeapon()
         end
     end
 end)

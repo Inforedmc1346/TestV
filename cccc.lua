@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #24.5
+--Memories Hub Hyper - Rewrite Fixed & Update #24.6
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -4668,12 +4668,13 @@ V4Tab:AddToggle({
         DisableTween(KillTrials)
     end    
 }) 
+local TargetI = nil
 task.spawn(function()
     while task.wait() do
         if KillTrials then
-            for i,v in pairs(game.Players:GetChildren()) do
-                magnitude = GetDistance(v.Character.HumanoidRootPart.Position)
-                if v ~= LP and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and magnitude <= 200 then
+            for i,v in pairs(WS.Characters:GetChildren()) do
+                magnitude = GetDistance(v.HumanoidRootPart.Position)
+                if v.Name ~= LP.Name and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and magnitude <= 200 then
                     TargetI = v
                     repeat task.wait()
                         DelayAttack = 0.02
@@ -4682,19 +4683,17 @@ task.spawn(function()
                             chodienspamhirimixienchetcuchungmay = true
                             SpamSkill = false
                             aim = true
-                            CFrameHunt = TargetI.Character.HumanoidRootPart.CFrame 
+                            CFrameHunt = TargetI.HumanoidRootPart.CFrame 
                         else
                             EWeapon()
                             SpamSkill = true
                             chodienspamhirimixienchetcuchungmay = false
-                            aim = true
-                            CFrameHunt = TargetI.Character.HumanoidRootPart.CFrame 
                         end
-                        ToTween(TargetI.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
-                        TargetI.Character.HumanoidRootPart.CanCollide = false
-                        TargetI.Character.Head.CanCollide = false
-                        TargetI.Character.Humanoid.WalkSpeed = 0
-                        TargetI.Character.HumanoidRootPart.Size = Vector3.new(100,100,100)
+                        ToTween(TargetI.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
+                        TargetI.HumanoidRootPart.CanCollide = false
+                        TargetI.Head.CanCollide = false
+                        TargetI.Humanoid.WalkSpeed = 0
+                        TargetI.HumanoidRootPart.Size = Vector3.new(100,100,100)
                         EClick()
                         NoClip = true
                         EnableButtonKen = true

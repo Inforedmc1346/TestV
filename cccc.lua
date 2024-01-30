@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #29.2
+--Memories Hub Hyper - Rewrite Fixed & Update #29.3
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -2897,30 +2897,33 @@ task.spawn(function()
     while task.wait() do
         if SeaBeasts then
             if CheckSeaBeast() then
-                local v = CheckSeaBeast()
-                if LP.Character.Humanoid.Sit then
-                    LP.Character.Humanoid.Sit = false
-                end
-                repeat task.wait()
-                    if game.Players.LocalPlayer.Character.Humanoid.Health > 8000 then
-                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,300,0))
-                        NoClip = true
-                    elseif game.Players.LocalPlayer.Character.Humanoid.Health <= healthlow then
-                        if YTween then
-                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,600,0))
-                            NoClip = true
-                        else
-                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,300,0))
-                            NoClip = true
+                for i,v in pairs(WS.SeaBeasts:GetChildren()) do
+                    if v:FindFirstChild("HumanoidRootPart") and GetDistance(v.HumanoidRootPart.Position) <= 1200 then
+                        if LP.Character.Humanoid.Sit then
+                            LP.Character.Humanoid.Sit = false
                         end
+                        repeat task.wait()
+                            if game.Players.LocalPlayer.Character.Humanoid.Health > 8000 then
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,300,0))
+                                NoClip = true
+                            elseif game.Players.LocalPlayer.Character.Humanoid.Health <= healthlow then
+                                if YTween then
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,600,0))
+                                    NoClip = true
+                                else
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,300,0))
+                                    NoClip = true
+                                end
+                            end
+                            aim = true 
+                            CFrameHunt = v.HumanoidRootPart.CFrame 
+                            chodienspamhirimixienchetcuchungmay = true
+                        until not v or not v.Parent or v.Health.Value <= 0 or not CheckSeaBeast() or not SeaBeasts
+                        chodienspamhirimixienchetcuchungmay = false
+                        NoClip = false
+                        aim = false
                     end
-                    aim = true 
-                    CFrameHunt = v.HumanoidRootPart.CFrame 
-                    chodienspamhirimixienchetcuchungmay = true
-                until not v or not v.Parent or v.Health.Value <= 0 or not CheckSeaBeast() or not SeaBeasts
-                chodienspamhirimixienchetcuchungmay = false
-                NoClip = false
-                aim = false
+                end
             end
         end
     end

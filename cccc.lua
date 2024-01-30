@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #29.1
+--Memories Hub Hyper - Rewrite Fixed & Update #29.2
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -2772,6 +2772,10 @@ SeaTab:AddToggle({Name = "Auto Kill All Sharks",Default = false, Callback = func
     AllSharkKill = vAllSharkKill
 end    
 }) 
+SeaTab:AddToggle({Name = "Auto Kill Fish Crew + Ship",Default = false, Callback = function(vFCMAFS)
+    FCMAFS = vFCMAFS
+end    
+}) 
 SeaTab:AddToggle({Name = "Auto Kill Terror Shark",Default = false, Callback = function(vTerrorShark)
     TerrorShark = vTerrorShark
 end    
@@ -2780,6 +2784,33 @@ SeaTab:AddToggle({Name = "Auto Dodge Rough Sea",Default = false, Callback = func
     RoughSea = vRoughSea
 end    
 }) 
+task.spawn(function()
+    while task.wait() do
+        if FCMAFS then
+            if game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") then
+                if LP.Character.Humanoid.Sit then
+                    LP.Character.Humanoid.Sit = false
+                end
+                for i,v in pairs(Enemies:GetChildren()) do
+                    if v:FindFirstChild("VehicleSeat") then
+                        repeat task.wait()
+                            ToTween(v.VehicleSeat.CFrame * CFrame.new(0, -10, 0))
+                            game:GetService("VirtualUser"):CaptureController()
+                            game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
+                            aim = true 
+                            CFrameHunt = v.VehicleSeat.CFrame 
+                            chodienspamhirimixienchetcuchungmay = true
+                            NoClip = true
+                        until not v.Parent or v.Health.Value <= 0 or (not Enemies:FindFirstChild("FishBoat") and not Enemies:FindFirstChild("Fish Crew Member")) or not FCMAFS
+                        chodienspamhirimixienchetcuchungmay = false
+                        NoClip = false
+                        aim = false
+                    end
+                end
+            end
+        end
+    end
+end)
 task.spawn(function()
     while task.wait() do
         if RoughSea then

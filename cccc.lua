@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #28.7
+--Memories Hub Hyper - Rewrite Fixed & Update #28.8
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -2798,6 +2798,10 @@ task.spawn(function()
                 end
             end
         end
+    end
+end)
+task.spawn(function()
+    while task.wait() do
         if TerrorShark then
             for i,v in pairs(Enemies:GetChildren()) do
                 if v.Name == "Terrorshark" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
@@ -2815,6 +2819,10 @@ task.spawn(function()
                 end
             end
         end
+    end
+end)
+task.spawn(function()
+    while task.wait() do
         if SeaBeasts then
             if CheckSeaBeast() then
                 local v = CheckSeaBeast()
@@ -2841,21 +2849,27 @@ task.spawn(function()
                 aim = false
             end
         end
+    end
+end)
+task.spawn(function()
+    while task.wait() do
         if GhostShips then
-            for i,v in pairs(Enemies:GetChildren()) do
-                if v:FindFirstChild("Engine") then
-                    pcall(function()
-                        repeat task.wait()
-                            ToTween(v.Engine.CFrame * CFrame.new(0, -20, 0))
-                            aim = true 
-                            CFrameHunt = v.Engine.CFrame
-                            chodienspamhirimixienchetcuchungmay = true
-                            NoClip = true
-                        until not v or not v.Parent or v.Health.Value <= 0 or not CheckPirateBoat() or not GhostShips
-                        chodienspamhirimixienchetcuchungmay = false
-                        NoClip = false
-                        aim = false
-                    end)
+            if CheckPirateBoat() then
+                for i,v in pairs(Enemies:GetChildren()) do
+                    if v:FindFirstChild("Engine") then
+                        pcall(function()
+                            repeat task.wait()
+                                ToTween(v.Engine.CFrame * CFrame.new(0, -20, 0))
+                                aim = true 
+                                CFrameHunt = v.Engine.CFrame
+                                chodienspamhirimixienchetcuchungmay = true
+                                NoClip = true
+                            until not v or not v.Parent or v.Health.Value <= 0 or not CheckPirateBoat() or not GhostShips
+                            chodienspamhirimixienchetcuchungmay = false
+                            NoClip = false
+                            aim = false
+                        end)
+                    end
                 end
             end
         end

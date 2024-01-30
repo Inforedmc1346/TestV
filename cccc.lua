@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #28.5
+--Memories Hub Hyper - Rewrite Fixed & Update #28.6
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -2712,17 +2712,6 @@ local SeaEventToggle = SeaTab:AddToggle({
         DisableTween(SailBoat)
     end    
 }) 
-function GetDistanceDD(t1,t2)
-    vcl,ngu = pcall(function()
-        return game.Players.LocalPlayer.Character.HumanoidRootPart
-    end)
-    if vcl then 
-        if not t2 then 
-            t2 = ngu 
-        end
-        return (t2.Position-t1.Position).Magnitude
-    end
-end 
 task.spawn(function()
     while task.wait() do
         if SailBoat then
@@ -2760,9 +2749,7 @@ task.spawn(function()
                                 end
                             end)
                         else
-                            if GetDistanceDD(checkboat().VehicleSeat.Position,CFrame6Zone) > 50 then
-                                TweenObject(ZoneCFrame,checkboat().VehicleSeat,350)
-                            end
+                            TweenObject(ZoneCFrame,checkboat().VehicleSeat,350)
                         end
                     end
                 elseif CheckPirateBoat() or CheckSeaBeast() or Enemies:FindFirstChild("Shark") or Enemies:FindFirstChild("Piranha") or Enemies:FindFirstChild("Terrorshark") or Enemies:FindFirstChild("FishBoat") or Enemies:FindFirstChild("Fish Crew Member") then

@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #28.4
+--Memories Hub Hyper - Rewrite Fixed & Update #28.5
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -2712,6 +2712,17 @@ local SeaEventToggle = SeaTab:AddToggle({
         DisableTween(SailBoat)
     end    
 }) 
+function GetDistanceDD(t1,t2)
+    vcl,ngu = pcall(function()
+        return game.Players.LocalPlayer.Character.HumanoidRootPart
+    end)
+    if vcl then 
+        if not t2 then 
+            t2 = ngu 
+        end
+        return (t2.Position-t1.Position).Magnitude
+    end
+end 
 task.spawn(function()
     while task.wait() do
         if SailBoat then
@@ -2749,7 +2760,9 @@ task.spawn(function()
                                 end
                             end)
                         else
-                            TweenObject(ZoneCFrame,checkboat().VehicleSeat,350)
+                            if GetDistanceDD(checkboat().VehicleSeat.Position,CFrame6Zone) > 50 then
+                                TweenObject(ZoneCFrame,checkboat().VehicleSeat,350)
+                            end
                         end
                     end
                 elseif CheckPirateBoat() or CheckSeaBeast() or Enemies:FindFirstChild("Shark") or Enemies:FindFirstChild("Piranha") or Enemies:FindFirstChild("Terrorshark") or Enemies:FindFirstChild("FishBoat") or Enemies:FindFirstChild("Fish Crew Member") then
@@ -2758,7 +2771,7 @@ task.spawn(function()
         end
     end
 end)
-SeaTab:AddToggle({Name = "Kill All Shark",Default = false, Callback = function(vAllSharkKill)
+SeaTab:AddToggle({Name = "Kill All Sharks",Default = false, Callback = function(vAllSharkKill)
     AllSharkKill = vAllSharkKill
 end    
 }) 
@@ -2766,12 +2779,11 @@ SeaTab:AddToggle({Name = "Kill Terror Shark",Default = false, Callback = functio
     TerrorShark = vTerrorShark
 end    
 }) 
-local shark = {"Piranha", "Shark"}
 task.spawn(function()
     while task.wait() do
         if AllSharkKill then
             for i,v in pairs(Enemies:GetChildren()) do
-                if table.find(AllSharkKill, v.Name) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                if (v.Name == "Piranha" or v.Name == "Shark") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                     repeat task.wait()
                         EBuso()
                         EWeapon()
@@ -2780,7 +2792,7 @@ task.spawn(function()
                         v.Humanoid.WalkSpeed = 0
                         v.Humanoid.JumpPower = 0 
                         NoClip = true
-                    until not AllSharkKill or not table.find(AllSharkKill, v.Name) or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
+                    until not AllSharkKill or not v:FindFirstChild("Piranha") or not v:FindFirstChild("Shark") or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
                     NoClip = false
                 end
             end

@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #28
+--Memories Hub Hyper - Rewrite Fixed & Update #28.1
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -2727,7 +2727,7 @@ elseif Zou then
     Vector3Boat = Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406)
 end
 local SeaEventToggle = SeaTab:AddToggle({
-    Name = "Auto Sail Boats",
+    Name = "Auto Sail Boat",
     Default = false,
     Flag = "SailBoat",
     Save = false,
@@ -2751,25 +2751,10 @@ task.spawn(function()
                                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", BoatNameBuy)
                             end
                         end
-                    else
+                    elseif checkboat() then
                         if not LP.Character.Humanoid.Sit then
-                            task.spawn(function()
-                                local tickv09 = tick()
-                                repeat task.wait() until game:GetService("Players").LocalPlayer.Character.Humanoid.Sit or tick()-tickv09 > 5 
-                                if LP.Character.Humanoid.Sit then  
-                                    local Nigga = {}
-                                    for i,v in pairs(checkboat():GetDescendants()) do 
-                                        pcall(function() 
-                                            v.CanCollide = false
-                                            table.insert(Nigga,v) 
-                                        end)
-                                    end
-                                    repeat task.wait() until not LP.Character.Humanoid.Sit 
-                                    for i,v in pairs(Nigga) do 
-                                        v.CanCollide = true 
-                                    end
-                                end
-                            end)
+                            ToTween(checkboat().VehicleSeat.CFrame)
+                            NoClip = true
                         else
                             if (checkboat().VehicleSeat.Position - ZoneCFrame).Magnitude > 50 then
                                 TweenObject(CFrame6Zone,checkboat().VehicleSeat,350)

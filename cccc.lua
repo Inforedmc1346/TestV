@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #29
+--Memories Hub Hyper - Rewrite Fixed & Update #29.1
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -2796,36 +2796,42 @@ end)
 task.spawn(function()
     while task.wait() do
         if AllSharkKill then
-            for i,v in pairs(Enemies:GetChildren()) do
-                if v.Name == "Piranha" and v:FindFirstChild("Piranha") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                    if LP.Character.Humanoid.Sit then
-                        LP.Character.Humanoid.Sit = false
+            if game:GetService("Workspace").Enemies:FindFirstChild("Shark") then
+                for i,v in pairs(Enemies:GetChildren()) do
+                    if v.Name == "Piranha" and v:FindFirstChild("Piranha") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                        if LP.Character.Humanoid.Sit then
+                            LP.Character.Humanoid.Sit = false
+                        end
+                        repeat task.wait()
+                            EBuso()
+                            EWeapon()
+                            ToTween(v.HumanoidRootPart.Position * CFrame.new(0,30,0))
+                            EClick()
+                            v.Humanoid.WalkSpeed = 0
+                            v.Humanoid.JumpPower = 0 
+                            NoClip = true
+                        until not AllSharkKill or not v:FindFirstChild("Piranha") or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
+                        NoClip = false
                     end
-                    repeat task.wait()
-                        EBuso()
-                        EWeapon()
-                        ToTween(v.HumanoidRootPart.Position * CFrame.new(0,30,0))
-                        EClick()
-                        v.Humanoid.WalkSpeed = 0
-                        v.Humanoid.JumpPower = 0 
-                        NoClip = true
-                    until not AllSharkKill or not v:FindFirstChild("Piranha") or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
-                    NoClip = false
                 end
-                if v.Name == "Shark" and v:FindFirstChild("Shark") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                    if LP.Character.Humanoid.Sit then
-                        LP.Character.Humanoid.Sit = false
+            end
+            if game:GetService("Workspace").Enemies:FindFirstChild("Piranha") then
+                for i,v in pairs(Enemies:GetChildren()) do
+                    if v.Name == "Shark" and v:FindFirstChild("Shark") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                        if LP.Character.Humanoid.Sit then
+                            LP.Character.Humanoid.Sit = false
+                        end
+                        repeat task.wait()
+                            EBuso()
+                            EWeapon()
+                            ToTween(v.HumanoidRootPart.Position * CFrame.new(0,30,0))
+                            EClick()
+                            v.Humanoid.WalkSpeed = 0
+                            v.Humanoid.JumpPower = 0 
+                            NoClip = true
+                        until not AllSharkKill or not v:FindFirstChild("Shark") or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
+                        NoClip = false
                     end
-                    repeat task.wait()
-                        EBuso()
-                        EWeapon()
-                        ToTween(v.HumanoidRootPart.Position * CFrame.new(0,30,0))
-                        EClick()
-                        v.Humanoid.WalkSpeed = 0
-                        v.Humanoid.JumpPower = 0 
-                        NoClip = true
-                    until not AllSharkKill or not v:FindFirstChild("Shark") or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
-                    NoClip = false
                 end
             end
         end
@@ -2834,21 +2840,23 @@ end)
 task.spawn(function()
     while task.wait() do
         if TerrorShark then
-            for i,v in pairs(Enemies:GetChildren()) do
-                if v.Name == "Terrorshark" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                    if LP.Character.Humanoid.Sit then
-                        LP.Character.Humanoid.Sit = false
+            if game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") then
+                for i,v in pairs(Enemies:GetChildren()) do
+                    if v.Name == "Terrorshark" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                        if LP.Character.Humanoid.Sit then
+                            LP.Character.Humanoid.Sit = false
+                        end
+                        repeat task.wait()
+                            EBuso()
+                            EWeapon()
+                            ToTween(getNextPosition(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15)))))
+                            EClick()
+                            v.Humanoid.WalkSpeed = 0
+                            v.Humanoid.JumpPower = 0
+                            NoClip = true
+                        until not TerrorShark or not v:FindFirstChild("Terrorshark") or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
+                        NoClip = false
                     end
-                    repeat task.wait()
-                        EBuso()
-                        EWeapon()
-                        ToTween(getNextPosition(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15)))))
-                        EClick()
-                        v.Humanoid.WalkSpeed = 0
-                        v.Humanoid.JumpPower = 0
-                        NoClip = true
-                    until not TerrorShark or not v:FindFirstChild("Terrorshark") or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
-                    NoClip = false
                 end
             end
         end

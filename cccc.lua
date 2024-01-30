@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #28.6
+--Memories Hub Hyper - Rewrite Fixed & Update #28.7
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -1050,6 +1050,11 @@ function NameMelee()
         if v:IsA("Tool") and v.ToolTip == "Melee" then
             return v.Name
         end
+    end
+end
+function DisStting()
+    if LP.Character.Humanoid.Sit then
+        LP.Character.Humanoid.Sit = false
     end
 end
 function NameSword()
@@ -2716,7 +2721,7 @@ task.spawn(function()
     while task.wait() do
         if SailBoat then
             pcall(function()
-                if not CheckSeaBeast() and not CheckPirateBoat() and not game:GetService("Workspace").Enemies:FindFirstChild("Shark") and not game:GetService("Workspace").Enemies:FindFirstChild("Piranha") and not game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") and not game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and not game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and not game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Rough Sea") then
+                if not CheckSeaBeast() and not CheckPirateBoat() and not game:GetService("Workspace").Enemies:FindFirstChild("Shark") and not game:GetService("Workspace").Enemies:FindFirstChild("Piranha") and not game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") and not game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and not game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") then
                     if not checkboat() then
                         if (Vector3Boat - LP.Character.HumanoidRootPart.Position).Magnitude >= 2000 then
                             BypassTele(CFrameBoat)
@@ -2748,7 +2753,7 @@ task.spawn(function()
                                     end
                                 end
                             end)
-                        else
+                        elseif LP.Character.Humanoid.Sit and (checkboat().VehicleSeat.Position - ZoneCFrame.Position).Magnitude >= 50 then
                             TweenObject(ZoneCFrame,checkboat().VehicleSeat,350)
                         end
                     end
@@ -2758,11 +2763,19 @@ task.spawn(function()
         end
     end
 end)
-SeaTab:AddToggle({Name = "Kill All Sharks",Default = false, Callback = function(vAllSharkKill)
+SeaTab:AddToggle({Name = "Auto Kill Sea Beasts",Default = false, Callback = function(vSeaBeasts)
+    SeaBeasts = vSeaBeasts
+end    
+}) 
+SeaTab:AddToggle({Name = "Auto Kill Ghost Ships",Default = false, Callback = function(vGhostShips)
+    GhostShips = vGhostShips
+end    
+}) 
+SeaTab:AddToggle({Name = "Auto Kill All Sharks",Default = false, Callback = function(vAllSharkKill)
     AllSharkKill = vAllSharkKill
 end    
 }) 
-SeaTab:AddToggle({Name = "Kill Terror Shark",Default = false, Callback = function(vTerrorShark)
+SeaTab:AddToggle({Name = "Auto Kill Terror Shark",Default = false, Callback = function(vTerrorShark)
     TerrorShark = vTerrorShark
 end    
 }) 
@@ -2774,8 +2787,9 @@ task.spawn(function()
                     repeat task.wait()
                         EBuso()
                         EWeapon()
-                        ToTween(getNextPosition(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15)))))
+                        ToTween(getNextPosition(v.HumanoidRootPart.Position * CFrame.new(0,30,0)))
                         EClick()
+                        DisStting()
                         v.Humanoid.WalkSpeed = 0
                         v.Humanoid.JumpPower = 0 
                         NoClip = true
@@ -2792,11 +2806,56 @@ task.spawn(function()
                         EWeapon()
                         ToTween(getNextPosition(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15)))))
                         EClick()
+                        DisStting()
                         v.Humanoid.WalkSpeed = 0
                         v.Humanoid.JumpPower = 0
                         NoClip = true
                     until not TerrorShark or not v:FindFirstChild("Terrorshark") or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
                     NoClip = false
+                end
+            end
+        end
+        if SeaBeasts then
+            if CheckSeaBeast() then
+                local v = CheckSeaBeast()
+                repeat task.wait()
+                    if game.Players.LocalPlayer.Character.Humanoid.Health > 8000 then
+                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,300,0))
+                        NoClip = true
+                    elseif game.Players.LocalPlayer.Character.Humanoid.Health <= healthlow then
+                        if YTween then
+                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,600,0))
+                            NoClip = true
+                        else
+                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,300,0))
+                            NoClip = true
+                        end
+                    end
+                    DisStting()
+                    aim = true 
+                    CFrameHunt = v.HumanoidRootPart.CFrame 
+                    chodienspamhirimixienchetcuchungmay = true
+                until not v or not v.Parent or v.Health.Value <= 0 or not CheckSeaBeast() or not SeaBeasts
+                chodienspamhirimixienchetcuchungmay = false
+                NoClip = false
+                aim = false
+            end
+        end
+        if GhostShips then
+            for i,v in pairs(Enemies:GetChildren()) do
+                if v:FindFirstChild("Engine") then
+                    pcall(function()
+                        repeat task.wait()
+                            ToTween(v.Engine.CFrame * CFrame.new(0, -20, 0))
+                            aim = true 
+                            CFrameHunt = v.Engine.CFrame
+                            chodienspamhirimixienchetcuchungmay = true
+                            NoClip = true
+                        until not v or not v.Parent or v.Health.Value <= 0 or not CheckPirateBoat() or not GhostShips
+                        chodienspamhirimixienchetcuchungmay = false
+                        NoClip = false
+                        aim = false
+                    end)
                 end
             end
         end

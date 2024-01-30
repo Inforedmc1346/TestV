@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #28.1
+--Memories Hub Hyper - Rewrite Fixed & Update #28.2
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -2727,7 +2727,7 @@ elseif Zou then
     Vector3Boat = Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406)
 end
 local SeaEventToggle = SeaTab:AddToggle({
-    Name = "Auto Sail Boat",
+    Name = "Auto Sail Boats",
     Default = false,
     Flag = "SailBoat",
     Save = false,
@@ -2757,7 +2757,7 @@ task.spawn(function()
                             NoClip = true
                         else
                             if (checkboat().VehicleSeat.Position - ZoneCFrame).Magnitude > 50 then
-                                TweenObject(CFrame6Zone,checkboat().VehicleSeat,350)
+                                TweenObject(ZoneCFrame,checkboat().VehicleSeat,350)
                             end
                         end
                     end

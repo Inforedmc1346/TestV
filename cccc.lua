@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #28.2
+--Memories Hub Hyper - Rewrite Fixed & Update #28.3
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -1236,7 +1236,7 @@ function EquipAllWeapon()
 end
 function TweenObject(TweenCFrame,obj,ts)
     if not ts then ts = 350 end
-    local tween_s = game:service "TweenService"
+    local tween_s = game:GetService("TweenService")
     local info =
         TweenInfo.new(
         (TweenCFrame.Position -
@@ -1431,30 +1431,6 @@ SettingsTab:AddButton({
         OrionLib:MakeNotification({Name = "Memories Hub", Content = "Copied!", Image = "rbxassetid://16161703575",Time = 5})
   	end    
 })
-function TweenObject(TweenCFrame,obj,ts)
-    if not ts then ts = 350 end
-    local Nigga = {}
-    local tween_s = game:service "TweenService"
-    local info =
-        TweenInfo.new(
-        (TweenCFrame.Position -
-            obj.Position).Magnitude /
-            ts,
-        Enum.EasingStyle.Linear
-    )
-    tween =
-        tween_s:Create(
-            obj,
-        info,
-        {CFrame = TweenCFrame}
-    )
-    tween:Play()  
-    Nigga.Tween = tween
-    function Nigga:Stop()
-        tween:Cancel()
-    end 
-    return Nigga
-end 
 SettingsTab:AddLabel("I From VIETNAM") 
 local x2Code = {
     "KITTGAMING",
@@ -1950,7 +1926,7 @@ spawn(function()
                     else
                         if EnemySpawns:FindFirstChild(CheckQuest()["MobName"]) then
                             for i,v in pairs(EnemySpawns:GetChildren()) do
-                                if v.Name == CheckQuest()["MobName"] then
+                                if v.Name == RemoveLvTitle(CheckQuest()["MobName"]) then
                                     ToTween(getNextPosition2(v.CFrame * CFrame.new(0,15,0)))
                                 end
                             end
@@ -2727,7 +2703,7 @@ elseif Zou then
     Vector3Boat = Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406)
 end
 local SeaEventToggle = SeaTab:AddToggle({
-    Name = "Auto Sail Boats",
+    Name = "Auto Sail Boat",
     Default = false,
     Flag = "SailBoat",
     Save = false,

@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #27.9
+--Memories Hub Hyper - Rewrite Fixed & Update #28
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -1234,6 +1234,24 @@ function EquipAllWeapon()
         end
     end
 end
+function TweenObject(TweenCFrame,obj,ts)
+    if not ts then ts = 350 end
+    local tween_s = game:service "TweenService"
+    local info =
+        TweenInfo.new(
+        (TweenCFrame.Position -
+            obj.Position).Magnitude /
+            ts,
+        Enum.EasingStyle.Linear
+    )
+    tween =
+        tween_s:Create(
+            obj,
+        info,
+        {CFrame = TweenCFrame}
+    )
+    tween:Play() 
+end
 function MobGet(tablemob, valuebb)
     for r, v in pairs(Enemies:GetChildren()) do
         if table.find(tablemob, v.Name) and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
@@ -1436,17 +1454,6 @@ function TweenObject(TweenCFrame,obj,ts)
         tween:Cancel()
     end 
     return Nigga
-end 
-function GetDistance(t1,t2)
-    vcl,ngu = pcall(function()
-        return game.Players.LocalPlayer.Character.HumanoidRootPart
-    end)
-    if vcl then 
-        if not t2 then 
-            t2 = ngu 
-        end
-        return (t2.Position-t1.Position).Magnitude
-    end
 end 
 SettingsTab:AddLabel("I From VIETNAM") 
 local x2Code = {
@@ -2720,7 +2727,7 @@ elseif Zou then
     Vector3Boat = Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406)
 end
 local SeaEventToggle = SeaTab:AddToggle({
-    Name = "Auto Sail Boat",
+    Name = "Auto Sail Boats",
     Default = false,
     Flag = "SailBoat",
     Save = false,
@@ -2741,15 +2748,14 @@ task.spawn(function()
                             ToTween(CFrameBoat)
                             NoClip = true
                             if (Vector3Boat - LP.Character.HumanoidRootPart.Position).Magnitude < 20 then
-                                RS.Remotes.CommF_:InvokeServer("BuyBoat", BoatNameBuy)
+                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", BoatNameBuy)
                             end
                         end
-                    elseif checkboat() then
+                    else
                         if not LP.Character.Humanoid.Sit then
-                            Tweento(checkboat().VehicleSeat.CFrame) 
                             task.spawn(function()
-                                local v1 = tick()
-                                repeat task.wait() until LP.Character.Humanoid.Sit or tick()-v1 > 5 
+                                local tickv09 = tick()
+                                repeat task.wait() until game:GetService("Players").LocalPlayer.Character.Humanoid.Sit or tick()-tickv09 > 5 
                                 if LP.Character.Humanoid.Sit then  
                                     local Nigga = {}
                                     for i,v in pairs(checkboat():GetDescendants()) do 
@@ -2765,9 +2771,9 @@ task.spawn(function()
                                 end
                             end)
                         else
-                            if GetDistance(checkboat().VehicleSeat.Position,ZoneCFrame) > 50 then
-                                TweenObject(ZoneCFrame,checkboat().VehicleSeat,350)
-                            end 
+                            if (checkboat().VehicleSeat.Position - ZoneCFrame).Magnitude > 50 then
+                                TweenObject(CFrame6Zone,checkboat().VehicleSeat,350)
+                            end
                         end
                     end
                 elseif CheckPirateBoat() or CheckSeaBeast() or Enemies:FindFirstChild("Shark") or Enemies:FindFirstChild("Piranha") or Enemies:FindFirstChild("Terrorshark") or Enemies:FindFirstChild("FishBoat") or Enemies:FindFirstChild("Fish Crew Member") then

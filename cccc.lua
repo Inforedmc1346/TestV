@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #28.9
+--Memories Hub Hyper - Rewrite Fixed & Update #29
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -2298,7 +2298,8 @@ MainTab:AddDropdown({Name = "Select Skill [Click Skill Enable]", Default = "", O
 end    
 })
 ItemTab:AddSection({Name = "Misc Farm"})
-local FM = ItemTab:AddLabel("Travel Zou")
+StatusTab:AddSection({Name = "Status Mirage & Moon"})
+local FM = StatusTab:AddLabel("Travel Zou")
 task.spawn(function()
     while task.wait() do
         pcall(function()
@@ -2359,7 +2360,7 @@ elseif Zou then
             Mirragecheck:Set('❌: Mystic Island Not Found' )
         end
     end)
-    Mirragecheck = ItemTab:AddLabel("Zou")
+    Mirragecheck = StatusTab:AddLabel("Zou")
     ItemTab:AddToggle({
         Name = "Tween Mystic Island",
         Default = false,
@@ -2569,7 +2570,7 @@ spawn(function()
 end)
 ItemTab:AddSection({Name = "Elite Hunter"})
 local EliteToggle = ItemTab:AddToggle({
-	Name = "Get Quest & Kill Elites",
+	Name = "Auto Elite",
 	Default = false,
 	Flag = "KillElite",
 	Save = true,
@@ -2796,7 +2797,7 @@ task.spawn(function()
     while task.wait() do
         if AllSharkKill then
             for i,v in pairs(Enemies:GetChildren()) do
-                if (v.Name == "Piranha" or v.Name == "Shark") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                if v.Name == "Piranha" and v:FindFirstChild("Piranha") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                     if LP.Character.Humanoid.Sit then
                         LP.Character.Humanoid.Sit = false
                     end
@@ -2808,7 +2809,22 @@ task.spawn(function()
                         v.Humanoid.WalkSpeed = 0
                         v.Humanoid.JumpPower = 0 
                         NoClip = true
-                    until not AllSharkKill or not v:FindFirstChild("Piranha") or not v:FindFirstChild("Shark") or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
+                    until not AllSharkKill or not v:FindFirstChild("Piranha") or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
+                    NoClip = false
+                end
+                if v.Name == "Shark" and v:FindFirstChild("Shark") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                    if LP.Character.Humanoid.Sit then
+                        LP.Character.Humanoid.Sit = false
+                    end
+                    repeat task.wait()
+                        EBuso()
+                        EWeapon()
+                        ToTween(v.HumanoidRootPart.Position * CFrame.new(0,30,0))
+                        EClick()
+                        v.Humanoid.WalkSpeed = 0
+                        v.Humanoid.JumpPower = 0 
+                        NoClip = true
+                    until not AllSharkKill or not v:FindFirstChild("Shark") or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
                     NoClip = false
                 end
             end

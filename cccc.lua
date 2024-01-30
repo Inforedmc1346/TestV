@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #28.3
+--Memories Hub Hyper - Rewrite Fixed & Update #28.4
 repeat wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -2699,8 +2699,8 @@ if Dressora then
     CFrameBoat = CFrame.new(-13.488054275512695, 10.311711311340332, 2927.69287109375)
     Vector3Boat = Vector3.new(-13.488054275512695, 10.311711311340332, 2927.69287109375)
 elseif Zou then
-    CFrameBoat = CFrame.new(-16207.501953125, 9.0863618850708, 475.1490783691406)
-    Vector3Boat = Vector3.new(-16207.501953125, 9.0863618850708, 475.1490783691406)
+    CFrameBoat = CFrame.new(-16927.17578125, 9.056343078613281, 435.248779296875)
+    Vector3Boat = Vector3.new(-16927.17578125, 9.056343078613281, 435.248779296875)
 end
 local SeaEventToggle = SeaTab:AddToggle({
     Name = "Auto Sail Boat",
@@ -2732,9 +2732,7 @@ task.spawn(function()
                             ToTween(checkboat().VehicleSeat.CFrame)
                             NoClip = true
                         else
-                            if (checkboat().VehicleSeat.Position - ZoneCFrame).Magnitude > 50 then
-                                TweenObject(ZoneCFrame,checkboat().VehicleSeat,350)
-                            end
+                            TweenObject(ZoneCFrame,checkboat().VehicleSeat,350)
                         end
                     end
                 elseif CheckPirateBoat() or CheckSeaBeast() or Enemies:FindFirstChild("Shark") or Enemies:FindFirstChild("Piranha") or Enemies:FindFirstChild("Terrorshark") or Enemies:FindFirstChild("FishBoat") or Enemies:FindFirstChild("Fish Crew Member") then

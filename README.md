@@ -1,4 +1,4 @@
---// Key System Fix8
+--// Key System Fix9
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 KeySystemGui = Instance.new("ScreenGui");
@@ -313,6 +313,7 @@ if ChooseGetKey == "Panda Development 24 Hours" then
     local aab = "\77\101\109\111\114\105\101\115\115\49\47\76\111\97\100\101\114\77\101\109\111\114\105\101\115\47\109\97\105\110\47\77\101\109\111\114\105\101\115\72\46\108\117\97"
     local ccb = "https://raw.githubusercontent.com/"
     CopyButton.MouseButton1Down:Connect(function()
+        notis.new("<Color=Blue>Copied!<Color=/>"):Display()
         setclipboard(PandaAuth:GetLink(ServiceID))
     end)
     XButton.MouseButton1Down:Connect(function()
@@ -322,6 +323,7 @@ if ChooseGetKey == "Panda Development 24 Hours" then
     end)
     SumbitButton.MouseButton1Down:Connect(function()
         if PandaAuth:ValidateKey(ServiceID, InputKey.Text) then
+            notis.new("<Color=Green>Correct Key<Color=/>"):Display()
             _G.KeyOld = InputKey.Text
             game.CoreGui.KeySystemGui:Destroy()
             loadstring(game:HttpGet(ccb .. aab))()
@@ -363,8 +365,6 @@ if ChooseGetKey == "Panda Development 24 Hours" then
     while keycorrect == false do 
         CopyTextBox = KeyLink
     end
-    notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
-    notis.new("<Color=Red>Correct Key<Color=/>"):Display()
     if game.CoreGui:FindFirstChild("KeySystemGui") then
         game.CoreGui.KeySystemGui:Destroy()
     end
@@ -377,6 +377,7 @@ if ChooseGetKey == "Easy Key 12 Hours" then
     local ccb = "https://raw.githubusercontent.com/"
     local KeyLoader = loadstring(game:HttpGet(ccb .. Odi))
     CopyButton.MouseButton1Down:Connect(function()
+        notis.new("<Color=Blue>Copied!<Color=/>"):Display()
         setclipboard("https://web1s.pro/memoriesKeys")
     end)
     XButton.MouseButton1Down:Connect(function()
@@ -387,6 +388,7 @@ if ChooseGetKey == "Easy Key 12 Hours" then
     SumbitButton.MouseButton1Down:Connect(function()
         if InputKey.Text == KeyLoader then
             _G.KeyOld = InputKey.Text
+            notis.new("<Color=Green>Correct Key<Color=/>"):Display()
             game.CoreGui.KeySystemGui:Destroy()
             loadstring(game:HttpGet(ccb .. aab))()
         else
@@ -427,9 +429,7 @@ if ChooseGetKey == "Easy Key 12 Hours" then
     while keycorrect == false do 
         CopyTextBox = KeyLink
     end
-    notis.new("<Color=Red>Correct Key<Color=/>"):Display()
     if game.CoreGui:FindFirstChild("KeySystemGui") then
         game.CoreGui.KeySystemGui:Destroy()
     end
-    --// Script Here
 end

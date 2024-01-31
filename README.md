@@ -1,4 +1,4 @@
---// Key System Fix12
+--// Key System Fix123
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 KeySystemGui = Instance.new("ScreenGui");
@@ -324,7 +324,6 @@ if ChooseGetKey == "Panda Development 24 Hours" then
     end)
     SumbitButton.MouseButton1Down:Connect(function()
         if PandaAuth:ValidateKey(ServiceID, InputKey.Text) then
-            notis.new("<Color=Green>Correct Key<Color=/>"):Display()
             _G.KeyOld = InputKey.Text
             game.CoreGui:FindFirstChild("KeySystemGui"):Destroy()
             loadstring(game:HttpGet(ccb .. aab))()
@@ -389,7 +388,6 @@ if ChooseGetKey == "Easy Key 12 Hours" then
     end)
     SumbitButton.MouseButton1Down:Connect(function()
         if InputKey.Text == KeyLoader then
-            notis.new("<Color=Green>Correct Key<Color=/>"):Display()
             _G.KeyOld = InputKey.Text
             game.CoreGui:FindFirstChild("KeySystemGui"):Destroy()
             loadstring(game:HttpGet(ccb .. aab))()

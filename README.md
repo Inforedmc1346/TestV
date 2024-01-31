@@ -1,4 +1,4 @@
---// Key System Fix11
+--// Key System Fix12
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 KeySystemGui = Instance.new("ScreenGui");
@@ -28,7 +28,7 @@ XButton = Instance.new("TextButton");
 
 KeySystemGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 KeySystemGui.Name = "KeySystemGui"
-KeySystemGui.Parent = game:GetService("CoreGui")
+KeySystemGui.Parent = game.CoreGui
 
 MainKey.AnchorPoint = Vector2.new(0.5, 0.5)
 MainKey.BackgroundColor3 = Color3.fromRGB(12.000000234693289, 12.000000234693289, 12.000000234693289)
@@ -188,7 +188,7 @@ CopyImage.Size = UDim2.new(1, -10, 1, -10)
 CopyImage.Name = "CopyImage"
 CopyImage.Parent = CopyFrame
 
-InputKey.PlaceholderText = "Key System Link"
+CopyTextBox.PlaceholderText = "Key System Link"
 CopyTextBox.Font = Enum.Font.GothamBold
 CopyTextBox.PlaceholderColor3 = Color3.fromRGB(178.00000458955765, 178.00000458955765, 178.00000458955765)
 CopyTextBox.Text = "Key System Link"
@@ -315,17 +315,18 @@ if ChooseGetKey == "Panda Development 24 Hours" then
     CopyButton.MouseButton1Down:Connect(function()
         notis.new("<Color=Blue>Copied!<Color=/>"):Display()
         setclipboard(PandaAuth:GetLink(ServiceID))
+        CopyTextBox.Text = tostring(PandaAuth:GetLink(ServiceID))
     end)
     XButton.MouseButton1Down:Connect(function()
         if game.CoreGui:FindFirstChild("KeySystemGui") then
-            game.CoreGui.KeySystemGui:Destroy()
+            game.CoreGui:FindFirstChild("KeySystemGui"):Destroy()
         end
     end)
     SumbitButton.MouseButton1Down:Connect(function()
         if PandaAuth:ValidateKey(ServiceID, InputKey.Text) then
             notis.new("<Color=Green>Correct Key<Color=/>"):Display()
             _G.KeyOld = InputKey.Text
-            game.CoreGui.KeySystemGui:Destroy()
+            game.CoreGui:FindFirstChild("KeySystemGui"):Destroy()
             loadstring(game:HttpGet(ccb .. aab))()
         else
             game.Players.LocalPlayer:Kick("Incorrect Key")
@@ -379,6 +380,7 @@ if ChooseGetKey == "Easy Key 12 Hours" then
     CopyButton.MouseButton1Down:Connect(function()
         notis.new("<Color=Blue>Copied!<Color=/>"):Display()
         setclipboard("https://web1s.pro/memoriesKeys")
+        CopyTextBox.Text = "https://web1s.pro/memoriesKeys"
     end)
     XButton.MouseButton1Down:Connect(function()
         if game.CoreGui:FindFirstChild("KeySystemGui") then
@@ -387,12 +389,12 @@ if ChooseGetKey == "Easy Key 12 Hours" then
     end)
     SumbitButton.MouseButton1Down:Connect(function()
         if InputKey.Text == KeyLoader then
-            _G.KeyOld = InputKey.Text
             notis.new("<Color=Green>Correct Key<Color=/>"):Display()
-            game.CoreGui.KeySystemGui:Destroy()
+            _G.KeyOld = InputKey.Text
+            game.CoreGui:FindFirstChild("KeySystemGui"):Destroy()
             loadstring(game:HttpGet(ccb .. aab))()
         else
-            print("Dung Thang Bo May")
+            game.Players.LocalPlayer:Kick("Incorrect Key")
         end
     end)
     local foldername = "Memories Hub"

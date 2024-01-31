@@ -1,4 +1,4 @@
---// Key System Fix6
+--// Key System Fix7
 repeat task.wait() until game:IsLoaded()
 KeySystemGui = Instance.new("ScreenGui");
 MainKey = Instance.new("Frame");
@@ -312,26 +312,20 @@ local Odi = "\72\105\114\105\109\105\115\115\115\115\115\115\115\47\75\101\121\1
 local LoaderKey = loadstring(game:HttpGet(ccb .. Odi))()
 local aab = "\77\101\109\111\114\105\101\115\115\49\47\76\111\97\100\101\114\77\101\109\111\114\105\101\115\47\109\97\105\110\47\77\101\109\111\114\105\101\115\72\46\108\117\97"
 local ccb = "https://raw.githubusercontent.com/"
-if ChooseGetKey == "Panda Development 24 Hours" then
-    CopyLinks = PandaAuth:GetLink(ServiceID)
-elseif ChooseGetKey == "Easy Key 12 Hours" then
-    CopyLinks = "https://web1s.pro/memoriesKeys"
-end
 CopyButton.MouseButton1Down:Connect(function()
-    setclipboard(CopyLinks)
+    if ChooseGetKey == "Panda Development 24 Hours" then
+        setclipboard(PandaAuth:GetLink(ServiceID))
+    elseif ChooseGetKey == "Easy Key 12 Hours" then
+        setclipboard("https://web1s.pro/memoriesKeys")
+    end
 end)
 XButton.MouseButton1Down:Connect(function()
     if game.CoreGui:FindFirstChild("KeySystemGui") then
         game.CoreGui.KeySystemGui:Destroy()
     end
 end)
-if ChooseGetKey == "Panda Development 24 Hours" then
-    KeyChoose = PandaAuth:ValidateKey(ServiceID, InputKey.Text)
-elseif ChooseGetKey == "Easy Key 12 Hours" then
-    KeyChoose = InputKey.Text == LoaderKey
-end
 SumbitButton.MouseButton1Down:Connect(function()
-    if KeyChoose then
+    if (ChooseGetKey == "Panda Development 24 Hours" and PandaAuth:ValidateKey(ServiceID, InputKey.Text)) or (ChooseGetKey == "Easy Key 12 Hours" or InputKey.Text == LoaderKey) then
         _G.KeyOld = InputKey.Text
         game.CoreGui.KeySystemGui:Destroy()
         loadstring(game:HttpGet(ccb .. aab))()

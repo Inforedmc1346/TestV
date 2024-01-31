@@ -1,5 +1,6 @@
---// Key System Fix7
+--// Key System Fix8
 repeat task.wait() until game:IsLoaded()
+notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 KeySystemGui = Instance.new("ScreenGui");
 MainKey = Instance.new("Frame");
 UICorner = Instance.new("UICorner");
@@ -303,73 +304,132 @@ function MakeDraggable(topbarobject, object)
     )
 end
 MakeDraggable(MainKey,MainKey)
-local LibVersion = "v2" -- ( v3 & v4 )
-local LibType = "roblox" -- Available ( FiveM or Roblox ) always use small letter
-local ServiceID = "hirimii" -- Replace this with your Service ID
-local PandaAuth = loadstring(game:HttpGet('https://pandadevelopment.net/servicelib?service='..ServiceID..'&core='..LibType..'&param='..LibVersion))()
--- Validation ( Regular Key )
-local Odi = "\72\105\114\105\109\105\115\115\115\115\115\115\115\47\75\101\121\115\45\76\111\97\100\101\114\47\109\97\105\110\47\75\101\121\76\111\97\100\101\114\46\108\117\97"
-local LoaderKey = loadstring(game:HttpGet(ccb .. Odi))()
-local aab = "\77\101\109\111\114\105\101\115\115\49\47\76\111\97\100\101\114\77\101\109\111\114\105\101\115\47\109\97\105\110\47\77\101\109\111\114\105\101\115\72\46\108\117\97"
-local ccb = "https://raw.githubusercontent.com/"
-CopyButton.MouseButton1Down:Connect(function()
-    if ChooseGetKey == "Panda Development 24 Hours" then
+if ChooseGetKey == "Panda Development 24 Hours" then
+    local LibVersion = "v2" -- ( v3 & v4 )
+    local LibType = "roblox" -- Available ( FiveM or Roblox ) always use small letter
+    local ServiceID = "hirimii" -- Replace this with your Service ID
+    local PandaAuth = loadstring(game:HttpGet('https://pandadevelopment.net/servicelib?service='..ServiceID..'&core='..LibType..'&param='..LibVersion))()
+    -- Validation ( Regular Key )
+    local aab = "\77\101\109\111\114\105\101\115\115\49\47\76\111\97\100\101\114\77\101\109\111\114\105\101\115\47\109\97\105\110\47\77\101\109\111\114\105\101\115\72\46\108\117\97"
+    local ccb = "https://raw.githubusercontent.com/"
+    CopyButton.MouseButton1Down:Connect(function()
         setclipboard(PandaAuth:GetLink(ServiceID))
-    elseif ChooseGetKey == "Easy Key 12 Hours" then
-        setclipboard("https://web1s.pro/memoriesKeys")
+    end)
+    XButton.MouseButton1Down:Connect(function()
+        if game.CoreGui:FindFirstChild("KeySystemGui") then
+            game.CoreGui.KeySystemGui:Destroy()
+        end
+    end)
+    SumbitButton.MouseButton1Down:Connect(function()
+        if PandaAuth:ValidateKey(ServiceID, InputKey.Text) then
+            _G.KeyOld = InputKey.Text
+            game.CoreGui.KeySystemGui:Destroy()
+            loadstring(game:HttpGet(ccb .. aab))()
+        else
+            game.Players.LocalPlayer:Kick("Incorrect Key")
+        end
+    end)
+    local foldername = "Memories Hub"
+    local filename = foldername.."/OldKey.json"
+    function saveSettings()
+        local HttpService = game:GetService("HttpService")
+        local json = HttpService:JSONEncode(_G)
+        if isfolder(foldername) then
+            if isfile(filename) then
+                writefile(filename, json)
+            else
+                writefile(filename, json)
+            end
+        else
+            makefolder(foldername)
+        end
     end
-end)
-XButton.MouseButton1Down:Connect(function()
-    if game.CoreGui:FindFirstChild("KeySystemGui") then
-        game.CoreGui.KeySystemGui:Destroy()
+    function loadSettings()
+        local HttpService = game:GetService("HttpService")
+        if isfolder(foldername) then
+            if isfile(filename) then
+                _G = HttpService:JSONDecode(readfile(filename))
+            end
+        end
     end
-end)
-SumbitButton.MouseButton1Down:Connect(function()
-    if (ChooseGetKey == "Panda Development 24 Hours" and PandaAuth:ValidateKey(ServiceID, InputKey.Text)) or (ChooseGetKey == "Easy Key 12 Hours" or InputKey.Text == LoaderKey) then
-        _G.KeyOld = InputKey.Text
+    _G.KeyOld = ""
+    loadSettings()
+    if PandaAuth:ValidateKey(ServiceID, _G.KeyOld) then
         game.CoreGui.KeySystemGui:Destroy()
         loadstring(game:HttpGet(ccb .. aab))()
     else
-        game.Players.LocalPlayer:Kick("Incorrect Key")
+        notis.new("<Color=Red>Expired Key<Color=/>"):Display()
     end
-end)
-local foldername = "Memories Hub"
-local filename = foldername.."/OldKey.json"
-function saveSettings()
-    local HttpService = game:GetService("HttpService")
-    local json = HttpService:JSONEncode(_G)
-    if isfolder(foldername) then
-        if isfile(filename) then
-            writefile(filename, json)
+    while keycorrect == false do 
+        CopyTextBox = KeyLink
+    end
+    notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
+    notis.new("<Color=Red>Correct Key<Color=/>"):Display()
+    if game.CoreGui:FindFirstChild("KeySystemGui") then
+        game.CoreGui.KeySystemGui:Destroy()
+    end
+    --// Script Here
+end
+if ChooseGetKey == "Easy Key 12 Hours" then
+    local Odi = "\72\105\114\105\109\105\115\115\115\115\115\115\115\47\75\101\121\115\45\76\111\97\100\101\114\47\109\97\105\110\47\75\101\121\76\111\97\100\101\114\46\108\117\97"
+    -- Validation ( Regular Key )
+    local aab = "\77\101\109\111\114\105\101\115\115\49\47\76\111\97\100\101\114\77\101\109\111\114\105\101\115\47\109\97\105\110\47\77\101\109\111\114\105\101\115\72\46\108\117\97"
+    local ccb = "https://raw.githubusercontent.com/"
+    local KeyLoader = loadstring(game:HttpGet(ccb .. Odi))
+    CopyButton.MouseButton1Down:Connect(function()
+        setclipboard("https://web1s.pro/memoriesKeys")
+    end)
+    XButton.MouseButton1Down:Connect(function()
+        if game.CoreGui:FindFirstChild("KeySystemGui") then
+            game.CoreGui.KeySystemGui:Destroy()
+        end
+    end)
+    SumbitButton.MouseButton1Down:Connect(function()
+        if InputKey.Text == KeyLoader then
+            _G.KeyOld = InputKey.Text
+            game.CoreGui.KeySystemGui:Destroy()
+            loadstring(game:HttpGet(ccb .. aab))()
         else
-            writefile(filename, json)
+            game.Players.LocalPlayer:Kick("Incorrect Key")
         end
+    end)
+    local foldername = "Memories Hub"
+    local filename = foldername.."/OldKey.json"
+    function saveSettings()
+        local HttpService = game:GetService("HttpService")
+        local json = HttpService:JSONEncode(_G)
+        if isfolder(foldername) then
+            if isfile(filename) then
+                writefile(filename, json)
+            else
+                writefile(filename, json)
+            end
+        else
+            makefolder(foldername)
+        end
+    end
+    function loadSettings()
+        local HttpService = game:GetService("HttpService")
+        if isfolder(foldername) then
+            if isfile(filename) then
+                _G = HttpService:JSONDecode(readfile(filename))
+            end
+        end
+    end
+    _G.KeyOld = ""
+    loadSettings()
+    if _G.KeyOld == KeyLoader then
+        game.CoreGui.KeySystemGui:Destroy()
+        loadstring(game:HttpGet(ccb .. aab))()
     else
-        makefolder(foldername)
+        notis.new("<Color=Red>Expired Key<Color=/>"):Display()
     end
-end
-function loadSettings()
-    local HttpService = game:GetService("HttpService")
-    if isfolder(foldername) then
-        if isfile(filename) then
-            _G = HttpService:JSONDecode(readfile(filename))
-        end
+    while keycorrect == false do 
+        CopyTextBox = KeyLink
     end
+    notis.new("<Color=Red>Correct Key<Color=/>"):Display()
+    if game.CoreGui:FindFirstChild("KeySystemGui") then
+        game.CoreGui.KeySystemGui:Destroy()
+    end
+    --// Script Here
 end
-_G.KeyOld = ""
-loadSettings()
-if PandaAuth:ValidateKey(ServiceID, _G.KeyOld) then
-    game.CoreGui.KeySystemGui:Destroy()
-    loadstring(game:HttpGet(ccb .. aab))()
-else
-    notis.new("<Color=Red>Expired Key<Color=/>"):Display()
-end
-while keycorrect == false do 
-    CopyTextBox = KeyLink
-end
-notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
-notis.new("<Color=Red>Correct Key<Color=/>"):Display()
-if game.CoreGui:FindFirstChild("KeySystemGui") then
-    game.CoreGui.KeySystemGui:Destroy()
-end
---// Script Here

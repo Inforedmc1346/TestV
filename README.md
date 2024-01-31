@@ -1,4 +1,4 @@
---// Key System Fix9
+--// Key System Fix10
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 KeySystemGui = Instance.new("ScreenGui");
@@ -392,7 +392,7 @@ if ChooseGetKey == "Easy Key 12 Hours" then
             game.CoreGui.KeySystemGui:Destroy()
             loadstring(game:HttpGet(ccb .. aab))()
         else
-            game.Players.LocalPlayer:Kick("Incorrect Key")
+            print("Dung Thang Bo May")
         end
     end)
     local foldername = "Memories Hub"

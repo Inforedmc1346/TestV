@@ -1,4 +1,4 @@
---// Key System Fix10
+--// Key System Fix11
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 KeySystemGui = Instance.new("ScreenGui");
@@ -375,7 +375,7 @@ if ChooseGetKey == "Easy Key 12 Hours" then
     -- Validation ( Regular Key )
     local aab = "\77\101\109\111\114\105\101\115\115\49\47\76\111\97\100\101\114\77\101\109\111\114\105\101\115\47\109\97\105\110\47\77\101\109\111\114\105\101\115\72\46\108\117\97"
     local ccb = "https://raw.githubusercontent.com/"
-    local KeyLoader = loadstring(game:HttpGet(ccb .. Odi))
+    local KeyLoader = loadstring(game:HttpGet(ccb .. Odi))()
     CopyButton.MouseButton1Down:Connect(function()
         notis.new("<Color=Blue>Copied!<Color=/>"):Display()
         setclipboard("https://web1s.pro/memoriesKeys")

@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #31.1
+--Memories Hub Hyper - Rewrite Fixed & Update #31.4
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -869,7 +869,7 @@ end
 spawn(function()
     while wait() do
         for i,v in pairs(Enemies:GetChildren()) do
-            if ((StartFarms and SelectFarm == "Level" and StartBring and v.Name == CheckQuest()["MobName"]) or (FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob()) or (MobArua and StartBring) or (AutoMaterial and ((SelectMeterial == "Magma Ore" and v.Name == MagOreMon) or (SelectMeterial == "Mystic Droplet" and v.Name == "Water Fighter") or (SelectMeterial == "Radioactive Material" and v.Name == "Factory Staff") or (SelectMeterial == "Angel Wing" and v.Name == "Royal Soldier") or (SelectMeterial == "Conjured Cocoa" and v.Name == "Chocolate Bar Battler") or (SelectMeterial == "Scrap Metal" and v.Name == MobScrap)) and StartBring)) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 350 then
+            if ((StartFarms and SelectFarm == "Level" and StartBring and v.Name == CheckQuest()["MobName"]) or (FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob()) or (MobArua and StartBring) or (FishTail and v.Name == "Fishman Captain" and StartBring) and (RadioactiveMaterial and v.Name == "Factory Staff" and StartBring) or (VampireFang and v.Name == "Vampire" and StartBring) or (Gunpowder and v.Name == "Pistol Billionaire" and StartBring) or(MagmaOre and v.Name == "Lava Pirate" and StartBring) or (ConjuredCocoa and v.Name == "Chocolate Bar Battler" and StartBring) or (MysticDroplet and v.Name == "Water Fighter" and StartBring) or (DragonScale and v.Name == "Dragon Crew Warrior" and StartBring) or (MiniTusk and v.Name == "Mythological Pirate" and StartBring)) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 350 then
                 BringList = {}
                 BringPos = nil
                 for j, k in pairs(Enemies:GetChildren()) do
@@ -2395,229 +2395,329 @@ function DisableSpamSkill()
 end
 local tablelistmeterial = {"Magma Ore", "Mystic Droplet", "Radioactive Material", "Angel Wing", "Conjured Cocoa", "Dragon Scale", "Scrap Metal", "Fish Tail"}
 ItemTab:AddSection({Name = "Meterial Farm"})
-local MeterialD = ItemTab:AddDropdown({Name = "Select Meterial", Default = "", Options = tablelistmeterial,Callback = function(vSelectMeterial)
-    SelectMeterial = vSelectMeterial
+ItemTab:AddToggle({Name = "Auto Magma Ore [2]", Default = false, Callback = function(vMagmaOre)
+    MagmaOre = vMagmaOre
+    DisableTween(MagmaOre)
 end    
 })
-local UpgradeRaceToggle2 = ItemTab:AddToggle({Name = "Auto Meterial", Default = false, Callback = function(vMeterialAuto)
-    MeterialAuto = vMeterialAuto
-    DisableTween(MeterialAuto)
+ItemTab:AddToggle({Name = "Auto Radioactive Material [2]", Default = false, Callback = function(vRadioactiveMaterial)
+    RadioactiveMaterial = vRadioactiveMaterial
+    DisableTween(RadioactiveMaterial)
+end    
+})
+ItemTab:AddToggle({Name = "Auto Fish Tail [3]", Default = false, Callback = function(vFishTail)
+    FishTail = vFishTail
+    DisableTween(FishTail)
+end    
+})
+ItemTab:AddToggle({Name = "Auto Vampire Fang [2]", Default = false, Callback = function(vVampireFang)
+    VampireFang = vVampireFang
+    DisableTween(VampireFang)
+end    
+})
+ItemTab:AddToggle({Name = "Auto Mystic Droplet [2]", Default = false, Callback = function(vMysticDroplet)
+    MysticDroplet = vMysticDroplet
+    DisableTween(MysticDroplet)
+end    
+})
+ItemTab:AddToggle({Name = "Auto Angel Wing [1]", Default = false, Callback = function(vAngelWings)
+    AngelWings = vAngelWings
+    DisableTween(AngelWings)
+end    
+})
+ItemTab:AddToggle({Name = "Auto Conjured Cocoa [3]", Default = false, Callback = function(vConjuredCocoa)
+    ConjuredCocoa = vConjuredCocoa
+    DisableTween(ConjuredCocoa)
+end    
+})
+ItemTab:AddToggle({Name = "Auto Ectoplasm [2]", Default = false, Callback = function(vEctoplasm)
+    Ectoplasm = vEctoplasm
+    DisableTween(Ectoplasm)
+end    
+})
+ItemTab:AddToggle({Name = "Auto Dragon Scale [3]", Default = false, Callback = function(vDragonScale)
+    DragonScale = vDragonScale
+    DisableTween(DragonScale)
+end    
+})
+ItemTab:AddToggle({Name = "Auto Mini Tusk [3]", Default = false, Callback = function(vMiniTusk)
+    MiniTusk = vMiniTusk
+    DisableTween(MiniTusk)
 end    
 })
 spawn(function()
     while task.wait() do
-        if MeterialAuto and SelectMeterial == "Magma Ore" then
-            if Main then
-                MagOreMon = "Military Spy"
-                RepliPosMag = CFrame.new(-5850.2802734375, 77.28675079345703, 8848.6748046875)
-            elseif Dressora then
-                MagOreMon = "Lava Pirate"
-                RepliPosMag = CFrame.new(-5234.60595703125, 51.953372955322266, -4732.27880859375)
-            end
-            if Zou then
-                RS.Remotes.CommF_:InvokeServer("TravelDressrosa")
-            end
-            if Enemies:FindFirstChild(MagOreMon) then
-                for i,v in pairs(Enemies:GetChildren()) do
-                    if v.Name == MagOreMon and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                        repeat task.wait()
-                            EBuso()
-                            EWeapon()
-                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                            EClick()
-                            v.HumanoidRootPart.CanCollide = false
-                            v.Humanoid.WalkSpeed = 0
-                            PosMon = v.HumanoidRootPart.Position
-                            NoClip = true
-                            StartBring = true
-                        until not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MeterialAuto or not SelectMeterial == "Magma Ore"
-                        StartBring = false
-                    end
-                end
-            else
-                ToTweenWithEntrace(RepliPosMag)
-            end
-        elseif MeterialAuto and SelectMeterial == "Mystic Droplet" then
+        if MagmaOre then
             if not Dressora then
                 RS.Remotes.CommF_:InvokeServer("TravelDressrosa")
             end
+            if Enemies:FindFirstChild("Lava Pirate") then
+                for i,v in pairs(Enemies:GetChildren()) do
+                    if v.Name == "Lava Pirate" then
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                EBuso()
+                                EWeapon()
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                EClick()
+                                v.HumanoidRootPart.CanCollide = false
+                                NoClip = true
+                                StartBring = true
+                            until not MagmaOre or not v.Parent or v.Humanoid.Health <= 0
+                            StartBring = false
+                        end
+                    end
+                end
+            else
+                ToTweenWithEntrace(RS:FindFirstChild("Lava Pirate").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                NoClip = true
+            end
+        end
+    end
+end)
+spawn(function()
+    while task.wait() do
+        if MysticDroplet then
             if Enemies:FindFirstChild("Water Fighter") then
                 for i,v in pairs(Enemies:GetChildren()) do
-                    if v.Name == "Water Fighter" and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                        repeat task.wait()
-                            EBuso()
-                            EWeapon()
-                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                            EClick()
-                            v.HumanoidRootPart.CanCollide = false
-                            v.Humanoid.WalkSpeed = 0
-                            PosMon = v.HumanoidRootPart.Position
-                            NoClip = true
-                            StartBring = true
-                        until not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MeterialAuto or not SelectMeterial == "Mystic Droplet"
-                        StartBring = false
+                    if v.Name == "Water Fighter" then
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                EBuso()
+                                EWeapon()
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                EClick()
+                                v.HumanoidRootPart.CanCollide = false
+                                NoClip = true
+                                StartBring = true
+                            until not MysticDroplet or not v.Parent or v.Humanoid.Health <= 0
+                            StartBring = false
+                        end
                     end
                 end
             else
-                ToTweenWithEntrace(CFrame.new(-3352.9013671875, 285.01556396484375, -10534.841796875))
+                ToTweenWithEntrace(RS:FindFirstChild("Water Fighter").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
                 NoClip = true
             end
-        elseif MeterialAuto and SelectMeterial == "Radioactive Material" then
-            if not Dressora then
-                RS.Remotes.CommF_:InvokeServer("TravelDressrosa")
-            end
-            if Enemies:FindFirstChild("Factory Staff") then
-                for i,v in pairs(Enemies:GetChildren()) do
-                    if v.Name == "Factory Staff" and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                        repeat task.wait()
-                            EBuso()
-                            EWeapon()
-                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                            EClick()
-                            v.HumanoidRootPart.CanCollide = false
-                            v.Humanoid.WalkSpeed = 0
-                            PosMon = v.HumanoidRootPart.Position
-                            NoClip = true
-                            StartBring = true
-                        until not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MeterialAuto or not SelectMeterial == "Radioactive Material"
-                        StartBring = false
-                    end
-                end
-            else
-                ToTweenWithEntrace(CFrame.new(-507.7895202636719, 72.99479675292969, -126.45632934570312))
-            end
-        elseif MeterialAuto and SelectMeterial == "Angel Wing" then
-            if not Main then
-                RS.Remotes.CommF_:InvokeServer("TravelMain")
-            end
+        end
+    end
+end)
+spawn(function()
+    while task.wait() do
+        if AngelWings then
             if Enemies:FindFirstChild("Royal Soldier") then
                 for i,v in pairs(Enemies:GetChildren()) do
-                    if v.Name == "Royal Soldier" and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                        repeat task.wait()
-                            EBuso()
-                            EWeapon()
-                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                            EClick()
-                            v.HumanoidRootPart.CanCollide = false
-                            v.Humanoid.WalkSpeed = 0
-                            PosMon = v.HumanoidRootPart.Position
-                            NoClip = true
-                            StartBring = true
-                        until not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MeterialAuto or not SelectMeterial == "Angel Wing"
-                        StartBring = false
+                    if v.Name == "Royal Soldier" then
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            if v.Name == "Water Fighter" then
+                                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                    repeat task.wait()
+                                        EBuso()
+                                        EWeapon()
+                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                        EClick()
+                                        v.HumanoidRootPart.CanCollide = false
+                                        NoClip = true
+                                        StartBring = true
+                                    until not AngelWings or not v.Parent or v.Humanoid.Health <= 0
+                                    StartBring = false
+                                end
+                            end
+                        end
                     end
                 end
             else
-                ToTweenWithEntrace(CFrame.new(-7827.15625, 5606.912109375, -1705.5833740234375))
+                ToTweenWithEntrace(RS:FindFirstChild("Royal Soldier").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                NoClip = true
             end
-        elseif MeterialAuto and SelectMeterial == "Conjured Cocoa" then
-            if not Zou then
-                RS.Remotes.CommF_:InvokeServer("TravelZou")
-            end
+        end
+    end
+end)
+spawn(function()
+    while task.wait() do
+        if ConjuredCocoa then
             if Enemies:FindFirstChild("Chocolate Bar Battler") then
                 for i,v in pairs(Enemies:GetChildren()) do
-                    if v.Name == "Chocolate Bar Battler" and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                        repeat task.wait()
-                            EBuso()
-                            EWeapon()
-                            ToTween(CFrame.new(v.HumanoidRootPart.CFrame + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))
-                            EClick()
-                            v.HumanoidRootPart.CanCollide = false
-                            v.Humanoid.WalkSpeed = 0
-                            PosMon = v.HumanoidRootPart.Position
-                            NoClip = true
-                        until not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MeterialAuto or not SelectMeterial == "Conjured Cocoa"
+                    if v.Name == "Chocolate Bar Battler" then
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                EBuso()
+                                EWeapon()
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                EClick()
+                                v.HumanoidRootPart.CanCollide = false
+                                NoClip = true
+                                StartBring = true
+                            until not ConjuredCocoa or not v.Parent or v.Humanoid.Health <= 0
+                            StartBring = false
+                        end
+                    end
+                end
+            end
+        else
+            ToTweenWithEntrace(RS:FindFirstChild("Chocolate Bar Battler").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+            NoClip = true
+        end
+    end
+end)
+spawn(function()
+    while task.wait() do
+        if RadioactiveMaterial then
+            if Enemies:FindFirstChild("Factory Staff") then
+                for i,v in pairs(Enemies:GetChildren()) do
+                    if v.Name == "Factory Staff" then
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                repeat task.wait()
+                                    EBuso()
+                                    EWeapon()
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                    EClick()
+                                    v.HumanoidRootPart.CanCollide = false
+                                    NoClip = true
+                                    StartBring = true
+                                until not RadioactiveMaterial or not v.Parent or v.Humanoid.Health <= 0
+                                StartBring = false
+                            end
+                        end
                     end
                 end
             else
-                ToTweenWithEntrace(CFrame.new(744.7930908203125, 24.76934242248535, -12637.7255859375))
-                NoClip = true
+                ToTweenWithEntrace(RS:FindFirstChild("Factory Staff").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
             end
-        elseif MeterialAuto and SelectMeterial == "Dragon Scale" then
-            if not Zou then
-                RS.Remotes.CommF_:InvokeServer("TravelZou")
+        end
+    end
+end)
+
+spawn(function()
+    while task.wait() do
+        if Ectoplasm then
+            if game:GetService("Workspace").Enemies:FindFirstChild("Ship Deckhand") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Engineer") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Steward") or game:GetService("Workspace").Enemies:FindFirstChild("Ship Officer") then
+                for i,v in pairs(Enemies:GetChildren()) do
+                    if v.Name == "Ship Officer" or v.Name == "Ship Steward" or "Ship Engineer" or "Ship Deckhand" then
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                EBuso()
+                                EWeapon()
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                EClick()
+                                v.HumanoidRootPart.CanCollide = false
+                                NoClip = true
+                                StartBring = true
+                            until not Ectoplasm or not v.Parent or v.Humanoid.Health <= 0
+                            StartBring = false
+                        end
+                    end
+                end
+            else
+                local Distance = (Vector3.new(911.35827636719, 125.95812988281, 33159.5390625) - LP.Character.HumanoidRootPart.Position).Magnitude
+                if Distance > 18000 then
+                    RS.Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
+                end
             end
+        end
+    end
+end)
+spawn(function()
+    while task.wait() do
+        if DragonScale then
             if Enemies:FindFirstChild("Dragon Crew Warrior") then
                 for i,v in pairs(Enemies:GetChildren()) do
-                    if v.Name == "Dragon Crew Warrior" and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                        repeat task.wait()
-                            EBuso()
-                            EWeapon()
-                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                            EClick()
-                            v.HumanoidRootPart.CanCollide = false
-                            v.Humanoid.WalkSpeed = 0
-                            PosMon = v.HumanoidRootPart.Position
-                            NoClip = true
-                            StartBring = true
-                        until not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MeterialAuto or not SelectMeterial == "Dragon Scale"
-                        StartBring = false
+                    if v.Name == "Dragon Crew Warrior" then
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                EBuso()
+                                EWeapon()
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                EClick()
+                                v.HumanoidRootPart.CanCollide = false
+                                NoClip = true
+                                StartBring = true
+                            until not Ectoplasm or not v.Parent or v.Humanoid.Health <= 0
+                            StartBring = false
+                        end
                     end
                 end
             else
-                ToTweenWithEntrace(CFrame.new(5824.06982421875, 51.38640213012695, -1106.694580078125))
-                NoClip = true
+                ToTweenWithEntrace(RS:FindFirstChild("Dragon Crew Warrior").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
             end
-        elseif MeterialAuto and SelectMeterial == "Scrap Metal" then
-            if Main then
-                MobScrap = "Brute"
-                RepScrap = CFrame.new(-1132.4202880859375, 14.844913482666016, 4293.30517578125)
-            elseif Dressora then
-                MobScrap = "Mercenary"
-                RepScrap = CFrame.new(-972.307373046875, 73.04473876953125, 1419.2901611328125)
-            elseif Zou then
-                MobScrap = "Pirate Millionaire"
-                RepScrap = CFrame.new(-289.6311950683594, 43.8282470703125, 5583.66357421875)
-            end
-            if Enemies:FindFirstChild(MobScrap) then
+        end
+    end
+end)
+spawn(function()
+    while task.wait() do
+        if MiniTusk then
+            if Enemies:FindFirstChild("Mythological Pirate") then
                 for i,v in pairs(Enemies:GetChildren()) do
-                    if v.Name == MobScrap and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                        repeat task.wait()
-                            EBuso()
-                            EWeapon()
-                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                            EClick()
-                            v.HumanoidRootPart.CanCollide = false
-                            v.Humanoid.WalkSpeed = 0
-                            PosMon = v.HumanoidRootPart.Position
-                            NoClip = true
-                            StartBring = true
-                        until not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MeterialAuto or not SelectMeterial == "Scrap Metal"
-                        StartBring = false
+                    if v.Name == "Mythological Pirate" then
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                EBuso()
+                                EWeapon()
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                EClick()
+                                v.HumanoidRootPart.CanCollide = false
+                                NoClip = true
+                                StartBring = true
+                            until not MiniTusk or not v.Parent or v.Humanoid.Health <= 0
+                            StartBring = false
+                        end
                     end
                 end
-            else
-                ToTweenWithEntrace(RepScrap)
-                NoClip = true
             end
-        elseif MeterialAuto and SelectMeterial == "Fish Tail" then
-            if Dressora then
-                RS.Remotes.CommF_:InvokeServer("TravelMain")
-            end
-            if Main then
-                MobFishT = "Fishman Warrior"
-                RepFishT = CFrame.new(61122.65234375, 18.497442245483, 1569.3997802734)
-            elseif Zou then
-                MobFishT = "Fishman Captain"
-                RepFishT = CFrame.new(-10961.0126953125, 331.7977600097656, -8914.29296875)
-            end
-            if Enemies:FindFirstChild(MobFishT) then
+        else
+            ToTweenWithEntrace(RS:FindFirstChild("Mythological Pirate").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+        end
+    end
+end)
+spawn(function()
+    while task.wait() do
+        if FishTail then
+            if Enemies:FindFirstChild("Fishman Captain") then
                 for i,v in pairs(Enemies:GetChildren()) do
-                    if v.Name == MobFishT and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                        repeat task.wait()
-                            EBuso()
-                            EWeapon()
-                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                            EClick()
-                            v.HumanoidRootPart.CanCollide = false
-                            v.Humanoid.WalkSpeed = 0
-                            NoClip = true
-                        until not not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MeterialAuto or not SelectMeterial == "Fish Tail"
+                    if v.Name == "Fishman Captain" then
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                EBuso()
+                                EWeapon()
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                EClick()
+                                v.HumanoidRootPart.CanCollide = false
+                                NoClip = true
+                                StartBring = true
+                            until not FishTail or not v.Parent or v.Humanoid.Health <= 0
+                            StartBring = false
+                        end
                     end
                 end
             else
-                ToTweenWithEntrace(RepFishT)
-                NoClip = true
+                ToTweenWithEntrace(RS:FindFirstChild("Fishman Captain").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+            end
+        end
+    end
+end)
+spawn(function()
+    while task.wait() do
+        if VampireFang then
+            if Enemies:FindFirstChild("Vampire") then
+                for i,v in pairs(Enemies:GetChildren()) do
+                    if v.Name == "Vampire" then
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            repeat task.wait()
+                                EBuso()
+                                EWeapon()
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                EClick()
+                                v.HumanoidRootPart.CanCollide = false
+                                NoClip = true
+                                StartBring = true
+                            until not VampireFang or not v.Parent or v.Humanoid.Health <= 0
+                            StartBring = false
+                        end
+                    end
+                end
+            else
+                ToTween(RS:FindFirstChild("Vampire").HumanoidRootPart.CFrame * CFrame.new(0,30,0))
             end
         end
     end

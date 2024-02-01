@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #29.9
+--Memories Hub Hyper - Rewrite Fixed & Update #30.1
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
 notis.new("<Color=Blue>Founder: deforehirimx<Color=/>"):Display() 
@@ -2915,7 +2915,7 @@ elseif Zou then
     Vector3Boat = Vector3.new(-16927.17578125, 9.056343078613281, 435.248779296875)
 end
 local SeaEventToggle = SeaTab:AddToggle({
-    Name = "Auto Sail Boat",
+    Name = "Auto Sail Boats",
     Default = false,
     Flag = "SailBoat",
     Save = false,
@@ -2928,7 +2928,7 @@ task.spawn(function()
     while task.wait() do
         if SailBoat then
             pcall(function()
-                if not CheckSeaBeast() and not CheckPirateBoat() and not game:GetService("Workspace").Enemies:FindFirstChild("Shark") and not game:GetService("Workspace").Enemies:FindFirstChild("Piranha") and not game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") and not game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and not game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") or WO.Locations:FindFirstChild("Rough Sea") then
+                if not CheckSeaBeast() and not CheckPirateBoat() and not game:GetService("Workspace").Enemies:FindFirstChild("Shark") and not game:GetService("Workspace").Enemies:FindFirstChild("Piranha") and not game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") and not game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and not game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and not WO.Locations:FindFirstChild("Rough Sea") then
                     if not checkboat() then
                         if (Vector3Boat - LP.Character.HumanoidRootPart.Position).Magnitude >= 2000 then
                             BypassTele(CFrameBoat)
@@ -2964,7 +2964,7 @@ task.spawn(function()
                             TweenObject(ZoneCFrame,checkboat().VehicleSeat,350)
                         end
                     end
-                elseif CheckPirateBoat() or CheckSeaBeast() or Enemies:FindFirstChild("Shark") or Enemies:FindFirstChild("Piranha") or Enemies:FindFirstChild("Terrorshark") or Enemies:FindFirstChild("FishBoat") or Enemies:FindFirstChild("Fish Crew Member") then
+                elseif CheckPirateBoat() or CheckSeaBeast() or Enemies:FindFirstChild("Shark") or Enemies:FindFirstChild("Piranha") or Enemies:FindFirstChild("Terrorshark") or Enemies:FindFirstChild("FishBoat") or Enemies:FindFirstChild("Fish Crew Member") or WO.Locations:FindFirstChild("Rough Sea") then
                 end
             end)
         end
@@ -3047,10 +3047,9 @@ spawn(function()
                         repeat task.wait()
                             EBuso()
                             EWeapon()
-                            ToTween(v.HumanoidRootPart.Position * CFrame.new(0,30,0))
+                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
                             EClick()
                             v.Humanoid.WalkSpeed = 0
-                            v.Humanoid.JumpPower = 0 
                             NoClip = true
                         until not AllSharkKill or not v:FindFirstChild("Piranha") or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
                         NoClip = false
@@ -3066,10 +3065,9 @@ spawn(function()
                         repeat task.wait()
                             EBuso()
                             EWeapon()
-                            ToTween(v.HumanoidRootPart.Position * CFrame.new(0,30,0))
+                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
                             EClick()
                             v.Humanoid.WalkSpeed = 0
-                            v.Humanoid.JumpPower = 0 
                             NoClip = true
                         until not AllSharkKill or not v:FindFirstChild("Shark") or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
                         NoClip = false
@@ -3091,7 +3089,7 @@ spawn(function()
                         repeat task.wait()
                             EBuso()
                             EWeapon()
-                            ToTween(getNextPosition(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15)))))
+                            ToTween(getNextPosition(CFrame.new(v.HumanoidRootPart.CFrame + Vector3.new(math.random(-15,15), 20, math.random(-15,15)))))
                             EClick()
                             v.Humanoid.WalkSpeed = 0
                             v.Humanoid.JumpPower = 0

@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #31.5
+--Memories Hub Hyper - Rewrite Fixed & Update #31.6
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -2550,10 +2550,10 @@ spawn(function()
                         end
                     end
                 end
+            else
+                ToTweenWithEntrace(CFrame.new(744.7930908203125, 24.76934242248535, -12637.7255859375))
+                NoClip = true
             end
-        else
-            ToTweenWithEntrace(CFrame.new(744.7930908203125, 24.76934242248535, -12637.7255859375))
-            NoClip = true
         end
     end
 end)

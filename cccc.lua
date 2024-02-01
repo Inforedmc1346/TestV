@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #31.4
+--Memories Hub Hyper - Rewrite Fixed & Update #31.5
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -2448,9 +2448,6 @@ end
 spawn(function()
     while task.wait() do
         if MagmaOre then
-            if not Dressora then
-                RS.Remotes.CommF_:InvokeServer("TravelDressrosa")
-            end
             if Enemies:FindFirstChild("Lava Pirate") then
                 for i,v in pairs(Enemies:GetChildren()) do
                     if v.Name == "Lava Pirate" then
@@ -2469,7 +2466,7 @@ spawn(function()
                     end
                 end
             else
-                ToTweenWithEntrace(RS:FindFirstChild("Lava Pirate").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                ToTweenWithEntrace(CFrame.new(-5234.60595703125, 51.953372955322266, -4732.27880859375))
                 NoClip = true
             end
         end
@@ -2496,7 +2493,7 @@ spawn(function()
                     end
                 end
             else
-                ToTweenWithEntrace(RS:FindFirstChild("Water Fighter").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                ToTweenWithEntrace(CFrame.new(-3352.9013671875, 285.01556396484375, -10534.841796875))
                 NoClip = true
             end
         end
@@ -2527,7 +2524,7 @@ spawn(function()
                     end
                 end
             else
-                ToTweenWithEntrace(RS:FindFirstChild("Royal Soldier").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                ToTweenWithEntrace(CFrame.new(-7827.15625, 5606.912109375, -1705.5833740234375))
                 NoClip = true
             end
         end
@@ -2555,7 +2552,7 @@ spawn(function()
                 end
             end
         else
-            ToTweenWithEntrace(RS:FindFirstChild("Chocolate Bar Battler").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+            ToTweenWithEntrace(CFrame.new(744.7930908203125, 24.76934242248535, -12637.7255859375))
             NoClip = true
         end
     end
@@ -2583,7 +2580,7 @@ spawn(function()
                     end
                 end
             else
-                ToTweenWithEntrace(RS:FindFirstChild("Factory Staff").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                ToTweenWithEntrace(CFrame.new(-507.7895202636719, 72.99479675292969, -126.45632934570312))
             end
         end
     end
@@ -2639,7 +2636,7 @@ spawn(function()
                     end
                 end
             else
-                ToTweenWithEntrace(RS:FindFirstChild("Dragon Crew Warrior").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                ToTweenWithEntrace(CFrame.new(5824.06982421875, 51.38640213012695, -1106.694580078125))
             end
         end
     end
@@ -2666,7 +2663,7 @@ spawn(function()
                 end
             end
         else
-            ToTweenWithEntrace(RS:FindFirstChild("Mythological Pirate").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+            ToTweenWithEntrace(CFrame.new(-13516.0458984375, 469.8182373046875, -6899.16064453125))
         end
     end
 end)
@@ -2691,7 +2688,7 @@ spawn(function()
                     end
                 end
             else
-                ToTweenWithEntrace(RS:FindFirstChild("Fishman Captain").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                ToTweenWithEntrace(CFrame.new(-10961.0126953125, 331.7977600097656, -8914.29296875))
             end
         end
     end

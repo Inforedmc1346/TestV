@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #32.2
+--Memories Hub Hyper - Rewrite Fixed & Update #32.3
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -2023,6 +2023,12 @@ spawn(function()
                                             NoClip = true
                                             task.wait(.2)
                                         end
+                                        if SelectTypeMas == "Gun" then
+                                            pcall(function()
+                                                game:GetService("VirtualUser"):CaptureController()
+                                                game:GetService("VirtualUser"):ClickButton1(Vector2.new(0,1 , 0,1), game.Workspace.CurrentCamera)
+                                            end)
+                                        end
                                         aim = true
                                         CFrameHunt = v.HumanoidRootPart.CFrame
                                     until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MasteryOption
@@ -2037,6 +2043,12 @@ spawn(function()
                                             SendKeyEvents("X")
                                             NoClip = true
                                             task.wait(.2)
+                                        end
+                                        if SelectTypeMas == "Gun" then
+                                            pcall(function()
+                                                game:GetService("VirtualUser"):CaptureController()
+                                                game:GetService("VirtualUser"):ClickButton1(Vector2.new(0,1 , 0,1), game.Workspace.CurrentCamera)
+                                            end)
                                         end
                                         aim = true
                                         CFrameHunt = v.HumanoidRootPart.CFrame
@@ -2243,7 +2255,7 @@ MainTab:AddDropdown({Name = "Select Type Mastery Farm", Default = "", Options = 
     SelectTypeMas = vSelectTypeMas
 end    
 })
-MainTab:AddToggle({Name = "Enable Mastery Option", Default = false, Callback = function(vMasteryOption)
+MainTab:AddToggle({Name = "Enable Mastery Options", Default = false, Callback = function(vMasteryOption)
     MasteryOption = vMasteryOption
 end    
 })

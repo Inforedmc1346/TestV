@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #32.6
+--Memories Hub Hyper - Rewrite Fixed & Update #32.7
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -910,42 +910,21 @@ function FindPosBring(positionList)
     local averagePosition = totalPosition / validCount
     return averagePosition
 end
-function checkfunc(a)
-    if a and a.Parent then
-        if a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") and a.Humanoid.Health > 0 and a.HumanoidRootPart.CFrame then
-            return true
-        else
-            return false
-        end
-    else
-        return false
-    end
-end 
 spawn(function()
     while wait() do
         for i,v in pairs(Enemies:GetChildren()) do
             if ((StartFarms and SelectFarm == "Level" and StartBring and v.Name == CheckQuest()["MobName"]) or (FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob()) or (MobArua and StartBring)) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 350 then
-                BringList = {}
-                BringPos = nil
-                for j, k in pairs(Enemies:GetChildren()) do
-                    if checkfunc(k) and v.Name == k.Name then
-                        table.insert(BringList, k.HumanoidRootPart.Position)
-                    end
+                v.HumanoidRootPart.CFrame = PosMon
+                v.HumanoidRootPart.Size = Vector3.new(1,1,1)                                               
+                v.HumanoidRootPart.CanCollide = false
+                v.Head.CanCollide = false
+                v.Humanoid.JumpPower = 0
+                v.Humanoid.WalkSpeed = 0
+                if v.Humanoid:FindFirstChild("Animator") then
+                    v.Humanoid.Animator:Destroy()
                 end
-                BringPos = FindPosBring(BringList)
-                if BringPos == nil then return end
-                for j, k in pairs(Enemies:GetChildren()) do
-                    if checkfunc(k) and v.Name == k.Name and (k.HumanoidRootPart.Position - BringPos).Magnitude <= 380 then
-                        k.PrimaryPart.Position = BringPos
-                        k.PrimaryPart.CFrame = CFrame.new(BringPos)
-                        k.HumanoidRootPart.CFrame = CFrame.new(BringPos)
-                        k.Humanoid.JumpPower = 0
-                        k.Humanoid.WalkSpeed = 0
-                        k.HumanoidRootPart.CanCollide = false
-                        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                        k.Humanoid:ChangeState(14)
-                    end
-                end
+                v.Humanoid:ChangeState(14)
+                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius",  math.huge)
             end
         end
     end
@@ -3097,14 +3076,14 @@ end
 task.spawn(function()
     while task.wait() do
         if FCMAFS then
-            if game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") then
+            if (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member")) or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and not game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member")) then
                 if LP.Character.Humanoid.Sit then
                     LP.Character.Humanoid.Sit = false
                 end
                 for i,v in pairs(Enemies:GetChildren()) do
                     if v:FindFirstChild("VehicleSeat") then
                         repeat task.wait()
-                            ToTween(v.VehicleSeat.CFrame * CFrame.new(0, -10, 0))
+                            ToTween(v.VehicleSeat.CFrame * CFrame.new(0, 5, 0))
                             game:GetService("VirtualUser"):CaptureController()
                             game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
                             aim = true 
@@ -3188,7 +3167,18 @@ spawn(function()
                         repeat task.wait()
                             EBuso()
                             EWeapon()
-                            ToTween(getNextPosition(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0)))
+                            if game.Players.LocalPlayer.Character.Humanoid.Health > 8000 then
+                                ToTween(getNextPosition(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0)))
+                                NoClip = true
+                            elseif game.Players.LocalPlayer.Character.Humanoid.Health <= healthlow then
+                                if YTween then
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,600,0))
+                                    NoClip = true
+                                else
+                                    ToTween(getNextPosition(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0)))
+                                    NoClip = true
+                                end
+                            end
                             EClick()
                             v.Humanoid.WalkSpeed = 0
                             v.Humanoid.JumpPower = 0
@@ -3278,7 +3268,7 @@ local CfLeviFind = CFrame.new(-118140.65625, 31.783639907836914, 172404.875)
 spawn(function()
     while task.wait() do
         if FindLeviathan then
-            if LP.Character.Humanoid.Sit and (checkboat().VehicleSeat.Position - CfLeviFind.Position).Magnitude >= 50 and not WS.Locations:FindFirstChild("Frozen Dimension") then
+            if LP.Character.Humanoid.Sit and (checkboat().VehicleSeat.Position - CfLeviFind.Position).Magnitude >= 50 then
                 TweenObject(CfLeviFind,checkboat().VehicleSeat,350)
             elseif CheckPirateBoat() or CheckSeaBeast() or Enemies:FindFirstChild("Shark") or Enemies:FindFirstChild("Piranha") or Enemies:FindFirstChild("Terrorshark") or Enemies:FindFirstChild("FishBoat") or Enemies:FindFirstChild("Fish Crew Member") or WO.Locations:FindFirstChild("Rough Sea") and GetDistance(WS.Boats:FindFirstChild("VehicleSeat").Position) <= 1200 then
                 TweenObject(CfLeviFind * CFrame.new(0,40,0),checkboat().VehicleSeat,350)
@@ -4101,33 +4091,31 @@ MainTab:AddToggle({
 	end    
 })
 spawn(function()
-    while wait() do
+    while task.wait() do
         if RaidPirate then
-            pcall(function()
-                local CFrameBoss = CFrame.new(-5496.17432, 313.768921, -2841.53027, 0.924894512, 7.37058015e-09, 0.380223751, 3.5881019e-08, 1, -1.06665446e-07, -0.380223751, 1.12297109e-07, 0.924894512)
-                if (CFrame.new(-5539.3115234375, 313.800537109375, -2972.372314453125).Position - LP.Character.HumanoidRootPart.Position).Magnitude <= 500 then
-                    for i,v in pairs(Enemies:GetChildren()) do
-                        if RaidPirate and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                            if (v.HumanoidRootPart.Position - LP.Character.HumanoidRootPart.Position).Magnitude < 2000 then
-                                repeat wait()
-                                    EBuso()
-                                    EWeapon()
-                                    v.HumanoidRootPart.CanCollide = false
-                                    v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-                                    Click()
-                                until v.Humanoid.Health <= 0 or not v.Parent or not RaidPirate
-                            end
+            local CFrameBoss = CFrame.new(-5496.17432, 313.768921, -2841.53027, 0.924894512, 7.37058015e-09, 0.380223751, 3.5881019e-08, 1, -1.06665446e-07, -0.380223751, 1.12297109e-07, 0.924894512)
+            if (CFrame.new(-5539.3115234375, 313.800537109375, -2972.372314453125).Position - LP.Character.HumanoidRootPart.Position).Magnitude <= 500 then
+                for i,v in pairs(Enemies:GetChildren()) do
+                    if RaidPirate and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                        if (v.HumanoidRootPart.Position - LP.Character.HumanoidRootPart.Position).Magnitude < 2000 then
+                            repeat task.wait()
+                                EBuso()
+                                EWeapon()
+                                v.HumanoidRootPart.CanCollide = false
+                                v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                Click()
+                            until v.Humanoid.Health <= 0 or not v.Parent or not RaidPirate
                         end
                     end
-                else
-                    if ((CFrameBoss).Position - LP.Character.HumanoidRootPart.Position).magnitude <= 1500 then
-                        ToTween(CFrameBoss)
-                    else
-                        ToTween(CFrameBoss)
-                    end
                 end
-            end)
+            else
+                if ((CFrameBoss).Position - LP.Character.HumanoidRootPart.Position).magnitude <= 1500 then
+                    ToTween(CFrameBoss)
+                else
+                    ToTween(CFrameBoss)
+                end
+            end
         end
     end
 end)

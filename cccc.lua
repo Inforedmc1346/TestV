@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #32.3
+--Memories Hub Hyper - Rewrite Fixed & Update #32.6
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -3267,7 +3267,7 @@ SeaTab:AddSection({Name = "Leviathan"})
 local AutoFindLevi = SeaTab:AddToggle({
     Name = "Auto Find Leviathan",
     Default = false,
-    Flag = "SailBoat",
+    Flag = "FindLeviathan",
     Save = false,
     Callback = function(vFindLeviathan)
         FindLeviathan = vFindLeviathan
@@ -3278,11 +3278,11 @@ local CfLeviFind = CFrame.new(-118140.65625, 31.783639907836914, 172404.875)
 spawn(function()
     while task.wait() do
         if FindLeviathan then
-            if LP.Character.Humanoid.Sit and (WS.Boats:FindFirstChild("VehicleSeat").Position - CfLeviFind.Position).Magnitude >= 50 then
-                TweenObject(CfLeviFind,WS.Boats:FindFirstChild("VehicleSeat"),350)
+            if LP.Character.Humanoid.Sit and (checkboat().VehicleSeat.Position - CfLeviFind.Position).Magnitude >= 50 and not WS.Locations:FindFirstChild("Frozen Dimension") then
+                TweenObject(CfLeviFind,checkboat().VehicleSeat,350)
             elseif CheckPirateBoat() or CheckSeaBeast() or Enemies:FindFirstChild("Shark") or Enemies:FindFirstChild("Piranha") or Enemies:FindFirstChild("Terrorshark") or Enemies:FindFirstChild("FishBoat") or Enemies:FindFirstChild("Fish Crew Member") or WO.Locations:FindFirstChild("Rough Sea") and GetDistance(WS.Boats:FindFirstChild("VehicleSeat").Position) <= 1200 then
-                TweenObject(CfLeviFind + CFrame.new(0,40,0),WS.Boats:FindFirstChild("VehicleSeat"),350)
-            elseif game.Workspace._WorldOrigin.Locations:FindFirstChild('Frozen Dimension') then
+                TweenObject(CfLeviFind * CFrame.new(0,40,0),checkboat().VehicleSeat,350)
+            elseif WS.Locations:FindFirstChild("Frozen Dimension") then
                 AutoFindLevi:Set(false)
             end
         end

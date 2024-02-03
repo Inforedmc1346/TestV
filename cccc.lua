@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #32.7
+--Memories Hub Hyper - Rewrite Fixed & Update #32.8
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -3042,6 +3042,13 @@ task.spawn(function()
                             TweenObject(ZoneCFrame,checkboat().VehicleSeat,350)
                         end
                     end
+                elseif CheckSeaBeast() or CheckPirateBoat() or Enemies:FindFirstChild("Shark") or Enemies:FindFirstChild("Piranha") or Enemies:FindFirstChild("Terrorshark") or Enemies:FindFirstChild("Fish Crew Member") or Enemies:FindFirstChild("FishBoat") or WO.Locations:FindFirstChild("Rough Sea") and not checkboat() then
+                    if (Vector3Boat - LP.Character.HumanoidRootPart.Position).Magnitude >= 2000 then
+                        BypassTele(CFrameBoat)
+                    else
+                        ToTween(CFrameBoat)
+                        NoClip = true
+                    end
                 elseif CheckPirateBoat() or CheckSeaBeast() or Enemies:FindFirstChild("Shark") or Enemies:FindFirstChild("Piranha") or Enemies:FindFirstChild("Terrorshark") or Enemies:FindFirstChild("FishBoat") or Enemies:FindFirstChild("Fish Crew Member") or WO.Locations:FindFirstChild("Rough Sea") then
                 end
             end)
@@ -3057,7 +3064,7 @@ SeaTab:AddToggle({Name = "Auto Kill Ghost Ships",Default = false, Callback = fun
     GhostShips = vGhostShips
 end    
 }) 
-SeaTab:AddToggle({Name = "Auto Kill All Sharks",Default = false, Callback = function(vAllSharkKill)
+SeaTab:AddToggle({Name = "Auto Kill All Shark",Default = false, Callback = function(vAllSharkKill)
     AllSharkKill = vAllSharkKill
 end    
 }) 
@@ -3118,7 +3125,7 @@ spawn(function()
         if AllSharkKill then
             if game:GetService("Workspace").Enemies:FindFirstChild("Shark") then
                 for i,v in pairs(Enemies:GetChildren()) do
-                    if v.Name == "Piranha" and v:FindFirstChild("Piranha") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                    if v.Name == "Piranha" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                         if LP.Character.Humanoid.Sit then
                             LP.Character.Humanoid.Sit = false
                         end
@@ -3129,14 +3136,14 @@ spawn(function()
                             EClick()
                             v.Humanoid.WalkSpeed = 0
                             NoClip = true
-                        until not AllSharkKill or not v:FindFirstChild("Piranha") or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
+                        until not AllSharkKill or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
                         NoClip = false
                     end
                 end
             end
             if game:GetService("Workspace").Enemies:FindFirstChild("Piranha") then
                 for i,v in pairs(Enemies:GetChildren()) do
-                    if v.Name == "Shark" and v:FindFirstChild("Shark") and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                    if v.Name == "Shark" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                         if LP.Character.Humanoid.Sit then
                             LP.Character.Humanoid.Sit = false
                         end
@@ -3147,7 +3154,7 @@ spawn(function()
                             EClick()
                             v.Humanoid.WalkSpeed = 0
                             NoClip = true
-                        until not AllSharkKill or not v:FindFirstChild("Shark") or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
+                        until not AllSharkKill or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
                         NoClip = false
                     end
                 end

@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #33.4
+--Memories Hub Hyper - Rewrite Fixed & Update #33.5
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -33,7 +33,7 @@ local Quests = require(RS.Quests)
 local VIM = game:GetService("VirtualInputManager")
 CameraShaker:Stop()
 Toggle.Name = "Toggle"
-Toggle.Parent = game.CoreGui
+Toggle.Parent = LP:WaitForChild("PlayerGui")
 Toggle.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 LoadF.Name = "LoadF"

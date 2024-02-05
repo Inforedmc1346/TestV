@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #35.3
+--Memories Hub Hyper - Rewrite Fixed & Update #35.4
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -3723,6 +3723,7 @@ spawn(function()
                     Auto_Quest_Tushita_1 = false
                     Auto_Quest_Tushita_2 = false
                     Auto_Quest_Tushita_3 = false
+                    print("1")
                     RS.Remotes.CommF_:InvokeServer("CDKQuest","Progress","Evil")
                     RS.Remotes.CommF_:InvokeServer("CDKQuest","StartTrial","Evil")
                 elseif GetMaterial("Alucard Fragment") == 1 then
@@ -3732,6 +3733,7 @@ spawn(function()
                     Auto_Quest_Tushita_1 = false
                     Auto_Quest_Tushita_2 = false
                     Auto_Quest_Tushita_3 = false
+                    print("2")
                     RS.Remotes.CommF_:InvokeServer("CDKQuest","Progress","Evil")
                     RS.Remotes.CommF_:InvokeServer("CDKQuest","StartTrial","Evil")
                 elseif GetMaterial("Alucard Fragment") == 2 then

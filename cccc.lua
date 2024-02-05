@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #35.1
+--Memories Hub Hyper - Rewrite Fixed & Update #35.2
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -1599,7 +1599,7 @@ task.spawn(function()
             end
             pcall(function()
                 for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if not MasteryOption and v.Humanoid.Health > 0 then
+                    if (not MasteryOption or not CursedDualKT) and v.Humanoid.Health > 0 then
                         if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
                             FastAttack()
                             task.wait()
@@ -1621,7 +1621,7 @@ task.spawn(function()
             end
             pcall(function()
                 for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if not MasteryOption and v.Humanoid.Health > 0 then
+                    if (not MasteryOption or not CursedDualKT) and v.Humanoid.Health > 0 then
                         if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
                             task.wait(.000025)
                             Unboost()

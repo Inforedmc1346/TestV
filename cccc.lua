@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #33.9
+--Memories Hub Hyper - Rewrite Fixed & Update #34
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -88,15 +88,16 @@ function Notify(G, H, I)
     OrionLib:MakeNotification({Name = G, Content = H, Image = "rbxassetid://16161703575", Time = I})
 end
 function GetMaterial(CheckName)
-    for i, l in pairs(RS.Remotes.CommF_:InvokeServer("getInventory"))
-    if type(l) == "table" then
-        if l.Type == "Material" then
-            if l.Name == CheckName then
-                return l.Count
+    for i, l in pairs(RS.Remotes.CommF_:InvokeServer("getInventory")) do
+        if type(l) == "table" then
+            if l.Type == "Material" then
+                if l.Name == CheckName then
+                    return l.Count
+                    end
                 end
             end
+            return 0
         end
-        return 0
     end
 end
 function CheckNearestTeleporter(P)

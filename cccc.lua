@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #33.7
+--Memories Hub Hyper - Rewrite Fixed & Update #33.9
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -87,13 +87,16 @@ function Notify(G, H, I)
     end
     OrionLib:MakeNotification({Name = G, Content = H, Image = "rbxassetid://16161703575", Time = I})
 end
-function CheckM(cc)
-    for i,v in pairs(RS.Remotes.CommF_:InvokeServer("getInventory")) do
-        if type(v) == "table" then
-            if v.Name == cc then
-                return v
+function GetMaterial(CheckName)
+    for i, l in pairs(RS.Remotes.CommF_:InvokeServer("getInventory"))
+    if type(l) == "table" then
+        if l.Type == "Material" then
+            if l.Name == CheckName then
+                return l.Count
+                end
             end
         end
+        return 0
     end
 end
 function CheckNearestTeleporter(P)
@@ -2442,7 +2445,7 @@ function DisableSpamSkill()
     end
 end
 local tablelistmeterial = {"Magma Ore", "Mystic Droplet", "Radioactive Material", "Angel Wing", "Conjured Cocoa", "Dragon Scale", "Scrap Metal", "Fish Tail"}
-ItemTab:AddSection({Name = "Meterial Farm"})
+ItemTab:AddSection({Name = "Material Farm"})
 ItemTab:AddToggle({Name = "Auto Magma Ore [2]", Default = false, Callback = function(vMagmaOre)
     MagmaOre = vMagmaOre
     DisableTween(MagmaOre)
@@ -2837,7 +2840,7 @@ spawn(function()
             pcall(function()
                 if LP.Backpack:FindFirstChild("God's Chalice") or LP.Character:FindFirstChild("God's Chalice") then
                     if string.find(RS.Remotes.CommF_:InvokeServer("SweetChaliceNpc"),"Where") then
-                        Notify("Memories Hub", "Not Enough Meterial", 10)
+                        Notify("Memories Hub", "Not Enough Material", 10)
                     else
                         RS.Remotes.CommF_:InvokeServer("SweetChaliceNpc")
                     end
@@ -3723,7 +3726,7 @@ spawn(function()
     while wait() do
         pcall(function()
             if CursedDualKT then
-                if CheckM("Alucard Fragment") == 0 then
+                if GetMaterial("Alucard Fragment") == 0 then
                     Auto_Quest_Yama_1 = true
                     Auto_Quest_Yama_2 = false
                     Auto_Quest_Yama_3 = false
@@ -3732,7 +3735,7 @@ spawn(function()
                     Auto_Quest_Tushita_3 = false
                     RS.Remotes.CommF_:InvokeServer("CDKQuest","Progress","Evil")
                     RS.Remotes.CommF_:InvokeServer("CDKQuest","StartTrial","Evil")
-                elseif CheckM("Alucard Fragment") == 1 then
+                elseif GetMaterial("Alucard Fragment") == 1 then
                     Auto_Quest_Yama_1 = false
                     Auto_Quest_Yama_2 = true
                     Auto_Quest_Yama_3 = false
@@ -3741,7 +3744,7 @@ spawn(function()
                     Auto_Quest_Tushita_3 = false
                     RS.Remotes.CommF_:InvokeServer("CDKQuest","Progress","Evil")
                     RS.Remotes.CommF_:InvokeServer("CDKQuest","StartTrial","Evil")
-                elseif CheckM("Alucard Fragment") == 2 then
+                elseif GetMaterial("Alucard Fragment") == 2 then
                     Auto_Quest_Yama_1 = false
                     Auto_Quest_Yama_2 = false
                     Auto_Quest_Yama_3 = true
@@ -3750,7 +3753,7 @@ spawn(function()
                     Auto_Quest_Tushita_3 = false
                     RS.Remotes.CommF_:InvokeServer("CDKQuest","Progress","Evil")
                     RS.Remotes.CommF_:InvokeServer("CDKQuest","StartTrial","Evil")
-                elseif CheckM("Alucard Fragment") == 3 then
+                elseif GetMaterial("Alucard Fragment") == 3 then
                     Auto_Quest_Yama_1 = false
                     Auto_Quest_Yama_2 = false
                     Auto_Quest_Yama_3 = false
@@ -3759,7 +3762,7 @@ spawn(function()
                     Auto_Quest_Tushita_3 = false
                     RS.Remotes.CommF_:InvokeServer("CDKQuest","Progress","Good")
                     RS.Remotes.CommF_:InvokeServer("CDKQuest","StartTrial","Good")
-                elseif CheckM("Alucard Fragment") == 4 then
+                elseif GetMaterial("Alucard Fragment") == 4 then
                     Auto_Quest_Yama_1 = false
                     Auto_Quest_Yama_2 = false
                     Auto_Quest_Yama_3 = false
@@ -3768,7 +3771,7 @@ spawn(function()
                     Auto_Quest_Tushita_3 = false
                     RS.Remotes.CommF_:InvokeServer("CDKQuest","Progress","Good")
                     RS.Remotes.CommF_:InvokeServer("CDKQuest","StartTrial","Good")
-                elseif CheckM("Alucard Fragment") == 5 then
+                elseif GetMaterial("Alucard Fragment") == 5 then
                     Auto_Quest_Yama_1 = false
                     Auto_Quest_Yama_2 = false
                     Auto_Quest_Yama_3 = false
@@ -3777,7 +3780,7 @@ spawn(function()
                     Auto_Quest_Tushita_3 = true
                     RS.Remotes.CommF_:InvokeServer("CDKQuest","Progress","Good")
                     RS.Remotes.CommF_:InvokeServer("CDKQuest","StartTrial","Good")
-                elseif CheckM("Alucard Fragment") == 6 then
+                elseif GetMaterial("Alucard Fragment") == 6 then
                     if WS.Enemies:FindFirstChild("Cursed Skeleton Boss") or WS.ReplicatedStorage:FindFirstChild("Cursed Skeleton Boss") then
                         Auto_Quest_Yama_1 = false
                         Auto_Quest_Yama_2 = false
@@ -3930,7 +3933,7 @@ spawn(function()
                             wait(1.5)     
                             ToTween(WS.Map.HellDimension.Exit.CFrame)
                         end
-                    until not CursedDualKT or not Auto_Quest_Yama_3 or CheckM("Alucard Fragment") == 3
+                    until not CursedDualKT or not Auto_Quest_Yama_3 or GetMaterial("Alucard Fragment") == 3
                 else
                     if WS.Enemies:FindFirstChild("Soul Reaper") or game.ReplicatedStorage:FindFirstChild("Soul Reaper") then
                         if WS.Enemies:FindFirstChild("Soul Reaper") then

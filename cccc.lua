@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #35
+--Memories Hub Hyper - Rewrite Fixed & Update #35.1
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -634,7 +634,7 @@ loadstring(
 )()
 spawn(function()
     while wait() do
-        if StartFarms or DoughKingKill or TweentoIsland then
+        if StartFarms or DoughKingKill or TweentoIsland and CursedDualKT then
             NoClip = true
         else
             NoClip = false

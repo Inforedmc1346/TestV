@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #33.2
+--Memories Hub Hyper - Rewrite Fixed & Update #33.3
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -33,7 +33,7 @@ local Quests = require(RS.Quests)
 local VIM = game:GetService("VirtualInputManager")
 CameraShaker:Stop()
 Toggle.Name = "Toggle"
-Toggle.Parent = LP:WaitForChild("PlayerGui")
+Toggle.Parent = game.CoreGui
 Toggle.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 LoadF.Name = "LoadF"
@@ -61,6 +61,63 @@ MainStroke.Enabled = true
 MainStroke.Archivable = true  
 UICorner.CornerRadius = UDim.new(0, 3)
 UICorner.Parent = LoadF
+function MakeDraggable(topbarobject, object)
+    local Dragging = nil
+    local DragInput = nil
+    local DragStart = nil
+    local StartPosition = nil
+
+    local function Update(input)
+        local Delta = input.Position - DragStart
+        local pos =
+            UDim2.new(
+                StartPosition.X.Scale,
+                StartPosition.X.Offset + Delta.X,
+                StartPosition.Y.Scale,
+                StartPosition.Y.Offset + Delta.Y
+            )
+        local Tween = TweenService:Create(object, TweenInfo.new(0.2), {Position = pos})
+        Tween:Play()
+    end
+
+    topbarobject.InputBegan:Connect(
+        function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                Dragging = true
+                DragStart = input.Position
+                StartPosition = object.Position
+
+                input.Changed:Connect(
+                    function()
+                        if input.UserInputState == Enum.UserInputState.End then
+                            Dragging = false
+                        end
+                    end
+                )
+            end
+        end
+    )
+
+    topbarobject.InputChanged:Connect(
+        function(input)
+            if
+                input.UserInputType == Enum.UserInputType.MouseMovement or
+                input.UserInputType == Enum.UserInputType.Touch
+            then
+                DragInput = input
+            end
+        end
+    )
+
+    UserInputService.InputChanged:Connect(
+        function(input)
+            if input == DragInput and Dragging then
+                Update(input)
+            end
+        end
+    )
+end
+MakeDraggable(LoadF, LoadF)
 if game.PlaceId == 2753915549 then
     Main = true
 elseif game.PlaceId == 4442272183 then

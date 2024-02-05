@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #33.6
+--Memories Hub Hyper - Rewrite Fixed & Update #33.7
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -3694,7 +3694,8 @@ function autoTushita()
 end
 ItemTab:AddSection({Name = "Cursed Dual Katana"})
 ItemTab:AddToggle({Name = "Auto Cursed Dual Katana", Default = false, Flag = "CursedDualK", Save = true, Callback = function(vCursedDualKT)
-    CursedDualKT = vCursedDualKT    
+    CursedDualKT = vCursedDualKT   
+    selecttool:Set("Sword") 
     DisableTween(CursedDualKT)
 end    
 }) 

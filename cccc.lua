@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #32.8
+--Memories Hub Hyper - Rewrite Fixed & Update #33.1
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -86,6 +86,15 @@ function Notify(G, H, I)
         I = 10
     end
     OrionLib:MakeNotification({Name = G, Content = H, Image = "rbxassetid://16161703575", Time = I})
+end
+function CheckM(cc)
+    for i,v in pairs(RS.Remotes.CommF_:InvokeServer("getInventory")) do
+        if type(v) == "table" then
+            if v.Name == cc then
+                return v
+            end
+        end
+    end
 end
 function CheckNearestTeleporter(P)
     local min = math.huge
@@ -703,6 +712,16 @@ function CheckSwan()
         end
     end
 end
+function KillMobSE(mobb)
+    local mobreal = mobb
+    if Enemies:FindFirstChild(mobreal.Name) and mobreal:FindFirstChild("Humanoid") and mobreal:FindFirstChild("HumanoidRootPart") and mobreal.Humanoid.Health > 0 then
+        EBuso()
+        EWeapon()
+        ToTween(mobreal.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+        EClick()
+        NoClip = true
+    end
+end
 function CheckBoss(vl)
     if RS:FindFirstChild(vl) then
         for r, v in pairs(RS:GetChildren()) do
@@ -910,21 +929,42 @@ function FindPosBring(positionList)
     local averagePosition = totalPosition / validCount
     return averagePosition
 end
+function checkfunc(a)
+    if a and a.Parent then
+        if a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") and a.Humanoid.Health > 0 and a.HumanoidRootPart.CFrame then
+            return true
+        else
+            return false
+        end
+    else
+        return false
+    end
+end 
 spawn(function()
     while wait() do
         for i,v in pairs(Enemies:GetChildren()) do
             if ((StartFarms and SelectFarm == "Level" and StartBring and v.Name == CheckQuest()["MobName"]) or (FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob()) or (MobArua and StartBring)) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 350 then
-                v.HumanoidRootPart.CFrame = PosMon
-                v.HumanoidRootPart.Size = Vector3.new(1,1,1)                                               
-                v.HumanoidRootPart.CanCollide = false
-                v.Head.CanCollide = false
-                v.Humanoid.JumpPower = 0
-                v.Humanoid.WalkSpeed = 0
-                if v.Humanoid:FindFirstChild("Animator") then
-                    v.Humanoid.Animator:Destroy()
+                BringList = {}
+                BringPos = nil
+                for j, k in pairs(Enemies:GetChildren()) do
+                    if checkfunc(k) and v.Name == k.Name then
+                        table.insert(BringList, k.HumanoidRootPart.Position)
+                    end
                 end
-                v.Humanoid:ChangeState(14)
-                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius",  math.huge)
+                BringPos = FindPosBring(BringList)
+                if BringPos == nil then return end
+                for j, k in pairs(Enemies:GetChildren()) do
+                    if checkfunc(k) and v.Name == k.Name and (k.HumanoidRootPart.Position - BringPos).Magnitude <= 380 then
+                        k.PrimaryPart.Position = BringPos
+                        k.PrimaryPart.CFrame = CFrame.new(BringPos)
+                        k.HumanoidRootPart.CFrame = CFrame.new(BringPos)
+                        k.Humanoid.JumpPower = 0
+                        k.Humanoid.WalkSpeed = 0
+                        k.HumanoidRootPart.CanCollide = false
+                        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                        k.Humanoid:ChangeState(14)
+                    end
+                end
             end
         end
     end
@@ -967,6 +1007,17 @@ function EWeaponSelect(ToolSe2)
         Tool = game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe2)
         wait(.1)
         game.Players.LocalPlayer.Character.Humanoid:EquipTool(Tool)
+    end
+end
+function GetWeaponInventory(weapon, name)
+    for i,v in pairs(RS.Remotes.CommF_:InvokeServer("getInventory")) do
+        if type(v) == "table" then
+            if v.Type == weapon then
+                if v.Name == name then
+                    return v
+                end
+            end
+        end
     end
 end
 function GetFruitBelow1M()
@@ -3125,7 +3176,7 @@ spawn(function()
         if AllSharkKill then
             if game:GetService("Workspace").Enemies:FindFirstChild("Shark") then
                 for i,v in pairs(Enemies:GetChildren()) do
-                    if v.Name == "Piranha" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                    if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 1400 then
                         if LP.Character.Humanoid.Sit then
                             LP.Character.Humanoid.Sit = false
                         end
@@ -3143,7 +3194,7 @@ spawn(function()
             end
             if game:GetService("Workspace").Enemies:FindFirstChild("Piranha") then
                 for i,v in pairs(Enemies:GetChildren()) do
-                    if v.Name == "Shark" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                    if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 1400 then
                         if LP.Character.Humanoid.Sit then
                             LP.Character.Humanoid.Sit = false
                         end
@@ -3260,9 +3311,14 @@ spawn(function()
         end
     end
 end)
+SeaTab:AddSection({Name = "Misc Sea Event"})
+SeaTab:AddButton({Name = "Teleport Ship To Player", Callback = function()
+    checkboat().VehicleSeat.CFrame = LP.Character.HumanoidRootPart.CFrame
+end    
+})
 SeaTab:AddSection({Name = "Leviathan"})
 local AutoFindLevi = SeaTab:AddToggle({
-    Name = "Auto Find Leviathan",
+    Name = "Auto Find Leviathan [BETA]",
     Default = false,
     Flag = "FindLeviathan",
     Save = false,
@@ -3285,10 +3341,6 @@ spawn(function()
         end
     end
 end)
-SeaTab:AddButton({Name = "Teleport Ship To Player", Callback = function()
-    checkboat().VehicleSeat.CFrame = LP.Character.HumanoidRootPart.CFrame
-end    
-})
 SeaTab:AddSection({Name = "Low Health"})
 SeaTab:AddSlider({Name = "Set Low Health", Min = 0, Max = 13095, Default = 4000, Color = Color3.fromRGB(255,255,255), Increment = 1, ValueName = "Health", Callback = function(vhealthlow)
     healthlow = vhealthlow
@@ -3647,112 +3699,358 @@ function autoTushita()
         ToTween(CFrame.new(-12554.9443, 337.194092, -7501.44727))
     end
 end
-ItemTab:AddSection({Name = "Soul Guitar"})
-ItemTab:AddToggle({
-	Name = "Quest Soul Guitar",
-	Default = false,
-	Flag = "SoulGuitar",
-	Save = true,
-	Callback = function(Value)
-        AutoSoulGuitar = value    
-        DisableTween(AutoSoulGuitar)
-	end    
+ItemTab:AddSection({Name = "Cursed Dual Katana"})
+ItemTab:AddToggle({Name = "Auto Cursed Dual Katana", Default = false, Flag = "CursedDualK", Save = true, Callback = function(vCursedDualKT)
+    CursedDualKT = vCursedDualKT    
+    DisableTween(CursedDualKT)
+end    
 }) 
 spawn(function()
-    while task.wait() do
+    while wait() do
+        if CursedDualKT then
+            if LP.Character:FindFirstChild("Tushita") or LP.Backpack:FindFirstChild("Tushita") or LP.Character:FindFirstChild("Yama") or LP.Backpack:FindFirstChild("Yama") then
+                if LP.Character:FindFirstChild("Tushita") or LP.Backpack:FindFirstChild("Tushita") then
+                    if LP.Backpack:FindFirstChild("Tushita") then
+                        EWeaponSelect("Tushita") 
+                    end
+                elseif LP.Character:FindFirstChild("Yama") or LP.Backpack:FindFirstChild("Yama") then
+                    if LP.Backpack:FindFirstChild("Yama") then
+                        EWeaponSelect("Yama")
+                        
+                    end
+                end
+            else
+                RS.Remotes.CommF_:InvokeServer("LoadItem","Tushita")
+            end
+        end
+    end
+end)
+spawn(function()
+    while wait() do
         pcall(function()
-            if AutoSoulGuitar then
-                if not LP.Backpack:FindFirstChild("Soul Guitar") and not LP.Character:FindFirstChild("Soul Guitar") then
-                    if (CFrame.new(-9681.458984375, 6.139880657196045, 6341.3720703125).Position - LP.Character.HumanoidRootPart.Position).Magnitude <= 5000 then
-                        if WS.NPCs:FindFirstChild("Skeleton Machine") then
-                            RS.Remotes.CommF_:InvokeServer("soulGuitarBuy",true)
-                        else
-                            if WS.Map["Haunted Castle"].Candle1.Transparency == 0 then
-                                if WS.Map["Haunted Castle"].Placard1.Left.Part.Transparency == 0 then
-                                    repeat task.wait() 
-                                        ToTween(CFrame.new(-8762.69140625, 176.84783935546875, 6171.3076171875)) 
-                                    until (CFrame.new(-8762.69140625, 176.84783935546875, 6171.3076171875).Position - LP.Character.HumanoidRootPart.Position).Magnitude <= 3 or not AutoSoulGuitar
-                                    wait(1)
-                                    fireclickdetector(WS.Map["Haunted Castle"].Placard7.Left.ClickDetector)
-                                    wait(1)
-                                    fireclickdetector(WS.Map["Haunted Castle"].Placard6.Left.ClickDetector)
-                                    wait(1)
-                                    fireclickdetector(WS.Map["Haunted Castle"].Placard5.Left.ClickDetector)
-                                    wait(1)
-                                    fireclickdetector(WS.Map["Haunted Castle"].Placard4.Right.ClickDetector)
-                                    wait(1)
-                                    fireclickdetector(WS.Map["Haunted Castle"].Placard3.Left.ClickDetector)
-                                    wait(1)
-                                    fireclickdetector(WS.Map["Haunted Castle"].Placard2.Right.ClickDetector)
-                                    wait(1)
-                                    fireclickdetector(WS.Map["Haunted Castle"].Placard1.Right.ClickDetector)
-                                    wait(1)
-                                elseif WS.Map["Haunted Castle"].Tablet.Segment1:FindFirstChild("ClickDetector") then
-                                    if WS.Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part1:FindFirstChild("ClickDetector") then
-                                        repeat task.wait() 
-                                            ToTween(CFrame.new(-9553.5986328125, 65.62338256835938, 6041.58837890625)) 
-                                        until (CFrame.new(-9553.5986328125, 65.62338256835938, 6041.58837890625).Position - LP.Character.HumanoidRootPart.Position).Magnitude <= 3 or not AutoSoulGuitar
-                                        wait(1)
-                                        ToTween(WS.Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part3.CFrame)
-                                        wait(1)
-                                        fireclickdetector(WS.Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part3.ClickDetector)
-                                        wait(1)
-                                        ToTween(WS.Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part4.CFrame)
-                                        wait(1)
-                                        fireclickdetector(WS.Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part4.ClickDetector)
-                                        wait(1)
-                                        fireclickdetector(WS.Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part4.ClickDetector)
-                                        wait(1)
-                                        fireclickdetector(WS.Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part4.ClickDetector)
-                                        wait(1)
-                                        ToTween(WS.Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part6.CFrame)
-                                        wait(1)
-                                        fireclickdetector(WS.Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part6.ClickDetector)
-                                        wait(1)
-                                        fireclickdetector(WS.Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part6.ClickDetector)
-                                        wait(1)
-                                        ToTween(WS.Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part8.CFrame)
-                                        wait(1)
-                                        fireclickdetector(WS.Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part8.ClickDetector)
-                                        wait(1)
-                                        ToTween(WS.Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part10.CFrame)
-                                        wait(1)
-                                        fireclickdetector(WS.Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part10.ClickDetector)
-                                        wait(1)
-                                        fireclickdetector(WS.Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part10.ClickDetector)
-                                        wait(1)
-                                        fireclickdetector(WS.Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model.Part10.ClickDetector)
-                                    else
-                                        Quest3 = true
-                                        --Not Work Yet
+            if CursedDualKT then
+                if CheckM("Alucard Fragment") == 0 then
+                    Auto_Quest_Yama_1 = true
+                    Auto_Quest_Yama_2 = false
+                    Auto_Quest_Yama_3 = false
+                    Auto_Quest_Tushita_1 = false
+                    Auto_Quest_Tushita_2 = false
+                    Auto_Quest_Tushita_3 = false
+                    RS.Remotes.CommF_:InvokeServer("CDKQuest","Progress","Evil")
+                    RS.Remotes.CommF_:InvokeServer("CDKQuest","StartTrial","Evil")
+                elseif CheckM("Alucard Fragment") == 1 then
+                    Auto_Quest_Yama_1 = false
+                    Auto_Quest_Yama_2 = true
+                    Auto_Quest_Yama_3 = false
+                    Auto_Quest_Tushita_1 = false
+                    Auto_Quest_Tushita_2 = false
+                    Auto_Quest_Tushita_3 = false
+                    RS.Remotes.CommF_:InvokeServer("CDKQuest","Progress","Evil")
+                    RS.Remotes.CommF_:InvokeServer("CDKQuest","StartTrial","Evil")
+                elseif CheckM("Alucard Fragment") == 2 then
+                    Auto_Quest_Yama_1 = false
+                    Auto_Quest_Yama_2 = false
+                    Auto_Quest_Yama_3 = true
+                    Auto_Quest_Tushita_1 = false
+                    Auto_Quest_Tushita_2 = false
+                    Auto_Quest_Tushita_3 = false
+                    RS.Remotes.CommF_:InvokeServer("CDKQuest","Progress","Evil")
+                    RS.Remotes.CommF_:InvokeServer("CDKQuest","StartTrial","Evil")
+                elseif CheckM("Alucard Fragment") == 3 then
+                    Auto_Quest_Yama_1 = false
+                    Auto_Quest_Yama_2 = false
+                    Auto_Quest_Yama_3 = false
+                    Auto_Quest_Tushita_1 = true
+                    Auto_Quest_Tushita_2 = false
+                    Auto_Quest_Tushita_3 = false
+                    RS.Remotes.CommF_:InvokeServer("CDKQuest","Progress","Good")
+                    RS.Remotes.CommF_:InvokeServer("CDKQuest","StartTrial","Good")
+                elseif CheckM("Alucard Fragment") == 4 then
+                    Auto_Quest_Yama_1 = false
+                    Auto_Quest_Yama_2 = false
+                    Auto_Quest_Yama_3 = false
+                    Auto_Quest_Tushita_1 = false
+                    Auto_Quest_Tushita_2 = true
+                    Auto_Quest_Tushita_3 = false
+                    RS.Remotes.CommF_:InvokeServer("CDKQuest","Progress","Good")
+                    RS.Remotes.CommF_:InvokeServer("CDKQuest","StartTrial","Good")
+                elseif CheckM("Alucard Fragment") == 5 then
+                    Auto_Quest_Yama_1 = false
+                    Auto_Quest_Yama_2 = false
+                    Auto_Quest_Yama_3 = false
+                    Auto_Quest_Tushita_1 = false
+                    Auto_Quest_Tushita_2 = false
+                    Auto_Quest_Tushita_3 = true
+                    RS.Remotes.CommF_:InvokeServer("CDKQuest","Progress","Good")
+                    RS.Remotes.CommF_:InvokeServer("CDKQuest","StartTrial","Good")
+                elseif CheckM("Alucard Fragment") == 6 then
+                    if WS.Enemies:FindFirstChild("Cursed Skeleton Boss") or WS.ReplicatedStorage:FindFirstChild("Cursed Skeleton Boss") then
+                        Auto_Quest_Yama_1 = false
+                        Auto_Quest_Yama_2 = false
+                        Auto_Quest_Yama_3 = false
+                        Auto_Quest_Tushita_1 = false
+                        Auto_Quest_Tushita_2 = false
+                        Auto_Quest_Tushita_3 = false
+                        if WS.Enemies:FindFirstChild("Cursed Skeleton Boss") or WS.Enemies:FindFirstChild("Cursed Skeleton") then
+                            for i,v in pairs(WS.Enemies:GetChildren()) do
+                                if v.Name == "Cursed Skeleton Boss" or v.Name == "Cursed Skeleton" then
+                                    if v.Humanoid.Health > 0 then
+                                        repeat task.wait()
+                                            KillMobSE(v)
+                                        until not CursedDualKT or v.Humanoid.Health <= 0 or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid")
                                     end
-                                else
-                                    if WS.NPCs:FindFirstChild("Ghost") then
-                                        local args = {
-                                            [1] = "GuitarPuzzleProgress",
-                                            [2] = "Ghost"
-                                        }
-
-                                        RS.Remotes.CommF_:InvokeServer(unpack(args))
-                                    end
-                                end
-                            else    
-                                if string.find(RS.Remotes.CommF_:InvokeServer("gravestoneEvent",2), "Error") then
-                                    print("Go to Grave")
-                                    ToTween(CFrame.new(-8653.2060546875, 140.98487854003906, 6160.033203125))
-                                elseif string.find(RS.Remotes.CommF_:InvokeServer("gravestoneEvent",2), "Nothing") then
-                                    print("Wait Next Night")
-                                else
-                                    RS.Remotes.CommF_:InvokeServer("gravestoneEvent",2,true)
                                 end
                             end
                         end
                     else
-                        ToTween(CFrame.new(-9681.458984375, 6.139880657196045, 6341.3720703125))
+                        if GetDistance(CFrame.new(-12361.7060546875, 603.3547973632812, -6550.5341796875).Position) <= 100 then
+                            RS.Remotes.CommF_:InvokeServer("CDKQuest","Progress","Good")
+                            wait(1)
+                            RS.Remotes.CommF_:InvokeServer("CDKQuest","Progress","Evil")
+                            wait(1)
+                            ToTween(CFrame.new(-12361.7060546875, 603.3547973632812, -6550.5341796875))
+                            wait(1.5)
+                            game:GetService("VirtualInputManager"):SendKeyEvent(true, "E", false, game)
+                            wait(1.5)
+                            ToTween(CFrame.new(-12253.5419921875, 598.8999633789062, -6546.8388671875))
+                        else
+                            ToTween(CFrame.new(-12361.7060546875, 603.3547973632812, -6550.5341796875))
+                        end   
                     end
                 end
             end
         end)
+    end
+end)
+spawn(function()
+    while task.wait() do
+        if Auto_Quest_Yama_1 then
+            if WS.Enemies:FindFirstChild("Mythological Pirate") then
+                for i,v in pairs(WS.Enemies:GetChildren()) do
+                    if v.Name == "Mythological Pirate" then
+                        repeat task.wait()
+                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
+                        until not CursedDualKT or not Auto_Quest_Yama_1
+                        RS.Remotes.CommF_:InvokeServer("CDKQuest","StartTrial","Evil")
+                    end
+                end
+            else
+                ToTween(CFrame.new(-13451.46484375, 543.712890625, -6961.0029296875))
+            end
+        end
+    end
+end)
+spawn(function()
+    while wait() do
+        if Auto_Quest_Yama_2 then
+            for i,v in pairs(WS.Enemies:GetChildren()) do
+                if v:FindFirstChild("HazeESP") then
+                    v.HazeESP.Size = UDim2.new(50,50,50,50)
+                    v.HazeESP.MaxDistance = "inf"
+                end
+            end
+            for i,v in pairs(RS:GetChildren()) do
+                if v:FindFirstChild("HazeESP") then
+                    v.HazeESP.Size = UDim2.new(50,50,50,50)
+                    v.HazeESP.MaxDistance = "inf"
+                end
+            end
+        end
+        for i,v in pairs(WS.Enemies:GetChildren()) do
+            if Auto_Quest_Yama_2 and v:FindFirstChild("HazeESP") and (v.HumanoidRootPart.Position - PosMonsEsp.Position).magnitude <= 300 then
+                v.HumanoidRootPart.CFrame = PosMonsEsp
+                v.HumanoidRootPart.CanCollide = false
+                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                if not v.HumanoidRootPart:FindFirstChild("BodyVelocity") then
+                    local vc = Instance.new("BodyVelocity", v.HumanoidRootPart)
+                    vc.MaxForce = Vector3.new(1, 1, 1) * math.huge
+                    vc.Velocity = Vector3.new(0, 0, 0)
+                end
+            end
+        end
+    end
+end)
+spawn(function()
+    while wait() do
+        if Auto_Quest_Yama_2 then 
+            pcall(function() 
+                for i,v in pairs(WS.Enemies:GetChildren()) do
+                    if v:FindFirstChild("HazeESP") then
+                        repeat task.wait()
+                            if GetDistance(v.HumanoidRootPart.Position) > 2000 then
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                            else
+                                KillMobSE(v)						
+                            end      
+                        until not CursedDualKT or not Auto_Quest_Yama_2 or not v.Parent or v.Humanoid.Health <= 0 or not v:FindFirstChild("HazeESP")
+                    else
+                        for x,y in pairs(RS:GetChildren()) do
+                            if y:FindFirstChild("HazeESP") then
+                                if (y.HumanoidRootPart.Position - LP.Character.HumanoidRootPart.Position).Magnitude > 2000 then
+                                    ToTween(y.HumanoidRootPart.CFrameMon* CFrame.new(0,30,0))
+                                else
+                                    ToTween(y.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
+spawn(function()
+    while task.wait() do
+        if Auto_Quest_Yama_3 then
+            pcall(function()
+                if LP.Backpack:FindFirstChild("Hallow Essence") then         
+                    ToTween(WS.Map["Haunted Castle"].Summoner.Detection.CFrame)
+                elseif WS.Map:FindFirstChild("HellDimension") then
+                    repeat wait()
+                        if WS.Enemies:FindFirstChild("Cursed Skeleton") or WS.Enemies:FindFirstChild("Cursed Skeleton") or WS.Enemies:FindFirstChild("Hell's Messenger") then
+                            for i,v in pairs(WS.Enemies:GetChildren()) do
+                                if v.Name == "Cursed Skeleton" or v.Name == "Cursed Skeleton" or v.Name == "Hell's Messenger" then
+                                    if v.Humanoid.Health > 0 then
+                                        repeat task.wait()
+                                            KillMobSE(v)
+                                            if v.Humanoid.Health <= 0 and v.Humanoid:FindFirstChild("Animator") then
+                                                v.Humanoid.Animator:Destroy()
+                                            end	
+                                        until v.Humanoid.Health <= 0 or not v.Parent or not Auto_Quest_Yama_3
+                                    end
+                                end
+                            end
+                        else
+                            wait(5)
+                            ToTween(WS.Map.HellDimension.Torch1.CFrame)
+                            wait(1.5)
+                            game:GetService("VirtualInputManager"):SendKeyEvent(true, "E", false, game)
+                            wait(1.5)        
+                            ToTween(WS.Map.HellDimension.Torch2.CFrame)
+                            wait(1.5)
+                            game:GetService("VirtualInputManager"):SendKeyEvent(true, "E", false, game)
+                            wait(1.5)     
+                            ToTween(WS.Map.HellDimension.Torch3.CFrame)
+                            wait(1.5)
+                            game:GetService("VirtualInputManager"):SendKeyEvent(true, "E", false, game)
+                            wait(1.5)     
+                            ToTween(WS.Map.HellDimension.Exit.CFrame)
+                        end
+                    until not CursedDualKT or not Auto_Quest_Yama_3 or CheckM("Alucard Fragment") == 3
+                else
+                    if WS.Enemies:FindFirstChild("Soul Reaper") or game.ReplicatedStorage:FindFirstChild("Soul Reaper") then
+                        if WS.Enemies:FindFirstChild("Soul Reaper") then
+                            for i,v in pairs(WS.Enemies:GetChildren()) do
+                                if v.Name == "Soul Reaper" then
+                                    if v.Humanoid.Health > 0 then
+                                        repeat wait()
+                                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
+                                        until not CursedDualKT or not Auto_Quest_Yama_3 or WS.Map:FindFirstChild("HellDimension")
+                                    end
+                                end
+                            end
+                        else
+                            ToTween(CFrame.new(-9570.033203125, 315.9346923828125, 6726.89306640625))
+                        end
+                    else
+                        RS.Remotes.CommF_:InvokeServer("Bones","Buy",1,1)
+                    end
+                end
+            end)
+        end
+    end
+end)
+spawn(function()
+    while wait() do
+        if Auto_Quest_Tushita_1 then
+            ToTween(CFrame.new(-9546.990234375, 21.139892578125, 4686.1142578125))
+            wait(5)
+            ToTween(CFrame.new(-6120.0576171875, 16.455780029296875, -2250.697265625))
+            wait(5)
+            ToTween(CFrame.new(-9533.2392578125, 7.254445552825928, -8372.69921875))    
+        end
+    end
+end)
+spawn(function()
+    while wait() do
+        if Auto_Quest_Tushita_2 then
+            pcall(function()
+                if (CFrame.new(-5539.3115234375, 313.800537109375, -2972.372314453125).Position - LP.Character.HumanoidRootPart.Position).Magnitude <= 500 then
+                    for i,v in pairs(WS.Enemies:GetChildren()) do
+                        if Auto_Quest_Tushita_2 and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                            if (v.HumanoidRootPart.Position - LP.Character.HumanoidRootPart.Position).Magnitude < 2000 then
+                                repeat task.wait()
+                                    KillMobSE(v)
+                                    if v.Humanoid.Health <= 0 and v.Humanoid:FindFirstChild("Animator") then
+                                        v.Humanoid.Animator:Destroy()
+                                    end
+                                until v.Humanoid.Health <= 0 or not v.Parent or not Auto_Quest_Tushita_2
+                            end
+                        end
+                    end
+                else
+                    ToTween(CFrame.new(-5545.1240234375, 313.800537109375, -2976.616455078125))
+                end
+            end)
+        end
+    end
+end)
+spawn(function()
+    while wait() do
+        if Auto_Quest_Tushita_3 then
+            pcall(function()
+                if WS.Enemies:FindFirstChild("Cake Queen") or game.ReplicatedStorage:FindFirstChild("Cake Queen") then
+                    if WS.Enemies:FindFirstChild("Cake Queen") then
+                        for i,v in pairs(WS.Enemies:GetChildren()) do
+                            if v.Name == "Cake Queen" then
+                                if v.Humanoid.Health > 0 then
+                                    repeat wait()
+                                        KillMobSE(v)
+                                        if v.Humanoid.Health <= 0 and v.Humanoid:FindFirstChild("Animator") then
+                                            v.Humanoid.Animator:Destroy()
+                                        end
+                                    until not CursedDualKT or not Auto_Quest_Tushita_3 or WS.Map:FindFirstChild("HeavenlyDimension")
+                                end
+                            end
+                        end
+                    else
+                        ToTween(CFrame.new(-709.3132934570312, 381.6005859375, -11011.396484375))
+                    end
+                elseif WS.Map:FindFirstChild("HeavenlyDimension") then
+                    repeat wait()
+                        if WS.Enemies:FindFirstChild("Cursed Skeleton") or WS.Enemies:FindFirstChild("Cursed Skeleton") or WS.Enemies:FindFirstChild("Heaven's Guardian") then
+                            for i,v in pairs(WS.Enemies:GetChildren()) do
+                                if v.Name == "Cursed Skeleton" or v.Name == "Cursed Skeleton" or v.Name == "Heaven's Guardian" then
+                                    if v.Humanoid.Health > 0 then
+                                        repeat task.wait()
+                                            KillMobSE(v)
+                                            if v.Humanoid.Health <= 0 and v.Humanoid:FindFirstChild("Animator") then
+                                                v.Humanoid.Animator:Destroy()
+                                            end
+                                        until v.Humanoid.Health <= 0 or not v.Parent or Auto_Quest_Tushita_3 == false
+                                    end
+                                end
+                            end
+                        else
+                            wait(5)
+                            ToTween(WS.Map.HeavenlyDimension.Torch1.CFrame)
+                            wait(1.5)
+                            game:GetService("VirtualInputManager"):SendKeyEvent(true, "E", false, game)
+                            wait(1.5)        
+                            ToTween(WS.Map.HeavenlyDimension.Torch2.CFrame)
+                            wait(1.5)
+                            game:GetService("VirtualInputManager"):SendKeyEvent(true, "E", false, game)
+                            wait(1.5)     
+                            ToTween(WS.Map.HeavenlyDimension.Torch3.CFrame)
+                            wait(1.5)
+                            game:GetService("VirtualInputManager"):SendKeyEvent(true, "E", false, game)
+                            wait(1.5)     
+                            ToTween(WS.Map.HeavenlyDimension.Exit.CFrame)
+                        end
+                    until not CursedDualKT or not Auto_Quest_Tushita_3 or CheckM("Alucard Fragment") == 6
+                end
+            end)
+        end
     end
 end)
 ItemTab:AddSection({Name = "Saber"})
@@ -5384,12 +5682,10 @@ SHTab:AddButton({
         RS.Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","2")
   	end    
 })
-SHTab:AddButton({
-	Name = "Race Reroll",
-	Callback = function()
-        RS.Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","1")
-	    RS.Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","2")
-  	end    
+SHTab:AddButton({Name = "Race Reroll", Callback = function()
+    RS.Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","1")
+	RS.Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","2")
+end    
 })
 STTab:AddToggle({
 	Name = "Melee",
@@ -5456,40 +5752,27 @@ spawn(function()
         end
     end
 end)
-MiscTab:AddButton({
-	Name = "Haki Color",
-	Callback = function()
+MiscTab:AddButton({Name = "Haki Color",Callback = function()
     LP.PlayerGui.Main.Colors.Visible = true
-  	end    
+end    
 }) 
-MiscTab:AddButton({
-	Name = "Title Name",
-	Callback = function()
-        local args = {
-            [1] = "getTitles"
-        }
+MiscTab:AddButton({Name = "Title Name",Callback = function()
+        local args = {[1] = "getTitles"}
         RS.Remotes.CommF_:InvokeServer(unpack(args))
       	LP.PlayerGui.Main.Titles.Visible = true
-  	end    
+end    
 }) 
-MiscTab:AddButton({
-	Name = "Rejoin Server",
-	Callback = function()
-      	game:GetService("TeleportService"):Teleport(game.PlaceId, LP)
-  	end    
+MiscTab:AddButton({Name = "Rejoin Server", Callback = function()
+    game:GetService("TeleportService"):Teleport(game.PlaceId, LP)
+end    
 }) 
-MiscTab:AddButton({
-	Name = "Hop Server",
-	Callback = function()
-      HopServer()
-  	end    
+MiscTab:AddButton({Name = "Hop Server", Callback = function()
+    HopServer()
+end    
 }) 
-MiscTab:AddToggle({
-	Name = "Walk On Water",
-	Default = true,
-	Callback = function(vWaterPlane)
-		WaterPlane = vWaterPlane
-	end    
+MiscTab:AddToggle({Name = "Walk On Water", Default = true, Callback = function(vWaterPlane)
+	WaterPlane = vWaterPlane
+end    
 })
 spawn(function()
     while wait() do
@@ -5500,70 +5783,51 @@ spawn(function()
         end
     end
 end)	
-MiscTab:AddTextbox({
-	Name = "Paste Job ID",
-	Default = "Paste",
-	TextDisappear = true,
-	Callback = function(vJobID)
-		JobID = vJobID
-	end	  
+MiscTab:AddTextbox({Name = "Paste Job ID",Default = "Paste",TextDisappear = true,Callback = function(vJobID)
+	JobID = vJobID
+end	  
 })
-MiscTab:AddButton({
-	Name = "Copy Job ID",
-	Callback = function()
-      	setclipboard(tostring(game.JobId))
-  	end    
+MiscTab:AddButton({Name = "Copy Job ID", Callback = function()
+    setclipboard(tostring(game.JobId))
+end    
 })
-MiscTab:AddButton({
-	Name = "Join Server ID",
-	Callback = function()
-      	game:GetService("TeleportService"):TeleportToPlaceInstance(game.placeId,JobID, LP)
-  	end    
+MiscTab:AddButton({Name = "Join Server ID",Callback = function()
+    game:GetService("TeleportService"):TeleportToPlaceInstance(game.placeId,JobID, LP)
+end    
 })
-MiscTab:AddToggle({
-	Name = "Inf Soru",
-	Default = false,
-	Callback = function(Value)
-		getgenv().InfSoru = Value
-	end    
+MiscTab:AddToggle({Name = "Inf Soru",Default = false,Callback = function(vSoru)
+	getgenv().InfSoru = vSoru
+end    
 })
 spawn(function()
     while wait() do
-        pcall(function()
-            if getgenv().InfSoru and LP.Character:FindFirstChild("HumanoidRootPart") ~= nil  then
-                for i,v in next, getgc() do
-                    if LP.Character.Soru then
-                        if typeof(v) == "function" and getfenv(v).script == LP.Character.Soru then
-                            for i2,v2 in next, getupvalues(v) do
-                                if typeof(v2) == "table" then
-                                    repeat wait(0.1)
-                                        v2.LastUse = 0
-                                    until not getgenv().InfSoru or LP.Character.Humanoid.Health <= 0
-                                end
+        if getgenv().InfSoru and LP.Character:FindFirstChild("HumanoidRootPart") ~= nil  then
+            for i,v in next, getgc() do
+                if LP.Character.Soru then
+                    if typeof(v) == "function" and getfenv(v).script == LP.Character.Soru then
+                        for i2,v2 in next, getupvalues(v) do
+                            if typeof(v2) == "table" then
+                                repeat wait(0.1)
+                                    v2.LastUse = 0
+                                until not getgenv().InfSoru or LP.Character.Humanoid.Health <= 0
                             end
                         end
                     end
                 end
             end
-        end)
+        end
     end
 end)
-MiscTab:AddButton({
-	Name = "No Clip",
-	Callback = function()
-      	NoClip = true
-  	end    
+MiscTab:AddButton({Name = "No Clip", Callback = function()
+    NoClip = true
+end    
 })
-MiscTab:AddButton({
-	Name = "Join Pirates",
-	Callback = function()
-        RS.Remotes.CommF_:InvokeServer("SetTeam","Pirates")
-  	end    
+MiscTab:AddButton({Name = "Join Pirates", Callback = function()
+    RS.Remotes.CommF_:InvokeServer("SetTeam","Pirates")
+end    
 })
-MiscTab:AddButton({
-	Name = "Join Marines",
-	Callback = function()
-        RS.Remotes.CommF_:InvokeServer("SetTeam","Marines") 
-  	end    
+MiscTab:AddButton({Name = "Join Marines", Callback = function()
+    RS.Remotes.CommF_:InvokeServer("SetTeam","Marines") 
+end    
 })
 OrionLib:Init()

@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #35.2
+--Memories Hub Hyper - Rewrite Fixed & Update #35.3
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -713,16 +713,6 @@ function CheckSwan()
         if v.Name == "Swan Pirate" and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
             return true
         end
-    end
-end
-function KillMobSE(mobb)
-    local mobreal = mobb
-    if Enemies:FindFirstChild(mobreal.Name) and mobreal:FindFirstChild("Humanoid") and mobreal:FindFirstChild("HumanoidRootPart") and mobreal.Humanoid.Health > 0 then
-        EBuso()
-        EWeapon()
-        ToTween(mobreal.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-        EClick()
-        NoClip = true
     end
 end
 function CheckBoss(vl)
@@ -3827,12 +3817,14 @@ spawn(function()
                     if v.Name == "Mythological Pirate" then
                         repeat task.wait()
                             ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,0,0))
+                            NoClip = true
                         until not CursedDualKT or not Auto_Quest_Yama_1
                         RS.Remotes.CommF_:InvokeServer("CDKQuest","StartTrial","Evil")
                     end
                 end
             else
                 ToTween(CFrame.new(-13451.46484375, 543.712890625, -6961.0029296875))
+                NoClip = true
             end
         end
     end
@@ -3877,7 +3869,11 @@ spawn(function()
                             if GetDistance(v.HumanoidRootPart.Position) > 2000 then
                                 ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
                             else
-                                KillMobSE(v)						
+                                EBuso()
+                                EWeapon()
+                                ToTween(mobreal.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                EClick()
+                                NoClip = true						
                             end      
                         until not CursedDualKT or not Auto_Quest_Yama_2 or not v.Parent or v.Humanoid.Health <= 0 or not v:FindFirstChild("HazeESP")
                     else
@@ -3885,8 +3881,10 @@ spawn(function()
                             if y:FindFirstChild("HazeESP") then
                                 if (y.HumanoidRootPart.Position - LP.Character.HumanoidRootPart.Position).Magnitude > 2000 then
                                     ToTween(y.HumanoidRootPart.CFrameMon* CFrame.new(0,30,0))
+                                    NoClip = true
                                 else
                                     ToTween(y.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                    NoClip = true
                                 end
                             end
                         end
@@ -3909,7 +3907,11 @@ spawn(function()
                                 if v.Name == "Cursed Skeleton" or v.Name == "Cursed Skeleton" or v.Name == "Hell's Messenger" then
                                     if v.Humanoid.Health > 0 then
                                         repeat task.wait()
-                                            KillMobSE(v)
+                                            EBuso()
+                                            EWeapon()
+                                            ToTween(mobreal.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                            EClick()
+                                            NoClip = true
                                             if v.Humanoid.Health <= 0 and v.Humanoid:FindFirstChild("Animator") then
                                                 v.Humanoid.Animator:Destroy()
                                             end	
@@ -3948,6 +3950,7 @@ spawn(function()
                             end
                         else
                             ToTween(CFrame.new(-9570.033203125, 315.9346923828125, 6726.89306640625))
+                            NoClip = true
                         end
                     else
                         RS.Remotes.CommF_:InvokeServer("Bones","Buy",1,1)
@@ -3977,7 +3980,11 @@ spawn(function()
                         if Auto_Quest_Tushita_2 and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                             if (v.HumanoidRootPart.Position - LP.Character.HumanoidRootPart.Position).Magnitude < 2000 then
                                 repeat task.wait()
-                                    KillMobSE(v)
+                                    EBuso()
+                                    EWeapon()
+                                    ToTween(mobreal.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                    EClick()
+                                    NoClip = true
                                     if v.Humanoid.Health <= 0 and v.Humanoid:FindFirstChild("Animator") then
                                         v.Humanoid.Animator:Destroy()
                                     end
@@ -3987,6 +3994,7 @@ spawn(function()
                     end
                 else
                     ToTween(CFrame.new(-5545.1240234375, 313.800537109375, -2976.616455078125))
+                    NoClip = true
                 end
             end)
         end
@@ -4001,8 +4009,12 @@ spawn(function()
                         for i,v in pairs(WS.Enemies:GetChildren()) do
                             if v.Name == "Cake Queen" then
                                 if v.Humanoid.Health > 0 then
-                                    repeat wait()
-                                        KillMobSE(v)
+                                    repeat task.wait()
+                                        EBuso()
+                                        EWeapon()
+                                        ToTween(mobreal.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                        EClick()
+                                        NoClip = true
                                         if v.Humanoid.Health <= 0 and v.Humanoid:FindFirstChild("Animator") then
                                             v.Humanoid.Animator:Destroy()
                                         end
@@ -4012,6 +4024,7 @@ spawn(function()
                         end
                     else
                         ToTween(CFrame.new(-709.3132934570312, 381.6005859375, -11011.396484375))
+                        NoClip = true
                     end
                 elseif WS.Map:FindFirstChild("HeavenlyDimension") then
                     repeat wait()
@@ -4020,7 +4033,11 @@ spawn(function()
                                 if v.Name == "Cursed Skeleton" or v.Name == "Cursed Skeleton" or v.Name == "Heaven's Guardian" then
                                     if v.Humanoid.Health > 0 then
                                         repeat task.wait()
-                                            KillMobSE(v)
+                                            EBuso()
+                                            EWeapon()
+                                            ToTween(mobreal.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                            EClick()
+                                            NoClip = true
                                             if v.Humanoid.Health <= 0 and v.Humanoid:FindFirstChild("Animator") then
                                                 v.Humanoid.Animator:Destroy()
                                             end

@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #33.8
+--Memories Hub Hyper - Rewrite Fixed & Update #33.9
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -88,7 +88,7 @@ local function MakeDraggable(topbarobject, object)
 	)
 end
 
-ScreenGui.Parent = game.CoreGui
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 Frame.Parent = ScreenGui
@@ -115,7 +115,7 @@ ImageLabel.MouseButton1Down:Connect(function()
 end)
 UICorner.CornerRadius = UDim.new(0, 200)
 UICorner.Parent = ImageLabel
-MakeDraggable(Frame, Frame)
+MakeDraggable(ImageLabel, Frame)
 
 if game.PlaceId == 2753915549 then
     Main = true

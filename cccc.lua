@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #33.4
+--Memories Hub Hyper - Rewrite Fixed & Update #33.5
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -3025,7 +3025,7 @@ elseif Zou then
     Vector3Boat = Vector3.new(-16927.17578125, 9.056343078613281, 435.248779296875)
 end
 local SeaEventToggle = SeaTab:AddToggle({
-    Name = "Auto Sail Boats",
+    Name = "Auto Sail Boat",
     Default = false,
     Flag = "SailBoat",
     Save = false,
@@ -3074,7 +3074,6 @@ task.spawn(function()
                             TweenObject(ZoneCFrame,checkboat().VehicleSeat,350)
                         end
                     end
-                elseif CheckPirateBoat() or CheckSeaBeast() or Enemies:FindFirstChild("Shark") or Enemies:FindFirstChild("Piranha") or Enemies:FindFirstChild("Terrorshark") or Enemies:FindFirstChild("FishBoat") or Enemies:FindFirstChild("Fish Crew Member") or WO.Locations:FindFirstChild("Rough Sea") then
                 end
             end)
         end

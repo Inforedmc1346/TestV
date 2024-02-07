@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #33.1
+--Memories Hub Hyper - Rewrite Fixed & Update #33.2
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -3025,7 +3025,7 @@ elseif Zou then
     Vector3Boat = Vector3.new(-16927.17578125, 9.056343078613281, 435.248779296875)
 end
 local SeaEventToggle = SeaTab:AddToggle({
-    Name = "Auto Sail Boats",
+    Name = "Auto Sail Boat",
     Default = false,
     Flag = "SailBoat",
     Save = false,
@@ -3040,13 +3040,13 @@ task.spawn(function()
             pcall(function()
                 if not CheckSeaBeast() and not CheckPirateBoat() and not game:GetService("Workspace").Enemies:FindFirstChild("Shark") and not game:GetService("Workspace").Enemies:FindFirstChild("Piranha") and not game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") and not game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and not game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and not WO.Locations:FindFirstChild("Rough Sea") then
                     if not checkboat() then
-                        if (Vector3Boat - LP.Character.HumanoidRootPart.Position).Magnitude >= 2000 then
+                        if GetDistance(Vector3Boat) >= 2000 then
                             BypassTele(CFrameBoat)
                         else
                             ToTween(CFrameBoat)
                             NoClip = true
-                            if (Vector3Boat - LP.Character.HumanoidRootPart.Position).Magnitude < 20 then
-                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", BoatNameBuy)
+                            if GetDistance(Vector3Boat) < 20 and LP.Character.Humanoid.Health > 0 then
+                                RS.Remotes.CommF_:InvokeServer("BuyBoat", BoatNameBuy)
                             end
                         end
                     elseif checkboat() then
@@ -3064,7 +3064,7 @@ task.spawn(function()
                                             table.insert(Nigga,v) 
                                         end)
                                     end
-                                    repeat task.wait() until not game:GetService("Players").LocalPlayer.Character.Humanoid.Sit 
+                                    repeat task.wait() until not LP.Character.Humanoid.Sit 
                                     for i,v in pairs(Nigga) do 
                                         v.CanCollide = true 
                                     end

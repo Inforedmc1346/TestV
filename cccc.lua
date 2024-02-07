@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #33.3
+--Memories Hub Hyper - Rewrite Fixed & Update #33.4
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -3105,6 +3105,24 @@ SeaTab:AddToggle({Name = "Auto Dodge Rough Sea",Default = false, Callback = func
     RoughSea = vRoughSea
 end    
 }) 
+SeaTab:AddToggle({Name = "Auto Reset If Boat Destroy",Default = false, Callback = function(vBoatDEs)
+    BoatDEs = vBoatDEs
+end    
+}) 
+task.spawn(function()
+    while wait() do
+        if not checkboat() then
+            if CheckPirateBoat() or CheckSeaBeast() or Enemies:FindFirstChild("Shark") or Enemies:FindFirstChild("Piranha") or Enemies:FindFirstChild("Terrorshark") or Enemies:FindFirstChild("FishBoat") or Enemies:FindFirstChild("Fish Crew Member") or WO.Locations:FindFirstChild("Rough Sea") then
+                if (Vector3Boat - LP.Character.HumanoidRootPart.Position).Magnitude >= 2000 then
+                    BypassTele(CFrameBoat)
+                else
+                    ToTween(CFrameBoat)
+                    NoClip = true
+                end
+            end
+        end
+    end
+end)
 task.spawn(function()
     while task.wait() do
         if FCMAFS then

@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #33.5
+--Memories Hub Hyper - Rewrite Fixed & Update #33.7
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -1457,10 +1457,11 @@ local selecttool = MainTab:AddDropdown({Name = "Select Tool", Default = "", Opti
 	end    
 })
 MainTab:AddSection({Name = "Fast Attack"})
-local FastAttackD = MainTab:AddDropdown({Name = "Delay Attack", Default = "0.175", Options = {"0.1","0.15","0.175","0.2"},Callback = function(vFastDelay)
+local FastAttackD = MainTab:AddDropdown({Name = "Delay Attack", Default = "0.175", Options = {"0.1","0.15","0.175","0.2", "0.9"},Callback = function(vFastDelay)
     FastDelay = vFastDelay
 end    
 })
+FastDelay = 0.2
 Loop:Connect(function()
     if FastDelay == nil then
         if MasteryOption then
@@ -1491,6 +1492,12 @@ Loop:Connect(function()
             FastDelay = 3
         else
             FastDelay = 0.5
+        end
+    elseif FastDelay == "0.9" then
+        if MasteryOption then
+            FastDelay = 3
+        else
+            FastDelay = 2
         end
     end
 end)
@@ -3174,7 +3181,18 @@ spawn(function()
                         repeat task.wait()
                             EBuso()
                             EWeapon()
-                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                            if game.Players.LocalPlayer.Character.Humanoid.Health > 8000 then
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                NoClip = true
+                            elseif game.Players.LocalPlayer.Character.Humanoid.Health <= healthlow then
+                                if YTween then
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,600,0))
+                                    NoClip = true
+                                else
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                    NoClip = true
+                                end
+                            end
                             EClick()
                             v.Humanoid.WalkSpeed = 0
                             NoClip = true
@@ -3192,7 +3210,18 @@ spawn(function()
                         repeat task.wait()
                             EBuso()
                             EWeapon()
-                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                            if game.Players.LocalPlayer.Character.Humanoid.Health > 8000 then
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                NoClip = true
+                            elseif game.Players.LocalPlayer.Character.Humanoid.Health <= healthlow then
+                                if YTween then
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,600,0))
+                                    NoClip = true
+                                else
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                    NoClip = true
+                                end
+                            end
                             EClick()
                             v.Humanoid.WalkSpeed = 0
                             NoClip = true

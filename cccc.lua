@@ -18,7 +18,7 @@ local Window = Library:CreateWindow({
     Title = 'QuanKazakhstan  '..Date,
     Center = true, 
     AutoShow = true,
-})ด
+})
 local Tabs = {
     Main = Window:AddTab('General'), 
     ['UI Settings'] = Window:AddTab('UI Settings'),

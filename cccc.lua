@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #33.2
+--Memories Hub Hyper - Rewrite Fixed & Update #33.1
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -150,7 +150,7 @@ function ToTween(Pos)
     elseif Distance < 150 then
         Speed = 325
         LP.Character.PrimaryPart.CFrame = Pos
-    if Distance <= 250 then
+    elseif Distance < 250 then
         Speed = 325
         LP.Character.PrimaryPart.CFrame = Pos
     elseif Distance < 500 then
@@ -225,6 +225,25 @@ for i, v in pairs(CheckQuest()) do
         print(i, v)
     else
         print(i, #v)
+    end
+end
+function GetMob()
+    local ae = {}
+    for r, v in pairs(game.Workspace.MobSpawns:GetChildren()) do
+        if not table.find(ae, v.Name) then
+            table.insert(ae, v.Name)
+        end
+    end
+    if string.find(WO.EnemySpawns:GetChildren()[1].Name, "Lv.") then
+        for r, v in pairs(ae) do
+            local ab = v
+            v = tostring(v:gsub(" %pLv. %d+%p", ""))
+            if v == CheckQuest()["MobName"] then
+                return ab
+            end
+        end
+    else
+        return CheckQuest()["MobName"]
     end
 end
 function GetPosMob(Mob)
@@ -1438,7 +1457,7 @@ local selecttool = MainTab:AddDropdown({Name = "Select Tool", Default = "", Opti
 	end    
 })
 MainTab:AddSection({Name = "Fast Attack"})
-local FastAttackD = MainTab:AddDropdown({Name = "Delay Attack", Default = "0.175", Options = {"0.1","0.15","0.175","0.2", "0.9"},Callback = function(vFastDelay)
+local FastAttackD = MainTab:AddDropdown({Name = "Delay Attack", Default = "0.175", Options = {"0.1","0.15","0.175","0.2"},Callback = function(vFastDelay)
     FastDelay = vFastDelay
 end    
 })
@@ -1472,12 +1491,6 @@ Loop:Connect(function()
             FastDelay = 3
         else
             FastDelay = 0.5
-        end
-    elseif FastDelay == "0.9" then
-        if MasteryOption then
-            FastDelay = 3
-        else
-            FastDelay = 1
         end
     end
 end)
@@ -1885,7 +1898,7 @@ spawn(function()
                             end
                         end
                     else
-                        if EnemySpawns:FindFirstChild(RemoveLvTitle(CheckQuest()["MobName"])) then
+                        if EnemySpawns:FindFirstChild(CheckQuest()["MobName"]) then
                             for i,v in pairs(EnemySpawns:GetChildren()) do
                                 if v.Name == RemoveLvTitle(CheckQuest()["MobName"]) then
                                     ToTween(getNextPosition2(v.CFrame * CFrame.new(0,15,0)))
@@ -1933,13 +1946,6 @@ spawn(function()
                                         if va and ve then
                                             EquipWeaponName(va)
                                             SendKeyEvents(ve)
-                                            local args = {[1] = "TAP", [2] = v.HumanoidRootPart.Position}                
-                                            LP.Character.Humanoid:FindFirstChild("Soul Guitar"):InvokeServer(unpack(args))
-                                            local args = {
-                                                [1] = v.HumanoidRootPart.Position,
-                                                [2] = v.HumanoidRootPart
-                                            }
-                                            LP.Character[va].RemoteFunctionShoot:InvokeServer(unpack(args))
                                             NoClip = true
                                             task.wait(.2)
                                         end
@@ -1952,13 +1958,6 @@ spawn(function()
                                         local va = CheckMasSkill()
                                         ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
                                         if va then
-                                            local args = {[1] = "TAP", [2] = v.HumanoidRootPart.Position}                
-                                            LP.Character.Humanoid:FindFirstChild("Soul Guitar"):InvokeServer(unpack(args))
-                                            local args = {
-                                                [1] = v.HumanoidRootPart.Position,
-                                                [2] = v.HumanoidRootPart
-                                            }
-                                            LP.Character[va].RemoteFunctionShoot:InvokeServer(unpack(args))
                                             EquipWeaponName(va)
                                             SendKeyEvents("Z")
                                             SendKeyEvents("X")
@@ -3526,7 +3525,7 @@ spawn(function()
         if AutoYama then
             if RS.Remotes.CommF_:InvokeServer("EliteHunter","Progress") >= 30 then
                 repeat wait(.1)
-                    fireclickdetector(WS.Map.Waterfall.SealedKatana.Handle.ClickDetector)
+                    fireclickdetector(game:GetService("Workspace").Map.Waterfall.SealedKatana.Handle.ClickDetector)
                 until LP.Backpack:FindFirstChild("Yama") or not AutoYama
             end
         end
@@ -3535,9 +3534,9 @@ end)
 ItemTab:AddToggle({
 	Name = "Auto Tushita [Wait Update]",
 	Default = false,
-	Callback = function(vTushitac)
-        Tushitac = vTushitac
-        DisableTween(Tushitac)
+	Callback = function(vAutoTushita)
+         AutoTushita = vAutoTushita
+         DisableTween(AutoTushita)
 	end    
 }) 
 ItemTab:AddSection({Name = "Cursed Dual Katana"})
@@ -3546,6 +3545,7 @@ ItemTab:AddToggle({Name = "Auto Cursed Dual Katana [Wait Update]", Default = fal
     DisableTween(CursedDualKT)
 end    
 }) 
+
 ItemTab:AddSection({Name = "Saber"})
 ItemTab:AddToggle({
 	Name = "Claim Saber",

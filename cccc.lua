@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #35
+--Memories Hub Hyper - Rewrite Fixed & Update #35.1
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -1038,7 +1038,7 @@ for r,v in next, RS.Remotes.CommF_:InvokeServer("GetFruits", PG.Main.FruitShop:G
         FruitAbout1M[v.Price] = v.Name
     end
 end
-function QuestC(mob)
+function QuestCV(mob)
     if GuideModule["Data"]["QuestData"]["Name"] == mob then
         return true
     end
@@ -1913,7 +1913,7 @@ spawn(function()
                         Remote.CommF_:InvokeServer("AbandonQuest")
                     end
                 else
-                    if not QuestDungKo(CheckQuest()["MobName"]) then
+                    if not QuestCV(CheckQuest()["MobName"]) then
                         Remote:InvokeServer("AbandonQuest")
                     end
                 end

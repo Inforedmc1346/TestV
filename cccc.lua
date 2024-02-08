@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #34
+--Memories Hub Hyper - Rewrite Fixed & Update #35
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -1038,6 +1038,12 @@ for r,v in next, RS.Remotes.CommF_:InvokeServer("GetFruits", PG.Main.FruitShop:G
         FruitAbout1M[v.Price] = v.Name
     end
 end
+function QuestC(mob)
+    if GuideModule["Data"]["QuestData"]["Name"] == mob then
+        return true
+    end
+    return false
+end
 function EWeaponSelect(ToolSe2)
     if game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe2) then
         Tool = game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe2)
@@ -1902,8 +1908,14 @@ spawn(function()
             if StartFarms and SelectFarm == "Level" then         
                 local Quest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
                 local QuestTitle = PG.Main.Quest.Container.QuestTitle.Title.Text
-                if not string.find(QuestTitle, CheckQuest()["MobName"]) then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                if not Data.Level.Value == 2500 and not Data.Level.Value <= 2524 then 
+                    if not string.find(QuestTitle, CheckQuest()["MobName"]) then
+                        Remote.CommF_:InvokeServer("AbandonQuest")
+                    end
+                else
+                    if not QuestDungKo(CheckQuest()["MobName"]) then
+                        Remote:InvokeServer("AbandonQuest")
+                    end
                 end
                 if Quest.Visible == true then    
                     if game.Workspace.Enemies:FindFirstChild(CheckQuest()["MobName"]) then     

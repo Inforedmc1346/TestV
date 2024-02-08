@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #35.1
+--Memories Hub Hyper - Rewrite Fixed & Update #35.2
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -1407,6 +1407,7 @@ function NoFog()
             v:Destroy()
         end
     end
+    c.LightingLayers:Destroy()
 end
 function CheckMasSelect(weapon)
     local v00121 = LP.Backpack
@@ -1908,7 +1909,7 @@ spawn(function()
             if StartFarms and SelectFarm == "Level" then         
                 local Quest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
                 local QuestTitle = PG.Main.Quest.Container.QuestTitle.Title.Text
-                if not Data.Level.Value == 2500 and not Data.Level.Value <= 2524 then 
+                if not Data.Level.Value == 2500 or not Data.Level.Value <= 2524 then 
                     if not string.find(QuestTitle, CheckQuest()["MobName"]) then
                         Remote.CommF_:InvokeServer("AbandonQuest")
                     end
@@ -4839,7 +4840,7 @@ spawn(function()
 end)
 V4Tab:AddSection({Name = "Trial V4"})
 V4Tab:AddToggle({
-    Name = "Finish Trial Race",
+    Name = "Auto Trial Race",
     Default = false,
     Callback = function(vRaceTrial)
         RaceTrial = vRaceTrial
@@ -4944,43 +4945,47 @@ V4Tab:AddToggle({
 }) 
 local TargetI = nil
 local PlayerChecked = {}
+local CFrameAcientp = CFrame.new(28718.88671875, 14907.6630859375, -56.46955871582031)
 task.spawn(function()
     while task.wait() do
         if KillTrials then
             for i,v in pairs(WS.Characters:GetChildren()) do
                 magnitude = GetDistance(v.HumanoidRootPart.Position)
+                magnitudeacient = GetDistance(CFrameAcientp)
                 if v.Name ~= LP.Name and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and not table.find(PlayerChecked, v) then
-                    if magnitude <= 300 then
-                        TargetI = v
-                        repeat task.wait()
-                            FastDelay = 0.02
-                            EBuso()
-                            if SpamSkillAllWeapon then
-                                chodienspamhirimixienchetcuchungmay = true
-                                SpamSkill = false
-                                aim = true
-                                CFrameHunt = TargetI.HumanoidRootPart.CFrame 
-                            else
-                                EWeapon()
-                                SpamSkill = true
-                                chodienspamhirimixienchetcuchungmay = false
-                            end
-                            ToTween(TargetI.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
-                            EClick()
-                            NoClip = true
-                            EnableButtonKen = true
-                            EnableFastAttack = true
-                            UseAttack = true
-                        until not KillTrials or not TargetI:FindFirstChild("HumanoidRootPart") or not TargetI:FindFirstChild("Humanoid") or TargetI.Humanoid.Health <= 0
-                        table.insert(PlayerChecked, PlayerI)
-                        TargetI = nil
-                        aim = false
-                        EnableFastAttack = false
-                        SpamSkill = false
-                        NoClip = false
-                        EnableButtonKen = false
-                        UseAttack = false
-                        FastDelay = vFastDelay
+                    if magnitudeacient <= 500 and PG.Main.Timer.Visible == true then
+                        if magnitude <= 200 then
+                            TargetI = v
+                            repeat task.wait()
+                                FastDelay = 0.02
+                                EBuso()
+                                if SpamSkillAllWeapon then
+                                    chodienspamhirimixienchetcuchungmay = true
+                                    SpamSkill = false
+                                    aim = true
+                                    CFrameHunt = TargetI.HumanoidRootPart.CFrame 
+                                else
+                                    EWeapon()
+                                    SpamSkill = true
+                                    chodienspamhirimixienchetcuchungmay = false
+                                end
+                                ToTween(TargetI.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
+                                EClick()
+                                NoClip = true
+                                EnableButtonKen = true
+                                EnableFastAttack = true
+                                UseAttack = true
+                            until not KillTrials or not TargetI:FindFirstChild("HumanoidRootPart") or not TargetI:FindFirstChild("Humanoid") or TargetI.Humanoid.Health <= 0
+                            table.insert(PlayerChecked, PlayerI)
+                            TargetI = nil
+                            aim = false
+                            EnableFastAttack = false
+                            SpamSkill = false
+                            NoClip = false
+                            EnableButtonKen = false
+                            UseAttack = false
+                            FastDelay = vFastDelay
+                        end
                     end
                 end
             end

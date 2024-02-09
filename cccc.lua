@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #36.2
+--Memories Hub Hyper - Rewrite Fixed & Update #36.3
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -4945,6 +4945,7 @@ task.spawn(function()
                                 NoClip = true
                                 EnableButtonKen = true
                                 EnableFastAttack = true
+                                UseAttack = true
                             until not KillTrials or not TargetI:FindFirstChild("HumanoidRootPart") or not TargetI:FindFirstChild("Humanoid") or TargetI.Humanoid.Health <= 0
                             table.insert(PlayerChecked, PlayerI)
                             v = nil 
@@ -4955,6 +4956,7 @@ task.spawn(function()
                             SpamSkill = false
                             NoClip = false
                             EnableButtonKen = false
+                            UseAttack = false
                             FastDelay = vFastDelay
                         end
                     end
@@ -5034,7 +5036,7 @@ spawn(function()
                         NoClip = true
                         EnableButtonKen = true
                         EnableFastAttack = true
-                    until not KillTrials or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
+                    until not KillTrials2 or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
                     aim = false
                     EnableFastAttack = false
                     SpamSkill = false

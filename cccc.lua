@@ -4986,6 +4986,9 @@ task.spawn(function()
                         UseAttack = false
                         FastDelay = vFastDelay
                     end
+                elseif v.Humanoid.Health <= 0 and magnitude > 200 then
+                    v = nil
+                    v.Name = nil
                 end
             end
         else
@@ -5021,52 +5024,6 @@ spawn(function()
         end
     end
 end) 
-V4Tab:AddToggle({
-    Name = "Kill Player After Trails [Test]",
-    Default = false,
-    Callback = function(vKillTrials2)
-        KillTrials2 = vKillTrials2
-        DisableTween(KillTrials2)
-    end    
-}) 
-task.spawn(function()
-    while task.wait() do
-        if KillTrials2 then
-            repeat task.wait()
-                if GetCurrentTarg ~= nil and GetCurrentTarg.Character.Humanoid.Health <= 0 then
-                    GetCurrentTarg = nil
-                    GetPlayerTrial()
-                end
-                if GetCurrentTarg ~= nil then
-                    FastDelay = 0.02
-                    EBuso()
-                    if SpamSkillAllWeapon then
-                        chodienspamhirimixienchetcuchungmay = true
-                        SpamSkill = false
-                        aim = true
-                        CFrameHunt = GetCurrentTarg.HumanoidRootPart.CFrame 
-                    else
-                        EWeapon()
-                        SpamSkill = true
-                        chodienspamhirimixienchetcuchungmay = false
-                    end
-                    ToTween(GetCurrentTarg.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
-                    EClick()
-                    NoClip = true
-                    EnableFastAttack = true
-                    UseAttack = true
-                end
-            until not KillTrials or not GetCurrentTarg:FindFirstChild("HumanoidRootPart") or not GetCurrentTarg:FindFirstChild("Humanoid") or GetCurrentTarg.Humanoid.Health <= 0
-            GetCurrentTarg = nil
-            aim = false
-            EnableFastAttack = false
-            SpamSkill = false
-            NoClip = false
-            UseAttack = false
-            FastDelay = vFastDelay
-        end
-    end
-end)
 V4Tab:AddToggle({
     Name = "Spam Skill All Weapon [Option]",
     Default = false,

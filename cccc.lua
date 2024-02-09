@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #35.8
+--Memories Hub Hyper - Rewrite Fixed & Update #35.9
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -4791,6 +4791,21 @@ spawn(function()
     end
 end)
 V4Tab:AddSection({Name = "Trial V4"})
+V4Tab:AddToggle({
+    Name = "Auto Choose Gear",
+    Default = false,
+    Callback = function(vChooseGear)
+        ChooseGear = vChooseGear
+        DisableTween(ChooseGear)
+    end    
+})
+spawn(function()
+    while task.wait() do
+        if ChooseGear and Zou then
+            InstantChooseGear()
+        end
+    end
+end)
 V4Tab:AddToggle({
     Name = "Auto Trial Race",
     Default = false,

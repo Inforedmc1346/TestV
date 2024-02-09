@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #35.3
+--Memories Hub Hyper - Rewrite Fixed & Update #35.4
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -4113,6 +4113,7 @@ SettingTab:AddButton({
 	Name = "Remove Fog",
 	Callback = function()
         NoFog()
+        game:GetService("Lighting").LightingLayers:Destroy()
   	end    
 })
 SettingTab:AddToggle({

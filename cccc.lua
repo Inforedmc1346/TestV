@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #35.2
+--Memories Hub Hyper - Rewrite Fixed & Update #35.3
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -195,25 +195,13 @@ function TpEntrance(P)
     LP.Character.PrimaryPart.CFrame = CFrame.new(LP.Character.PrimaryPart.CFrame.X, LP.Character.PrimaryPart.CFrame.Y + 50, LP.Character.PrimaryPart.CFrame.Z)
     wait(0.5)
 end
-function ToTween(Pos)
-    Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    if Distance < 25 then
-        Speed = 325
+function ToTween(Pos, SpeedT)
+    Distance = GetDistance(Pos.Position)
+    if not SpeedT or typeof(SpeedT) ~= "number" then
+        Speed = 330
+    end
+    if Distance <= 220 then
         LP.Character.PrimaryPart.CFrame = Pos
-    elseif Distance < 50 then
-        Speed = 325
-        LP.Character.PrimaryPart.CFrame = Pos
-    elseif Distance < 150 then
-        Speed = 325
-        LP.Character.PrimaryPart.CFrame = Pos
-    elseif Distance < 250 then
-        Speed = 325
-    elseif Distance < 500 then
-        Speed = 325
-    elseif Distance < 750 then
-        Speed = 325
-    elseif Distance >= 1000 then
-        Speed = 325
     end
     tween = game:GetService("TweenService"):Create(
         game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
@@ -1909,13 +1897,9 @@ spawn(function()
             if StartFarms and SelectFarm == "Level" then         
                 local Quest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
                 local QuestTitle = PG.Main.Quest.Container.QuestTitle.Title.Text
-                if not Data.Level.Value == 2500 or not Data.Level.Value <= 2524 then 
-                    if not string.find(QuestTitle, CheckQuest()["MobName"]) then
-                        Remote.CommF_:InvokeServer("AbandonQuest")
-                    end
-                else
-                    if not QuestCV(CheckQuest()["MobName"]) then
-                        Remote:InvokeServer("AbandonQuest")
+                if not string.find(QuestTitle, CheckQuest()["MobName"]) then
+                    if not Data.Level.Value == 2500 or not Data.Level.Value <= 2524 then
+                        RS.Remotes.CommF_:InvokeServer("AbandonQuest")
                     end
                 end
                 if Quest.Visible == true then    
@@ -1925,7 +1909,7 @@ spawn(function()
                                 repeat task.wait()
                                     EWeapon()                                                                                                                    
                                     EBuso()
-                                    ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
                                     if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
                                         HealthM = v.Humanoid.Health <= v.Humanoid.MaxHealth * HealthStop / 100
                                         if HealthM then
@@ -1975,8 +1959,8 @@ spawn(function()
                     else
                         if EnemySpawns:FindFirstChild(CheckQuest()["MobName"]) then
                             for i,v in pairs(EnemySpawns:GetChildren()) do
-                                if v.Name == RemoveLvTitle(CheckQuest()["MobName"]) then
-                                    ToTween(getNextPosition2(v.CFrame * CFrame.new(0,15,0)))
+                                if v.Name == CheckQuest()["MobName"] then
+                                    ToTween(v.CFrame * CFrame.new(0,15,0))
                                 end
                             end
                         end
@@ -2007,10 +1991,10 @@ spawn(function()
                                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
                                     end
                                 elseif ClaimQuest and game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-                                    ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
                                 end
                             else
-                                ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
                             end
                             if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
                                 HealthM = v.Humanoid.Health <= v.Humanoid.MaxHealth * HealthStop / 100
@@ -2088,13 +2072,13 @@ spawn(function()
                                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                                 end
                                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                                    ToTween(CFrame.new(-2020.6177978515625, 37.793975830078125, -12029.17578125))
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
                                     if (LP.Character.HumanoidRootPart.Position - CFrame.new(-2020.6177978515625, 37.793975830078125, -12029.17578125).Position).Magnitude <= 5 then
                                         local args = {[1] = "StartQuest", [2] = "CakeQuest1", [3] = 1}
                                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
                                     end
                                 elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-                                    ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
                                 end
                             end
                             if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
@@ -2428,15 +2412,10 @@ elseif Zou then
         end
     end)
     Mirragecheck = StatusTab:AddLabel("Zou")
-    ItemTab:AddToggle({
-        Name = "Tween Mystic Island",
-        Default = false,
-        Flag = "Tomystic",
-        Save = true,
-        Callback = function(vTMysticIsland)
-            TMysticIsland = vTMysticIsland
-            DisableTween(TMysticIsland)
-        end    
+    ItemTab:AddToggle({Name = "Tween Mystic Island", Default = false, Flag = "Tomystic", Save = true, Callback = function(vTMysticIsland)
+        TMysticIsland = vTMysticIsland
+        DisableTween(TMysticIsland)
+    end    
     })
     spawn(function()
         while task.wait() do
@@ -2448,12 +2427,9 @@ elseif Zou then
             end
         end
     end)
-    ItemTab:AddToggle({
-        Name = "Cam To Moon",
-        Default = false,
-        Callback = function(vCamtomoon)
-            Camtomoon = vCamtomoon
-        end    
+    ItemTab:AddToggle({Name = "Cam To Moon", Default = false, Callback = function(vCamtomoon)
+        Camtomoon = vCamtomoon
+    end    
     }) 
     spawn(function()
         while wait() do
@@ -2963,16 +2939,11 @@ spawn(function()
     end
 end)
 ItemTab:AddSection({Name = "Elite Hunter"})
-local EliteToggle = ItemTab:AddToggle({
-	Name = "Auto Elite",
-	Default = false,
-	Flag = "KillElite",
-	Save = true,
-	Callback = function(vElite)
-		Elite = vElite
-        RS.Remotes.CommF_:InvokeServer("AbandonQuest")
-		DisableTween(Elite)
-	end    
+local EliteToggle = ItemTab:AddToggle({Name = "Auto Elite", Default = false, Flag = "KillElite", Save = true, Callback = function(vElite)
+	Elite = vElite
+    RS.Remotes.CommF_:InvokeServer("AbandonQuest")
+	DisableTween(Elite)
+end    
 }) 
 spawn(function()
     while task.wait() do
@@ -2986,7 +2957,7 @@ spawn(function()
                     repeat task.wait()
                         EBuso()
                         EWeapon()
-                        ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))
+                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
                         EClick()
                         NoClip = true
                     until not v or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") and v.Humanoid.Health <= 0 or not Elite
@@ -3007,10 +2978,9 @@ ItemTab:AddToggle({
 		BuyLS = vBuyLS
 	end    
 }) 
-
 spawn(function()
     while wait() do
-        if _G.AutoBuyLegendarySword then
+        if BuyLS then
             local args = { [1] = "LegendarySwordDealer", [2] = "1"}
             RS.Remotes.CommF_:InvokeServer(unpack(args))
             local args = {[1] = "LegendarySwordDealer", [2] = "2"}
@@ -3020,7 +2990,6 @@ spawn(function()
         end 
     end
 end)
-
 SeaTab:AddSection({Name = "Sea Event"})
 local BoatDropDown = SeaTab:AddDropdown({
 	Name = "Select Boat",
@@ -3041,16 +3010,14 @@ spawn(function()
         end
     end
 end)
-
 SeaTab:AddDropdown({
 	Name = "Select Zone",
 	Default = "",
 	Options = {"Zone 1", "Zone 2", "Zone 3", "Zone 4", "Zone 5", "Zone 6"},
-	Callback = function(Value)
-		ZoneSelect = Value
+	Callback = function(vZoneSelect)
+		ZoneSelect = vZoneSelect
 	end    
 })
-
 spawn(function()
     while wait() do 
         if ZoneSelect == "Zone 1" then
@@ -3479,15 +3446,15 @@ ItemTab:AddSection({Name = "Rip Indra - Dark Dagger"})
 ItemTab:AddToggle({
 	Name = "Auto Rip Indra",
 	Default = false,
-	Callback = function(Value)
-		_G.RipIndraKill = Value
-		DisableTween(_G.RipIndraKill)
+	Callback = function(vARipInd)
+		ARipInd = vARipInd
+		DisableTween(ARipInd)
 	end    
 }) 
 spawn(function()
     pcall(function()
         while wait() do
-            if _G.RipIndraKill then
+            if ARipInd then
                 if Enemies:FindFirstChild("rip_indra True Form") or Enemies:FindFirstChild("rip_indra") then
                     for i,v in pairs(Enemies:GetChildren()) do
                         if v.Name == ("rip_indra True Form" or v.Name == "rip_indra") and v.Humanoid.Health > 0 and v:IsA("Model") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
@@ -3501,7 +3468,7 @@ spawn(function()
                                     game:GetService("VirtualUser"):CaptureController()
                                     game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 670),workspace.CurrentCamera.CFrame)
                                 end)
-                            until not _G.RipIndraKill or v.Humanoid.Health <= 0
+                            until not ARipInd or v.Humanoid.Health <= 0
                         end
                     end
                 else
@@ -3664,7 +3631,7 @@ end
 
 ItemTab:AddSection({Name = "Saber"})
 ItemTab:AddToggle({
-	Name = "Claim Saber",
+	Name = "Auto Claim Saber",
 	Default = false,
 	Callback = function(ClaimSaber)
 		ClaimSaber = vClaimSaber
@@ -4007,7 +3974,7 @@ MainTab:AddToggle({
 spawn(function()
     while task.wait() do
         if RaidPirate then
-            local CFrameBoss = CFrame.new(-5496.17432, 313.768921, -2841.53027, 0.924894512, 7.37058015e-09, 0.380223751, 3.5881019e-08, 1, -1.06665446e-07, -0.380223751, 1.12297109e-07, 0.924894512)
+            local CFCOTS = CFrame.new(-5496.17432, 313.768921, -2841.53027, 0.924894512, 7.37058015e-09, 0.380223751, 3.5881019e-08, 1, -1.06665446e-07, -0.380223751, 1.12297109e-07, 0.924894512)
             if (CFrame.new(-5539.3115234375, 313.800537109375, -2972.372314453125).Position - LP.Character.HumanoidRootPart.Position).Magnitude <= 500 then
                 for i,v in pairs(Enemies:GetChildren()) do
                     if RaidPirate and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
@@ -4024,11 +3991,7 @@ spawn(function()
                     end
                 end
             else
-                if ((CFrameBoss).Position - LP.Character.HumanoidRootPart.Position).magnitude <= 1500 then
-                    ToTween(CFrameBoss)
-                else
-                    ToTween(CFrameBoss)
-                end
+                ToTweenWithEntrace(CFCOTS)
             end
         end
     end
@@ -4851,8 +4814,7 @@ task.spawn(function()
     while task.wait() do
         if RaceTrial then
             pcall(function()
-                local RaceAC = Data.Race.Value
-                if RaceAC == "Human" then
+                if Data.Race.Value == "Human" then
                     for i,v in pairs(Enemies:GetDescendants()) do
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             repeat wait(.1)
@@ -4862,30 +4824,35 @@ task.spawn(function()
                             until not RaceTrial or v.Humanoid.Health <= 0
                         end
                     end
-                elseif RaceAC == "Skypiea" then
+                elseif Data.Race.Value == "Skypiea" then
                     for i,v in pairs(WS.Map.SkyTrial.Model:GetDescendants()) do
                         if v.Name ==  "snowisland_Cylinder.081" then
                             ToTween(v.CFrame* CFrame.new(0,0,0))
                         end
                     end
-                elseif RaceAC == "Fishman" then
-                    for i,v in pairs(WS.SeaBeasts.SeaBeast1:GetDescendants()) do
-                        if v.Name ==  "HumanoidRootPart" then
-                            repeat task.wait()
-                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,400,0))
-                                aim = true 
-                                CFrameHunt = v.HumanoidRootPart.CFrame 
-                                chodienspamhirimixienchetcuchungmay = true
-                                NoClip = true
-                            until not RaceTrial or v.Humanoid.Health <= 0
-                            chodienspamhirimixienchetcuchungmay = false
-                            aim = false
+                elseif WO.Locations:FindFirstChild("Trial of Water") then
+                    for i,v in pairs(WS.SeaBeasts:GetChildren()) do
+                        if string.find(v.Name, "SeaBeast") and v:FindFirstChild("HumanoidRootPart") and (v.HumanoidRootPart.Position - FishmanTrial.Position).Magnitude <= 1500 then
+                            if v.Health.Value > 0 then
+                                repeat task.wait()
+                                    EBuso()
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,400,0))
+                                    CFrameHunt = v.HumanoidRootPart.Position
+                                    aim = true
+                                    NoClip = true
+                                    chodienspamhirimixienchetcuchungmay = true
+                                until v.Health.Value <= 0 or not RaceTrial
+                                aim = false
+                                CFrameHunt = nil
+                                NoClip = false
+                                chodienspamhirimixienchetcuchungmay = false
+                            end 
                         end
                     end
-                elseif RaceAC == "Cyborg" then
+                elseif Data.Race.Value == "Cyborg" then
                     ToTween(CFrame.new(28654, 14898.7832, -30, 1, 0, 0, 0, 1, 0, 0, 0, 1))
                     NoClip = true
-                elseif RaceAC == "Ghoul" then
+                elseif Data.Race.Value == "Ghoul" then
                     for i,v in pairs(Enemies:GetDescendants()) do
                         if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                             repeat wait(.1)
@@ -4895,7 +4862,7 @@ task.spawn(function()
                             until not RaceTrial or v.Humanoid.Health <= 0
                         end
                     end
-                elseif RaceAC == "Mink" then
+                elseif Data.Race.Value == "Mink" then
                     for i,v in pairs(WS:GetDescendants()) do
                         if v.Name == "StartPoint" then
                             ToTween(v.CFrame* CFrame.new(0,10,0))

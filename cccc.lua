@@ -684,6 +684,39 @@ function StopTween()
         tween:Cancel()
     end)
 end
+function GetDistance12(ta, cc)
+    tla,me = pcall(function()
+        return game.Players.LocalPlayer.Character.HumanoidRootPart
+    end)
+    if tla then 
+        if not cc then 
+            cc = me 
+        end
+        return (ta.Position-cc.Position).Magnitude
+    end
+end 
+local GetCurrentTarg = nil
+function GetPlayerTrial()
+    if GetCurrentTarg ~= nil then
+        return
+    end
+    v71 = nil
+    dis = 150
+    for i,v in pairs(game.Players:GetChildren()) do
+        dis2 = GetDistance12(v.Character.HumanoidRootPart.Position)
+        if dis2 <= dis and v ~= LP then
+            dis = dis2
+            v71 = v
+        end
+    end
+    if v71 == nil then
+        return
+    end
+    if GetCurrentTarg ~= nil then
+        return
+    end
+    GetCurrentTarg = v71
+end
 function CheckSeaBeastTrial()
     if not WS.Map:FindFirstChild("FishmanTrial") then
         chodienspamhirimixienchetcuchungmay = true
@@ -4922,7 +4955,6 @@ task.spawn(function()
         if KillTrials then
             for i,v in pairs(WS.Characters:GetChildren()) do
                 magnitude = GetDistance(v.HumanoidRootPart.Position)
-                magnitudeacient = GetDistance(CFrameAcientp)
                 if v.Name ~= LP.Name and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and not table.find(PlayerChecked, v) then
                     if magnitude <= 200 then
                         TargetI = v
@@ -4946,8 +4978,6 @@ task.spawn(function()
                             UseAttack = true
                         until not KillTrials or not TargetI:FindFirstChild("HumanoidRootPart") or not TargetI:FindFirstChild("Humanoid") or TargetI.Humanoid.Health <= 0
                         table.insert(PlayerChecked, PlayerI)
-                        v = nil 
-                        v.Name = nil
                         TargetI = nil
                         aim = false
                         EnableFastAttack = false
@@ -4991,6 +5021,52 @@ spawn(function()
         end
     end
 end) 
+V4Tab:AddToggle({
+    Name = "Kill Player After Trails [Test]",
+    Default = false,
+    Callback = function(vKillTrials2)
+        KillTrials2 = vKillTrials2
+        DisableTween(KillTrials2)
+    end    
+}) 
+task.spawn(function()
+    while task.wait() do
+        if KillTrials2 then
+            repeat task.wait()
+                if GetCurrentTarg ~= nil and GetCurrentTarg.Character.Humanoid.Health <= 0 then
+                    GetCurrentTarg = nil
+                    GetPlayerTrial()
+                end
+                if GetCurrentTarg ~= nil then
+                    FastDelay = 0.02
+                    EBuso()
+                    if SpamSkillAllWeapon then
+                        chodienspamhirimixienchetcuchungmay = true
+                        SpamSkill = false
+                        aim = true
+                        CFrameHunt = GetCurrentTarg.HumanoidRootPart.CFrame 
+                    else
+                        EWeapon()
+                        SpamSkill = true
+                        chodienspamhirimixienchetcuchungmay = false
+                    end
+                    ToTween(GetCurrentTarg.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
+                    EClick()
+                    NoClip = true
+                    EnableFastAttack = true
+                    UseAttack = true
+                end
+            until not KillTrials or not GetCurrentTarg:FindFirstChild("HumanoidRootPart") or not GetCurrentTarg:FindFirstChild("Humanoid") or GetCurrentTarg.Humanoid.Health <= 0
+            GetCurrentTarg = nil
+            aim = false
+            EnableFastAttack = false
+            SpamSkill = false
+            NoClip = false
+            UseAttack = false
+            FastDelay = vFastDelay
+        end
+    end
+end)
 V4Tab:AddToggle({
     Name = "Spam Skill All Weapon [Option]",
     Default = false,

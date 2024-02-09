@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #36
+--Memories Hub Hyper - Rewrite Fixed & Update #36.2
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -4945,7 +4945,6 @@ task.spawn(function()
                                 NoClip = true
                                 EnableButtonKen = true
                                 EnableFastAttack = true
-                                UseAttack = true
                             until not KillTrials or not TargetI:FindFirstChild("HumanoidRootPart") or not TargetI:FindFirstChild("Humanoid") or TargetI.Humanoid.Health <= 0
                             table.insert(PlayerChecked, PlayerI)
                             v = nil 
@@ -4956,7 +4955,6 @@ task.spawn(function()
                             SpamSkill = false
                             NoClip = false
                             EnableButtonKen = false
-                            UseAttack = false
                             FastDelay = vFastDelay
                         end
                     end
@@ -5005,6 +5003,49 @@ spawn(function()
         end
     end
 end) 
+V4Tab:AddToggle({
+    Name = "Kill Player After Trails [Test]",
+    Default = false,
+    Callback = function(vKillTrials2)
+        KillTrials2 = vKillTrials2
+        DisableTween(KillTrials2)
+    end    
+}) 
+spawn(function()
+    while task.wait() do
+        if KillTrials2 then
+            for i,v in pairs(WS.Characters:GetChildren()) do
+                if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 150 then
+                    repeat task.wait()
+                        FastDelay = 0.02
+                        EBuso()
+                        if SpamSkillAllWeapon then
+                            chodienspamhirimixienchetcuchungmay = true
+                            SpamSkill = false
+                            aim = true
+                            CFrameHunt = v.HumanoidRootPart.CFrame 
+                        else
+                            EWeapon()
+                            SpamSkill = true
+                            chodienspamhirimixienchetcuchungmay = false
+                        end
+                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
+                        EClick()
+                        NoClip = true
+                        EnableButtonKen = true
+                        EnableFastAttack = true
+                    until not KillTrials or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
+                    aim = false
+                    EnableFastAttack = false
+                    SpamSkill = false
+                    NoClip = false
+                    EnableButtonKen = false
+                    FastDelay = vFastDelay
+                end
+            end
+        end
+    end
+end)
 V4Tab:AddToggle({
     Name = "Spam Skill All Weapon [Option]",
     Default = false,

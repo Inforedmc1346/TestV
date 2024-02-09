@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #35.9
+--Memories Hub Hyper - Rewrite Fixed & Update #36
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -4836,7 +4836,7 @@ task.spawn(function()
                     end
                 elseif WO.Locations:FindFirstChild("Trial of Water") then
                     for i,v in pairs(WS.SeaBeasts:GetChildren()) do
-                        if string.find(v.Name, "SeaBeast") and v:FindFirstChild("HumanoidRootPart") and (v.HumanoidRootPart.Position - FishmanTrial.Position).Magnitude <= 1500 then
+                        if v.Name == "SeaBeast1" and v:FindFirstChild("HumanoidRootPart") then
                             if v.Health.Value > 0 then
                                 repeat task.wait()
                                     EBuso()
@@ -4948,6 +4948,8 @@ task.spawn(function()
                                 UseAttack = true
                             until not KillTrials or not TargetI:FindFirstChild("HumanoidRootPart") or not TargetI:FindFirstChild("Humanoid") or TargetI.Humanoid.Health <= 0
                             table.insert(PlayerChecked, PlayerI)
+                            v = nil 
+                            v.Name = nil
                             TargetI = nil
                             aim = false
                             EnableFastAttack = false
@@ -4978,12 +4980,19 @@ end)
 spawn(function()
     while task.wait() do
         if SpamSkill then
-            game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game)
-            game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game)
-            game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game)
-            game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game)
-            game:GetService("VirtualInputManager"):SendKeyEvent(true,99,false,game)
-            game:GetService("VirtualInputManager"):SendKeyEvent(false,99,false,game)
+            game:GetService("VirtualInputManager"):SendKeyEvent(true, "Z", false, game)
+                wait(0.1)
+                game:GetService("VirtualInputManager"):SendKeyEvent(false, "Z", false, game)
+                game:GetService("VirtualInputManager"):SendKeyEvent(true, "X", false, game)
+                wait(0.1)
+                game:GetService("VirtualInputManager"):SendKeyEvent(false, "X", false, game)
+                game:GetService("VirtualInputManager"):SendKeyEvent(true, "C", false, game)
+                wait(0.1)
+                game:GetService("VirtualInputManager"):SendKeyEvent(false, "C", false, game)
+                game:GetService("VirtualInputManager"):SendKeyEvent(true, "V", false, game)
+                wait(0.1)
+                game:GetService("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
+            end
         end
         if EnableButtonKen then
             repeat task.wait()

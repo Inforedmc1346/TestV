@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #35.4
+--Memories Hub Hyper - Rewrite Fixed & Update #35.8
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -1380,16 +1380,6 @@ spawn(function()
         end
     end
 end)
-function NoFog()
-    local c = game.Lighting
-    c.FogEnd = 100000
-    for r, v in pairs(c:GetDescendants()) do
-        if v:IsA("Atmosphere") then
-            v:Destroy()
-        end
-    end
-    c.LightingLayers:Destroy()
-end
 function CheckMasSelect(weapon)
     local v00121 = LP.Backpack
     for i,v in pairs(v00121:GetChildren()) do
@@ -4112,8 +4102,15 @@ SettingTab:AddToggle({
 SettingTab:AddButton({
 	Name = "Remove Fog",
 	Callback = function()
-        NoFog()
-        game:GetService("Lighting").LightingLayers:Destroy()
+        local c = game.Lighting
+        c.FogEnd = 100000
+        for r, v in pairs(c:GetDescendants()) do
+            if v:IsA("Atmosphere") then
+                v:Destroy()
+            end
+        end
+        c.LightingLayers:Destroy()
+        c.SeaTerrorCC:Destroy()
   	end    
 })
 SettingTab:AddToggle({

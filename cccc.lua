@@ -321,7 +321,6 @@ function GetQuest()
     end
     Remote:InvokeServer("SetSpawnPoint")
 end
-
 function HopServer(bO)
     if not bO then
         bO = 10
@@ -1025,12 +1024,6 @@ for r,v in next, RS.Remotes.CommF_:InvokeServer("GetFruits", PG.Main.FruitShop:G
     if v.Price >= 1000000 then
         FruitAbout1M[v.Price] = v.Name
     end
-end
-function QuestCV(mob)
-    if GuideModule["Data"]["QuestData"]["Name"] == mob then
-        return true
-    end
-    return false
 end
 function EWeaponSelect(ToolSe2)
     if game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe2) then
@@ -1898,9 +1891,7 @@ spawn(function()
                 local Quest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
                 local QuestTitle = PG.Main.Quest.Container.QuestTitle.Title.Text
                 if not string.find(QuestTitle, CheckQuest()["MobName"]) then
-                    if not Data.Level.Value == 2500 or not Data.Level.Value <= 2524 then
-                        RS.Remotes.CommF_:InvokeServer("AbandonQuest")
-                    end
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                 end
                 if Quest.Visible == true then    
                     if game.Workspace.Enemies:FindFirstChild(CheckQuest()["MobName"]) then     
@@ -1909,7 +1900,7 @@ spawn(function()
                                 repeat task.wait()
                                     EWeapon()                                                                                                                    
                                     EBuso()
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                    ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))
                                     if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
                                         HealthM = v.Humanoid.Health <= v.Humanoid.MaxHealth * HealthStop / 100
                                         if HealthM then
@@ -1959,8 +1950,8 @@ spawn(function()
                     else
                         if EnemySpawns:FindFirstChild(CheckQuest()["MobName"]) then
                             for i,v in pairs(EnemySpawns:GetChildren()) do
-                                if v.Name == CheckQuest()["MobName"] then
-                                    ToTween(v.CFrame * CFrame.new(0,15,0))
+                                if v.Name == RemoveLvTitle(CheckQuest()["MobName"]) then
+                                    ToTween(getNextPosition2(v.CFrame * CFrame.new(0,15,0)))
                                 end
                             end
                         end

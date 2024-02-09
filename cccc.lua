@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #36.4
+--Memories Hub Hyper - Rewrite Fixed & Update #36.5
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -4021,7 +4021,7 @@ MainTab:AddToggle({
 		TweenPly = Value
 	    pcall(function()
             if TweenPly then
-                repeat ToTween(game:GetService("Players")[SPlayer].Character.HumanoidRootPart.CFrame) wait() until not TweenPly
+                repeat ToTween(game:GetService("Players")[SPlayer].Character.HumanoidRootPart.CFrame) task.wait() until not TweenPly
             end
             DisableTween(TweenPly)
         end)
@@ -4942,7 +4942,6 @@ task.spawn(function()
                             ToTween(TargetI.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
                             EClick()
                             NoClip = true
-                            EnableButtonKen = true
                             EnableFastAttack = true
                             UseAttack = true
                         until not KillTrials or not TargetI:FindFirstChild("HumanoidRootPart") or not TargetI:FindFirstChild("Humanoid") or TargetI.Humanoid.Health <= 0
@@ -4954,7 +4953,6 @@ task.spawn(function()
                         EnableFastAttack = false
                         SpamSkill = false
                         NoClip = false
-                        EnableButtonKen = false
                         UseAttack = false
                         FastDelay = vFastDelay
                     end
@@ -4990,16 +4988,6 @@ spawn(function()
             game:GetService("VirtualInputManager"):SendKeyEvent(true, "V", false, game)
             wait(0.1)
             game:GetService("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
-        end
-        if EnableButtonKen then
-            repeat task.wait()
-                if not PG.ScreenGui:FindFirstChild("ImageLabel") then
-                    VU:CaptureController()
-                    VU:SetKeyDown("0x65")
-                    wait(2)
-                    VU:SetKeyUp("0x65")
-                end
-            until PG.ScreenGui:FindFirstChild("ImageLabel") or not EnableButtonKen
         end
     end
 end) 

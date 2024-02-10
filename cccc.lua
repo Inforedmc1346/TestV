@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #36.5
+--Memories Hub Hyper - Rewrite Fixed & Update #36.6
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -4992,7 +4992,7 @@ spawn(function()
                     EquipWeapon(_G.SelectWeapon)
                     Click()
                 end
-            until not KillTrials2 or not v.Parent or v.Humanoid.Health <= 0 
+            until not KillTrials2 or _G.TargTrial.Character.Humanoid.Health <= 0 
         end
     end
 end)

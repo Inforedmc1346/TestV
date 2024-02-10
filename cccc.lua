@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #36.8
+--Memories Hub Hyper - Rewrite Fixed & Update #36.9
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -4956,7 +4956,6 @@ task.spawn(function()
                             NoClip = true
                             EnableButtonKen = true
                             EnableFastAttack = true
-                            UseAttack = true
                         until not KillTrials or not TargetI:FindFirstChild("HumanoidRootPart") or not TargetI:FindFirstChild("Humanoid") or TargetI.Humanoid.Health <= 0
                         table.insert(PlayerChecked, PlayerI)
                         TargetI = nil
@@ -4965,7 +4964,6 @@ task.spawn(function()
                         SpamSkill = false
                         NoClip = false
                         EnableButtonKen = false
-                        UseAttack = false
                         FastDelay = vFastDelay
                     end
                 end
@@ -4988,18 +4986,25 @@ end)
 spawn(function()
     while task.wait() do
         if SpamSkill then
-            game:GetService("VirtualInputManager"):SendKeyEvent(true, "Z", false, game)
-            wait(0.1)
-            game:GetService("VirtualInputManager"):SendKeyEvent(false, "Z", false, game)
-            game:GetService("VirtualInputManager"):SendKeyEvent(true, "X", false, game)
-            wait(0.1)
-            game:GetService("VirtualInputManager"):SendKeyEvent(false, "X", false, game)
-            game:GetService("VirtualInputManager"):SendKeyEvent(true, "C", false, game)
-            wait(0.1)
-            game:GetService("VirtualInputManager"):SendKeyEvent(false, "C", false, game)
-            game:GetService("VirtualInputManager"):SendKeyEvent(true, "V", false, game)
-            wait(0.1)
-            game:GetService("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
+            for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do 
+                if v:IsA("Tool") and v.ToolTip == "Melee" then
+                    if checkskillMelee() then
+                        EquipWeaponName(NameMelee())
+                        local checkmel = checkskillMelee()
+                        if checkmel then
+                            SendKeyEvents(checkmel)
+                        end
+                    end
+                elseif v:IsA("Tool") and v.ToolTip == "Sword" then
+                    if checkskillSword() then
+                        EquipWeaponName(NameSword())
+                        local checksw = checkskillSword()
+                        if checksw then
+                            SendKeyEvents(checksw)
+                        end
+                    end
+                end
+            end
         end
     end
 end) 

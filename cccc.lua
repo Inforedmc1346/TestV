@@ -110,7 +110,7 @@ ImageLabel.BorderSizePixel = 0
 ImageLabel.Position = UDim2.new(0.200000003, 0, -0.75, 0)
 ImageLabel.Selectable = false
 ImageLabel.Size = UDim2.new(0, 40, 0, 40)
-ImageLabel.Image = "rbxassetid://16147783761"
+ImageLabel.Image = "rbxassetid://16313249298"
 ImageLabel.MouseButton1Down:Connect(function()
 	game:GetService("VirtualInputManager"):SendKeyEvent(true,"RightShift",false,game)
 end)
@@ -1434,25 +1434,26 @@ local SHTab = Window:MakeTab({Name = "Shop", Icon = "rbxassetid://6031265976", P
 local STTab = Window:MakeTab({Name = "Stats", Icon = "rbxassetid://7040410130", PremiumOnly = false}) 
 local MiscTab = Window:MakeTab({Name = "Miscellaneous", Icon = "rbxassetid://7044233235", PremiumOnly = false}) 
 SettingsTab:AddLabel("Ninja Hub")
-SettingsTab:AddLabel("Youtube Channels") 
-SettingsTab:AddLabel("https://www.youtube.com/@Memo09011") 
+SettingsTab:AddLabel("Hola, ven a conocer ninja hub.")
+SettingsTab:AddLabel("Youtube Channel") 
+SettingsTab:AddLabel("https://youtube.com/@ninjascript?si=v-2x8aZ8bRnyUcn3") 
 SettingsTab:AddButton({
-	Name = "Copy Link Youtube",
+	Name = "Copiar enlace Youtube",
 	Callback = function()
-        setclipboard("https://www.youtube.com/@Memo09011")
+        setclipboard("https://youtube.com/@ninjascript?si=v-2x8aZ8bRnyUcn3")
         OrionLib:MakeNotification({Name = "Ninja Hub", Content = "Copied!", Image = "rbxassetid://16313249298",Time = 5})
   	end    
 })
 SettingsTab:AddLabel("Join For Discord") 
-SettingsTab:AddLabel("https://discord.gg/RtWeughmYp") 
+SettingsTab:AddLabel("https://discord.com/invite/ninjascript") 
 SettingsTab:AddButton({
-	Name = "Copy Link Invite Discord",
+	Name = "Copiar enlace invitar a discordia",
 	Callback = function()
-        setclipboard("https://discord.gg/RtWeughmYp")
+        setclipboard("https://discord.com/invite/ninjascript")
         OrionLib:MakeNotification({Name = "Ninja Hub", Content = "Copied!", Image = "rbxassetid://16313249298",Time = 5})
   	end    
 })
-SettingsTab:AddLabel("I From VIETNAM") 
+SettingsTab:AddLabel("Developer: deforehirix") 
 local x2Code = {
     "KITTGAMING",
     "ENYU_IS_PRO",
@@ -1497,7 +1498,7 @@ MiscTab:AddButton({Name = "Disable No Clip", Callback = function()
 end    
 })
 MainTab:AddSection({Name = "Select Mode"})
-local selecttool = MainTab:AddDropdown({Name = "Select Tool", Default = "", Options = {"Melee","Sword"},Callback = function(vSelecttool)
+local selecttool = MainTab:AddDropdown({Name = "Select Weapon", Default = "", Options = {"Melee","Sword"},Callback = function(vSelecttool)
 		Selecttool = vSelecttool
 	end    
 })
@@ -2240,9 +2241,9 @@ spawn(function()
     end
 end)
 MainTab:AddToggle({
-	Name = "Mob Arua",
+	Name = "Mob Aura",
 	Default = false,
-	Flag = "Mob Arua",
+	Flag = "Mob Aura",
 	Save = true,
 	Callback = function(vMobArua)
 		MobArua = vMobArua

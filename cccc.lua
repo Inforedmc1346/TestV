@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #36.7
+--Memories Hub Hyper - Rewrite Fixed & Update #36.8
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -4925,99 +4925,48 @@ V4Tab:AddToggle({
         DisableTween(KillTrials)
     end    
 }) 
-V4Tab:AddToggle({
-    Name = "Kill Player After Trails [Test]",
-    Default = false,
-    Callback = function(vKillTrials2)
-        KillTrials2 = vKillTrials2
-        DisableTween(KillTrials2)
-    end    
-}) 
-local TargetE = nil
-function GetPlayerTarg()
-    local v10 = nil
-    local dis1 = 200
-    for i,v in pairs(WS.Characters:GetChildren()) do
-        disv00 = GetDistance12(v.HumanoidRootPart.Position)
-        if v ~= LP.Character and disv00 <= dis1 and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-            dis1 = disv00
-            v10 = v
-        end
-    end
-    if v10 == nil then
-        return
-    end
-    if TargetE == nil then
-        return 
-    end
-    TargetE = v10
-end
-spawn(function()
-    while task.wait() do
-        if KillTrials2 then
-            GetPlayerTarg()
-            if TargetE and TargetE ~= nil and GetDistance(TargetE.HumanoidRootPart.Position) <= 200 then
-                repeat task.wait()
-                    if TargetE ~= nil and TargetE.Humanoid.Health < 0 then
-                        TargetE = nil
-                        GetPlayerTarg()
-                    end
-                    if TargetE ~= nil then
-                        EBuso()
-                        EWeapon()
-                        ToTween(TargetE.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
-                        EClick()
-                        NoClip = true
-                    end
-                until not KillTrials2 or not TargetE:FindFirstChild("HumanoidRootPart") or not TargetE:FindFirstChild("Humanoid") or TargetE.Humanoid.Health <= 0
-                NoClip = false
-            end
-        end
-    end         
-end)
 local TargetI = nil
 local PlayerChecked = {}
-local CFrameAcientp = CFrame.new(28718.88671875, 14907.6630859375, -56.46955871582031)
 task.spawn(function()
     while task.wait() do
         if KillTrials then
             for i,v in pairs(WS.Characters:GetChildren()) do
-                magnitude = GetDistance(v.HumanoidRootPart.Position)
-                magnitudeacient = GetDistance(CFrameAcientp)
                 if v.Name ~= LP.Name and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and not table.find(PlayerChecked, v) then
-                    if magnitudeacient <= 500 and PG.Main.Timer.Visible == true then
-                        if magnitude <= 200 then
-                            TargetI = v
-                            repeat task.wait()
-                                FastDelay = 0.02
-                                EBuso()
-                                if SpamSkillAllWeapon then
-                                    chodienspamhirimixienchetcuchungmay = true
-                                    SpamSkill = false
-                                    aim = true
-                                    CFrameHunt = TargetI.HumanoidRootPart.CFrame 
-                                else
-                                    EWeapon()
-                                    SpamSkill = true
-                                    chodienspamhirimixienchetcuchungmay = false
-                                end
-                                ToTween(TargetI.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
-                                EClick()
-                                NoClip = true
-                                EnableButtonKen = true
-                                EnableFastAttack = true
-                                UseAttack = true
-                            until not KillTrials or not TargetI:FindFirstChild("HumanoidRootPart") or not TargetI:FindFirstChild("Humanoid") or TargetI.Humanoid.Health <= 0
-                            table.insert(PlayerChecked, PlayerI)
-                            TargetI = nil
-                            aim = false
-                            EnableFastAttack = false
-                            SpamSkill = false
-                            NoClip = false
-                            EnableButtonKen = false
-                            UseAttack = false
-                            FastDelay = vFastDelay
-                        end
+                    magnitude = GetDistance(v.HumanoidRootPart.Position)
+                    TargetI = v
+                    if TargetI.Humanoid.Health <= 0 then
+                        TargetI = nil
+                    end
+                    if magnitude <= 200 then
+                        repeat task.wait()
+                            FastDelay = 0.02
+                            EBuso()
+                            if SpamSkillAllWeapon then
+                                chodienspamhirimixienchetcuchungmay = true
+                                SpamSkill = false
+                                aim = true
+                                CFrameHunt = TargetI.HumanoidRootPart.CFrame 
+                            else
+                                EWeapon()
+                                SpamSkill = true
+                                chodienspamhirimixienchetcuchungmay = false
+                            end
+                            ToTween(TargetI.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
+                            EClick()
+                            NoClip = true
+                            EnableButtonKen = true
+                            EnableFastAttack = true
+                            UseAttack = true
+                        until not KillTrials or not TargetI:FindFirstChild("HumanoidRootPart") or not TargetI:FindFirstChild("Humanoid") or TargetI.Humanoid.Health <= 0
+                        table.insert(PlayerChecked, PlayerI)
+                        TargetI = nil
+                        aim = false
+                        EnableFastAttack = false
+                        SpamSkill = false
+                        NoClip = false
+                        EnableButtonKen = false
+                        UseAttack = false
+                        FastDelay = vFastDelay
                     end
                 end
             end

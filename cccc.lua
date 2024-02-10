@@ -1,12 +1,13 @@
---Memories Hub Hyper - Rewrite Fixed & Update #36.9
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
-notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
-notis.new("<Color=Blue>Founder: deforehirimx<Color=/>"):Display() 
-notis.new("<Color=Red>Discord: https://discord.gg/RtWeughmYp<Color=/>"):Display() 
-notis.new("<Color=Yellow>Exploit Use:<Color=/> ".. identifyexecutor()):Display() 
-local memaythangskidocnguloz = "\104\116\116\112\115://\114\97\119.\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116.\99\111\109/\72\105\114\105\109\105\105/\102\52\99\107\121\111\117/\109\97\105\110\47\99\99\108\117\97"
-local OrionLib = loadstring(game:HttpGet((memaythangskidocnguloz)))()
+notis.new("<Color=White>Ninja Hub<Color=/>"):Display()
+notis.new("<Color=Yellow>Founder: ninjascript.<Color=/>"):Display() 
+notis.new("<Color=Blue>Developer: deforehirimx<Color=/>"):Display() 
+notis.new("<Color=Red>Discord: https://discord.com/invite/ninjascript<Color=/>"):Display() 
+notis.new("<Color=Green>Exploit:<Color=/> ".. identifyexecutor()):Display() 
+local v122222 = "https://raw.githubusercontent.com/"
+local v1222222231 = "\77\101\109\111\114\105\101\115\48\57\49\50\47\102\52\99\107\121\111\117\47\109\97\105\110\47\76\111\97\100\76\105\98\46\108\117\97"
+local OrionLib = loadstring(game:HttpGet((v122222 .. v1222222231)))()
 local Mouse = game.Players.LocalPlayer:GetMouse()
 local P = game:GetService("Players")
 local LP = P.LocalPlayer
@@ -141,7 +142,7 @@ function Notify(G, H, I)
     if type(I) ~= "number" then
         I = 10
     end
-    OrionLib:MakeNotification({Name = G, Content = H, Image = "rbxassetid://16161703575", Time = I})
+    OrionLib:MakeNotification({Name = G, Content = H, Image = "rbxassetid://16313249298", Time = I})
 end
 function CheckNearestTeleporter(P)
     local min = math.huge
@@ -936,7 +937,7 @@ function InstantChooseGear()
         end
         task.wait(300)
     else
-        game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Memories Hub", Text = "You Hadn't Gear", Duration = 30})
+        game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Ninja Hub", Text = "You Hadn't Gear", Duration = 30})
         task.wait(30)
     end
 end
@@ -1404,9 +1405,9 @@ function GetQuestV3()
     if v33000 == 0 then
         RS.Remotes.CommF_:InvokeServer("Wenlocktoad", "2")
         wait(.1)
-        Notify("Memories Hub", "Claimed Quest V3", 10)
+        Notify("Ninja Hub", "Claimed Quest V3", 10)
     elseif v33000 == -1 then
-        Notify("Memories Hub", "You Not Have V2")
+        Notify("Ninja Hub", "You Not Have V2")
     end
 end
 function BypassTele(PosSelect)
@@ -1418,8 +1419,8 @@ function BypassTele(PosSelect)
         end
     end
 end
-local Window = OrionLib:MakeWindow({Name = "Memories Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "Memories Hub"})
-local SettingsTab = Window:MakeTab({Name = "About", Icon = "rbxassetid://16161703575", PremiumOnly = false})
+local Window = OrionLib:MakeWindow({Name = "Ninja Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "Ninja Hub"})
+local SettingsTab = Window:MakeTab({Name = "About", Icon = "rbxassetid://16313249298", PremiumOnly = false})
 local MainTab = Window:MakeTab({Name = "Main", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local SettingTab = Window:MakeTab({Name = "Setting", Icon = "rbxassetid://11446835336", PremiumOnly = false})
 local ItemTab = Window:MakeTab({Name = "Item", Icon = "rbxassetid://9606626859", PremiumOnly = false})
@@ -1432,14 +1433,14 @@ local DFTab = Window:MakeTab({Name = "Devil Fruit", Icon = "rbxassetid://7044233
 local SHTab = Window:MakeTab({Name = "Shop", Icon = "rbxassetid://6031265976", PremiumOnly = false}) 
 local STTab = Window:MakeTab({Name = "Stats", Icon = "rbxassetid://7040410130", PremiumOnly = false}) 
 local MiscTab = Window:MakeTab({Name = "Miscellaneous", Icon = "rbxassetid://7044233235", PremiumOnly = false}) 
-SettingsTab:AddLabel("Memories Hub")
+SettingsTab:AddLabel("Ninja Hub")
 SettingsTab:AddLabel("Youtube Channels") 
 SettingsTab:AddLabel("https://www.youtube.com/@Memo09011") 
 SettingsTab:AddButton({
 	Name = "Copy Link Youtube",
 	Callback = function()
         setclipboard("https://www.youtube.com/@Memo09011")
-        OrionLib:MakeNotification({Name = "Memories Hub", Content = "Copied!", Image = "rbxassetid://16161703575",Time = 5})
+        OrionLib:MakeNotification({Name = "Ninja Hub", Content = "Copied!", Image = "rbxassetid://16313249298",Time = 5})
   	end    
 })
 SettingsTab:AddLabel("Join For Discord") 
@@ -1448,7 +1449,7 @@ SettingsTab:AddButton({
 	Name = "Copy Link Invite Discord",
 	Callback = function()
         setclipboard("https://discord.gg/RtWeughmYp")
-        OrionLib:MakeNotification({Name = "Memories Hub", Content = "Copied!", Image = "rbxassetid://16161703575",Time = 5})
+        OrionLib:MakeNotification({Name = "Ninja Hub", Content = "Copied!", Image = "rbxassetid://16313249298",Time = 5})
   	end    
 })
 SettingsTab:AddLabel("I From VIETNAM") 
@@ -1854,10 +1855,10 @@ task.spawn(function()
     while task.wait() do
         if _G.HopNFMaM then
             moonst = CheckMSTss()
-            OrionLib:MakeNotification({Name = "Memories Hub", Content = moonst, Image = "rbxassetid://14161592006", Time = 30})
+            OrionLib:MakeNotification({Name = "Ninja Hub", Content = moonst, Image = "rbxassetid://14161592006", Time = 30})
             if moonst == "Full Moon" and (game.Lighting.ClockTime < 5 or game.Lighting.ClockTime > 12) or moonst == "Next Night" then
                 OrionLib:MakeNotification({
-                    Name = "Memories Hub",
+                    Name = "Ninja Hub",
                     Content = "Found Moon",
                     Image = "rbxassetid://14161592006",
                     Time = 30
@@ -1865,7 +1866,7 @@ task.spawn(function()
                 task.wait(30)
             else
                 OrionLib:MakeNotification({
-                    Name = "Memories Hub",
+                    Name = "Ninja Hub",
                     Content = "Not Found Moon, Start Hop",
                     Image = "rbxassetid://14161592006",
                     Time = 5
@@ -2337,7 +2338,7 @@ MainTab:AddDropdown({Name = "Select Skill [Click Skill Enable]", Default = "", O
             table.insert(RealSkillSelected, r)
         end
     end
-    Notify("Memories Hub", "Skill " .. tostring(vSelectSkills) .. ": " .. tostring(SkillSelected[vSelectSkills]) .. "")
+    Notify("Ninja Hub", "Skill " .. tostring(vSelectSkills) .. ": " .. tostring(SkillSelected[vSelectSkills]) .. "")
 end    
 })
 ItemTab:AddSection({Name = "Misc Farm"})
@@ -2419,7 +2420,7 @@ elseif Zou then
             end
         end
     end)
-    ItemTab:AddToggle({Name = "Cam To Moon", Default = false, Callback = function(vCamtomoon)
+    ItemTab:AddToggle({Name = "Auto Cam To Moon", Default = false, Callback = function(vCamtomoon)
         Camtomoon = vCamtomoon
     end    
     }) 
@@ -2430,10 +2431,11 @@ elseif Zou then
             end
         end
     end)
-    ItemTab:AddButton({
-        Name = "Find NPC Advanced Dealer",
-        Callback = function()
-            FindAdvancedDealer()
+    ItemTab:AddToggle({
+        Name = "Auto Find Advanced Dealer [Mirage]",
+        Default = false,
+        Callback = function(vFindADM)
+            FindADM = vFindADM
         end    
     }) 
     ItemTab:AddToggle({
@@ -2455,6 +2457,9 @@ elseif Zou then
                         end
                     end
                 end
+            end
+            if FindADM then
+                FindAdvancedDealer()
             end
         end
     end)
@@ -2861,7 +2866,7 @@ spawn(function()
             pcall(function()
                 if LP.Backpack:FindFirstChild("God's Chalice") or LP.Character:FindFirstChild("God's Chalice") then
                     if string.find(RS.Remotes.CommF_:InvokeServer("SweetChaliceNpc"),"Where") then
-                        Notify("Memories Hub", "Not Enough Meterial", 10)
+                        Notify("Ninja Hub", "Not Enough Meterial", 10)
                     else
                         RS.Remotes.CommF_:InvokeServer("SweetChaliceNpc")
                     end
@@ -3580,7 +3585,7 @@ spawn(function()
                     end
                 end
             else
-                Notify("Memories Hub", "Not Found Near FM or FM, Start Hop", 5)
+                Notify("Ninja Hub", "Not Found Near FM or FM, Start Hop", 5)
                 HopServer()
             end
         end
@@ -4927,6 +4932,7 @@ V4Tab:AddToggle({
 }) 
 local TargetI = nil
 local PlayerChecked = {}
+local CFrameAcientp = CFrame.new(28718.88671875, 14907.6630859375, -56.46955871582031)
 task.spawn(function()
     while task.wait() do
         if KillTrials then
@@ -4936,35 +4942,38 @@ task.spawn(function()
                     TargetI = v
                     if TargetI.Humanoid.Health <= 0 then
                         TargetI = nil
-                    end
-                    if magnitude <= 200 then
-                        repeat task.wait()
-                            FastDelay = 0.02
-                            EBuso()
-                            if SpamSkillAllWeapon then
-                                chodienspamhirimixienchetcuchungmay = true
-                                SpamSkill = false
-                                aim = true
-                                CFrameHunt = TargetI.HumanoidRootPart.CFrame 
-                            else
-                                EWeapon()
-                                SpamSkill = true
-                                chodienspamhirimixienchetcuchungmay = false
-                            end
-                            ToTween(TargetI.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
-                            EClick()
-                            NoClip = true
-                            EnableButtonKen = true
-                            EnableFastAttack = true
-                        until not KillTrials or not TargetI:FindFirstChild("HumanoidRootPart") or not TargetI:FindFirstChild("Humanoid") or TargetI.Humanoid.Health <= 0
                         table.insert(PlayerChecked, PlayerI)
-                        TargetI = nil
-                        aim = false
-                        EnableFastAttack = false
-                        SpamSkill = false
-                        NoClip = false
-                        EnableButtonKen = false
-                        FastDelay = vFastDelay
+                    end
+                    if (CFrameAcientp.Position - LP.Character.HumanoidRootPart.Position).Magnitude <= 240 and PG.Main.Timer.Visible == true then
+                        if magnitude <= 200 then
+                            repeat task.wait()
+                                FastDelay = 0.02
+                                EBuso()
+                                if SpamSkillAllWeapon then
+                                    chodienspamhirimixienchetcuchungmay = true
+                                    SpamSkill = false
+                                    aim = true
+                                    CFrameHunt = TargetI.HumanoidRootPart.CFrame 
+                                else
+                                    EWeapon()
+                                    SpamSkill = true
+                                    chodienspamhirimixienchetcuchungmay = false
+                                end
+                                ToTween(TargetI.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
+                                EClick()
+                                NoClip = true
+                                EnableButtonKen = true
+                                EnableFastAttack = true
+                            until not KillTrials or not TargetI:FindFirstChild("HumanoidRootPart") or not TargetI:FindFirstChild("Humanoid") or TargetI.Humanoid.Health <= 0
+                            table.insert(PlayerChecked, PlayerI)
+                            TargetI = nil
+                            aim = false
+                            EnableFastAttack = false
+                            SpamSkill = false
+                            NoClip = false
+                            EnableButtonKen = false
+                            FastDelay = vFastDelay
+                        end
                     end
                 end
             end

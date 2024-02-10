@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #36.6
+--Memories Hub Hyper - Rewrite Fixed & Update #36.7
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -695,28 +695,6 @@ function GetDistance12(ta, cc)
         return (ta.Position-cc.Position).Magnitude
     end
 end 
-local GetCurrentTarg = nil
-function GetPlayerTrial()
-    if GetCurrentTarg ~= nil then
-        return
-    end
-    v71 = nil
-    dis = 150
-    for i,v in pairs(game.Players:GetChildren()) do
-        dis2 = GetDistance12(v.Character.HumanoidRootPart.Position)
-        if dis2 <= dis and v ~= LP then
-            dis = dis2
-            v71 = v
-        end
-    end
-    if v71 == nil then
-        return
-    end
-    if GetCurrentTarg ~= nil then
-        return
-    end
-    GetCurrentTarg = v71
-end
 function CheckSeaBeastTrial()
     if not WS.Map:FindFirstChild("FishmanTrial") then
         chodienspamhirimixienchetcuchungmay = true
@@ -4955,46 +4933,47 @@ V4Tab:AddToggle({
         DisableTween(KillTrials2)
     end    
 }) 
--- function bữa của m
-_G.TargTrial = nil
-function targettrial()
-    if _G.TargTrial ~= nil then return end
-    local a = nil
-    local b = 450
-    for i,v in pairs(game.Players:GetChildren()) do
-        c = (v.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-        if c <= b and v ~= game.Players.LocalPlayer then
-            b = c 
-            a = v
+local TargetE = nil
+function GetPlayerTarg()
+    local v10 = nil
+    local dis1 = 200
+    for i,v in pairs(WS.Characters:GetChildren()) do
+        disv00 = GetDistance12(v.HumanoidRootPart.Position)
+        if v ~= LP.Character and disv00 <= dis1 and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+            dis1 = disv00
+            v10 = v
         end
     end
-    if a == nil then return end
-    if _G.TargTrial ~= nil then return end
-    _G.TargTrial = a
-end
-
-if _G.TargTrial ~= nil and _G.TargTrial.Character.Humanoid.Health < 0 then
-    _G.TargTrial = nil
-    targettrial()
+    if v10 == nil then
+        return
+    end
+    if TargetE == nil then
+        return 
+    end
+    TargetE = v10
 end
 spawn(function()
     while task.wait() do
         if KillTrials2 then
-            repeat task.wait()
-                targettrial()
-                if _G.TargTrial ~= nil and _G.TargTrial.Character.Humanoid.Health < 0 then
-                    _G.TargTrial = nil
-                    targettrial()
-                end
-                if _G.TargTrial ~= nil then
-                    topos(_G.TargTrial.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
-                    AutoHaki()
-                    EquipWeapon(_G.SelectWeapon)
-                    Click()
-                end
-            until not KillTrials2 or _G.TargTrial.Character.Humanoid.Health <= 0 
+            GetPlayerTarg()
+            if TargetE and TargetE ~= nil and GetDistance(TargetE.HumanoidRootPart.Position) <= 200 then
+                repeat task.wait()
+                    if TargetE ~= nil and TargetE.Humanoid.Health < 0 then
+                        TargetE = nil
+                        GetPlayerTarg()
+                    end
+                    if TargetE ~= nil then
+                        EBuso()
+                        EWeapon()
+                        ToTween(TargetE.HumanoidRootPart.CFrame * CFrame.new(0,0,2))
+                        EClick()
+                        NoClip = true
+                    end
+                until not KillTrials2 or not TargetE:FindFirstChild("HumanoidRootPart") or not TargetE:FindFirstChild("Humanoid") or TargetE.Humanoid.Health <= 0
+                NoClip = false
+            end
         end
-    end
+    end         
 end)
 local TargetI = nil
 local PlayerChecked = {}

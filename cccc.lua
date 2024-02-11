@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #37.2
+--Memories Hub Hyper - Rewrite Fixed & Update #37.3
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -1862,6 +1862,7 @@ spawn(function()
                                     EBuso()
                                     ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
                                     BringPos = v.HumanoidRootPart.CFrame
+                                    StartBring = true
                                     if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
                                         HealthM = v.Humanoid.Health <= v.Humanoid.MaxHealth * HealthStop / 100
                                         if HealthM then
@@ -1902,7 +1903,6 @@ spawn(function()
                                     v.HumanoidRootPart.Size = Vector3.new(50,50,50)  
                                     v.HumanoidRootPart.CanCollide = false
                                     NoClip = true
-                                    StartBring = true
                                 until not StartFarms or not SelectFarm == "Level" or v.Humanoid.Health <= 0 or not v:FindFirstChild("HumanoidRootPart")
                                 StartBring = false
                             end
@@ -1948,6 +1948,7 @@ spawn(function()
                                 ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
                             end
                             BringPos = v.HumanoidRootPart.CFrame
+                            StartBring = true
                             if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
                                 HealthM = v.Humanoid.Health <= v.Humanoid.MaxHealth * HealthStop / 100
                                 if HealthM then
@@ -1988,7 +1989,6 @@ spawn(function()
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)  
                             v.HumanoidRootPart.CanCollide = false
                             NoClip = true
-                            StartBring = true
                         until not StartFarms or not SelectFarm == "Bone" or not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or MasteryOption
                         StartBring = false
                     end
@@ -2033,6 +2033,7 @@ spawn(function()
                                 end
                             end
                             BringPos = v.HumanoidRootPart.CFrame
+                            StartBring = true
                             if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
                                 HealthM = v.Humanoid.Health <= v.Humanoid.MaxHealth * HealthStop / 100
                                 if HealthM then
@@ -2084,7 +2085,6 @@ spawn(function()
                             end
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)  
                             v.HumanoidRootPart.CanCollide = false
-                            StartBring = true
                         until not StartFarms or not SelectFarm == "Cake Prince" or not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0
                         StartBring = false
                     end

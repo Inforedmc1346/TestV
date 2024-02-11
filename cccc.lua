@@ -1,13 +1,12 @@
+--Memories Hub Hyper - Rewrite Fixed & Update #37.1
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
-notis.new("<Color=White>Ninja Hub<Color=/>"):Display()
-notis.new("<Color=Yellow>Founder: ninjascript.<Color=/>"):Display() 
-notis.new("<Color=Blue>Developer: deforehirimx<Color=/>"):Display() 
-notis.new("<Color=Red>Discord: https://discord.com/invite/ninjascript<Color=/>"):Display() 
-notis.new("<Color=Green>Exploit:<Color=/> ".. identifyexecutor()):Display() 
-local v122222 = "https://raw.githubusercontent.com/"
-local v1222222231 = "\77\101\109\111\114\105\101\115\48\57\49\50\47\102\52\99\107\121\111\117\47\109\97\105\110\47\76\111\97\100\76\105\98\46\108\117\97"
-local OrionLib = loadstring(game:HttpGet((v122222 .. v1222222231)))()
+notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
+notis.new("<Color=Blue>Founder: deforehirimx<Color=/>"):Display() 
+notis.new("<Color=Red>Discord: https://discord.gg/RtWeughmYp<Color=/>"):Display() 
+notis.new("<Color=Yellow>Exploit Use:<Color=/> ".. identifyexecutor()):Display() 
+local memaythangskidocnguloz = "\104\116\116\112\115://\114\97\119.\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116.\99\111\109/\72\105\114\105\109\105\105/\102\52\99\107\121\111\117/\109\97\105\110\47\99\99\108\117\97"
+local OrionLib = loadstring(game:HttpGet((memaythangskidocnguloz)))()
 local Mouse = game.Players.LocalPlayer:GetMouse()
 local P = game:GetService("Players")
 local LP = P.LocalPlayer
@@ -110,9 +109,10 @@ ImageLabel.BorderSizePixel = 0
 ImageLabel.Position = UDim2.new(0.200000003, 0, -0.75, 0)
 ImageLabel.Selectable = false
 ImageLabel.Size = UDim2.new(0, 40, 0, 40)
-ImageLabel.Image = "rbxassetid://16313249298"
+ImageLabel.Image = "rbxassetid://16147783761"
 ImageLabel.MouseButton1Down:Connect(function()
 	game:GetService("VirtualInputManager"):SendKeyEvent(true,"RightShift",false,game)
+    game:GetService("VirtualInputManager"):SendKeyEvent(false,"RightShift",false,game)
 end)
 UICorner.CornerRadius = UDim.new(0, 200)
 UICorner.Parent = ImageLabel
@@ -142,7 +142,7 @@ function Notify(G, H, I)
     if type(I) ~= "number" then
         I = 10
     end
-    OrionLib:MakeNotification({Name = G, Content = H, Image = "rbxassetid://16313249298", Time = I})
+    OrionLib:MakeNotification({Name = G, Content = H, Image = "rbxassetid://16161703575", Time = I})
 end
 function CheckNearestTeleporter(P)
     local min = math.huge
@@ -937,69 +937,23 @@ function InstantChooseGear()
         end
         task.wait(300)
     else
-        game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Ninja Hub", Text = "You Hadn't Gear", Duration = 30})
+        game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Memories Hub", Text = "You Hadn't Gear", Duration = 30})
         task.wait(30)
     end
 end
-function FindPosBring(positionList)
-    local totalPosition = Vector3.new()
-    local validCount = 0
-    for i = 1, #positionList do
-        local position = positionList[i]
-        local isFarEnough = true
-        for j = 1, #positionList do
-            if i ~= j then
-                local distance = (position - positionList[j]).Magnitude
-                if distance >= (350 * j) then
-                    isFarEnough = false
-                    break
-                end
-            end
-        end
-        if isFarEnough then
-            totalPosition = totalPosition + position
-            validCount = validCount + 1
-        end
-    end
-    local averagePosition = totalPosition / validCount
-    return averagePosition
-end
-function checkfunc(a)
-    if a and a.Parent then
-        if a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") and a.Humanoid.Health > 0 and a.HumanoidRootPart.CFrame then
-            return true
-        else
-            return false
-        end
-    else
-        return false
-    end
-end 
 spawn(function()
     while wait() do
         for i,v in pairs(Enemies:GetChildren()) do
-            if ((StartFarms and SelectFarm == "Level" and StartBring and v.Name == CheckQuest()["MobName"]) or (FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob()) or (MobArua and StartBring)) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 350 then
-                BringList = {}
-                BringPos = nil
-                for j, k in pairs(Enemies:GetChildren()) do
-                    if checkfunc(k) and v.Name == k.Name then
-                        table.insert(BringList, k.HumanoidRootPart.Position)
-                    end
+            if ((StartFarms and SelectFarm == "Level" and StartBring and v.Name == CheckQuest()["MobName"]) or (FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob()) or (MobArua and StartBring) or (MagmaOre and v.Name == "Lava Pirate" and StartBring) or (MysticDroplet and v.Name == "Water Fighter" and StartBring) or (AngelWings and v.Name == "Royal Soldier" and StartBring) or (ConjuredCocoa and v.Name == "Chocolate Bar Battler" and StartBring) or (RadioactiveMaterial and v.Name == "Factory Staff" and StartBring) or (Ectoplasm and (v.Name == "Ship Officer" or v.Name == "Ship Steward" or "Ship Engineer" or "Ship Deckhand") and StartBring) or (DragonScale and v.Name == "Dragon Crew Warrior" and StartBring) or (MiniTusk and v.Name == "Mythological Pirate" and StartBring) or (FishTail and v.Name == "Fishman Captain" and StartBring) or (VampireFang and v.Name == "Vampire" and StartBring)) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 350 then
+                v.HumanoidRootPart.Size = Vector3.new(50, 50, 50)
+                v.HumanoidRootPart.CFrame = BringPos
+                v.Humanoid:ChangeState(14)
+                v.HumanoidRootPart.CanCollide = false
+                v.Head.CanCollide = false
+                if v.Humanoid:FindFirstChild("Animator") then
+                    v.Humanoid.Animator:Destroy()
                 end
-                BringPos = FindPosBring(BringList)
-                if BringPos == nil then return end
-                for j, k in pairs(Enemies:GetChildren()) do
-                    if checkfunc(k) and v.Name == k.Name and (k.HumanoidRootPart.Position - BringPos).Magnitude <= 380 then
-                        k.PrimaryPart.Position = BringPos
-                        k.PrimaryPart.CFrame = CFrame.new(BringPos)
-                        k.HumanoidRootPart.CFrame = CFrame.new(BringPos)
-                        k.Humanoid.JumpPower = 0
-                        k.Humanoid.WalkSpeed = 0
-                        k.HumanoidRootPart.CanCollide = false
-                        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                        k.Humanoid:ChangeState(14)
-                    end
-                end
+                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
             end
         end
     end
@@ -1405,9 +1359,9 @@ function GetQuestV3()
     if v33000 == 0 then
         RS.Remotes.CommF_:InvokeServer("Wenlocktoad", "2")
         wait(.1)
-        Notify("Ninja Hub", "Claimed Quest V3", 10)
+        Notify("Memories Hub", "Claimed Quest V3", 10)
     elseif v33000 == -1 then
-        Notify("Ninja Hub", "You Not Have V2")
+        Notify("Memories Hub", "You Not Have V2")
     end
 end
 function BypassTele(PosSelect)
@@ -1419,8 +1373,8 @@ function BypassTele(PosSelect)
         end
     end
 end
-local Window = OrionLib:MakeWindow({Name = "Ninja Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "Ninja Hub"})
-local SettingsTab = Window:MakeTab({Name = "About", Icon = "rbxassetid://16313249298", PremiumOnly = false})
+local Window = OrionLib:MakeWindow({Name = "Memories Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "Memories Hub"})
+local SettingsTab = Window:MakeTab({Name = "About", Icon = "rbxassetid://16161703575", PremiumOnly = false})
 local MainTab = Window:MakeTab({Name = "Main", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local SettingTab = Window:MakeTab({Name = "Setting", Icon = "rbxassetid://11446835336", PremiumOnly = false})
 local ItemTab = Window:MakeTab({Name = "Item", Icon = "rbxassetid://9606626859", PremiumOnly = false})
@@ -1433,27 +1387,26 @@ local DFTab = Window:MakeTab({Name = "Devil Fruit", Icon = "rbxassetid://7044233
 local SHTab = Window:MakeTab({Name = "Shop", Icon = "rbxassetid://6031265976", PremiumOnly = false}) 
 local STTab = Window:MakeTab({Name = "Stats", Icon = "rbxassetid://7040410130", PremiumOnly = false}) 
 local MiscTab = Window:MakeTab({Name = "Miscellaneous", Icon = "rbxassetid://7044233235", PremiumOnly = false}) 
-SettingsTab:AddLabel("Ninja Hub")
-SettingsTab:AddLabel("Hola, ven a conocer ninja hub.")
-SettingsTab:AddLabel("Youtube Channel") 
-SettingsTab:AddLabel("https://youtube.com/@ninjascript?si=v-2x8aZ8bRnyUcn3") 
+SettingsTab:AddLabel("Memories Hub")
+SettingsTab:AddLabel("Youtube Channels") 
+SettingsTab:AddLabel("https://www.youtube.com/@Memo09011") 
 SettingsTab:AddButton({
-	Name = "Copiar enlace Youtube",
+	Name = "Copy Link Youtube",
 	Callback = function()
-        setclipboard("https://youtube.com/@ninjascript?si=v-2x8aZ8bRnyUcn3")
-        OrionLib:MakeNotification({Name = "Ninja Hub", Content = "Copied!", Image = "rbxassetid://16313249298",Time = 5})
+        setclipboard("https://www.youtube.com/@Memo09011")
+        OrionLib:MakeNotification({Name = "Memories Hub", Content = "Copied!", Image = "rbxassetid://16161703575",Time = 5})
   	end    
 })
 SettingsTab:AddLabel("Join For Discord") 
-SettingsTab:AddLabel("https://discord.com/invite/ninjascript") 
+SettingsTab:AddLabel("https://discord.gg/RtWeughmYp") 
 SettingsTab:AddButton({
-	Name = "Copiar enlace invitar a discordia",
+	Name = "Copy Link Invite Discord",
 	Callback = function()
-        setclipboard("https://discord.com/invite/ninjascript")
-        OrionLib:MakeNotification({Name = "Ninja Hub", Content = "Copied!", Image = "rbxassetid://16313249298",Time = 5})
+        setclipboard("https://discord.gg/RtWeughmYp")
+        OrionLib:MakeNotification({Name = "Memories Hub", Content = "Copied!", Image = "rbxassetid://16161703575",Time = 5})
   	end    
 })
-SettingsTab:AddLabel("Developer: deforehirix") 
+SettingsTab:AddLabel("I From VIETNAM") 
 local x2Code = {
     "KITTGAMING",
     "ENYU_IS_PRO",
@@ -1498,7 +1451,7 @@ MiscTab:AddButton({Name = "Disable No Clip", Callback = function()
 end    
 })
 MainTab:AddSection({Name = "Select Mode"})
-local selecttool = MainTab:AddDropdown({Name = "Select Weapon", Default = "", Options = {"Melee","Sword"},Callback = function(vSelecttool)
+local selecttool = MainTab:AddDropdown({Name = "Select Tool", Default = "", Options = {"Melee","Sword"},Callback = function(vSelecttool)
 		Selecttool = vSelecttool
 	end    
 })
@@ -1856,10 +1809,10 @@ task.spawn(function()
     while task.wait() do
         if _G.HopNFMaM then
             moonst = CheckMSTss()
-            OrionLib:MakeNotification({Name = "Ninja Hub", Content = moonst, Image = "rbxassetid://14161592006", Time = 30})
+            OrionLib:MakeNotification({Name = "Memories Hub", Content = moonst, Image = "rbxassetid://14161592006", Time = 30})
             if moonst == "Full Moon" and (game.Lighting.ClockTime < 5 or game.Lighting.ClockTime > 12) or moonst == "Next Night" then
                 OrionLib:MakeNotification({
-                    Name = "Ninja Hub",
+                    Name = "Memories Hub",
                     Content = "Found Moon",
                     Image = "rbxassetid://14161592006",
                     Time = 30
@@ -1867,7 +1820,7 @@ task.spawn(function()
                 task.wait(30)
             else
                 OrionLib:MakeNotification({
-                    Name = "Ninja Hub",
+                    Name = "Memories Hub",
                     Content = "Not Found Moon, Start Hop",
                     Image = "rbxassetid://14161592006",
                     Time = 5
@@ -1903,7 +1856,7 @@ spawn(function()
                                 repeat task.wait()
                                     EWeapon()                                                                                                                    
                                     EBuso()
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                    ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))
                                     if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
                                         HealthM = v.Humanoid.Health <= v.Humanoid.MaxHealth * HealthStop / 100
                                         if HealthM then
@@ -2178,7 +2131,7 @@ spawn(function()
                             repeat task.wait()
                                 EWeapon()                                                                                                                    
                                 EBuso()
-                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))       
+                                ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))               
                                 PosMon = v.HumanoidRootPart.CFrame                                                                       
                                 v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
                                 v.HumanoidRootPart.CanCollide = false
@@ -2213,7 +2166,7 @@ spawn(function()
                                     EWeapon()
                                     EBuso()	   
                                     NoClip = true         
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                    ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))
                                     EClick()
                                 until not FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
                             end
@@ -2241,9 +2194,9 @@ spawn(function()
     end
 end)
 MainTab:AddToggle({
-	Name = "Mob Aura",
+	Name = "Mob Arua",
 	Default = false,
-	Flag = "Mob Aura",
+	Flag = "Mob Arua",
 	Save = true,
 	Callback = function(vMobArua)
 		MobArua = vMobArua
@@ -2339,7 +2292,7 @@ MainTab:AddDropdown({Name = "Select Skill [Click Skill Enable]", Default = "", O
             table.insert(RealSkillSelected, r)
         end
     end
-    Notify("Ninja Hub", "Skill " .. tostring(vSelectSkills) .. ": " .. tostring(SkillSelected[vSelectSkills]) .. "")
+    Notify("Memories Hub", "Skill " .. tostring(vSelectSkills) .. ": " .. tostring(SkillSelected[vSelectSkills]) .. "")
 end    
 })
 ItemTab:AddSection({Name = "Misc Farm"})
@@ -2421,7 +2374,7 @@ elseif Zou then
             end
         end
     end)
-    ItemTab:AddToggle({Name = "Auto Cam To Moon", Default = false, Callback = function(vCamtomoon)
+    ItemTab:AddToggle({Name = "Cam To Moon", Default = false, Callback = function(vCamtomoon)
         Camtomoon = vCamtomoon
     end    
     }) 
@@ -2432,11 +2385,10 @@ elseif Zou then
             end
         end
     end)
-    ItemTab:AddToggle({
-        Name = "Auto Find Advanced Dealer [Mirage]",
-        Default = false,
-        Callback = function(vFindADM)
-            FindADM = vFindADM
+    ItemTab:AddButton({
+        Name = "Find NPC Advanced Dealer",
+        Callback = function()
+            FindAdvancedDealer()
         end    
     }) 
     ItemTab:AddToggle({
@@ -2459,9 +2411,6 @@ elseif Zou then
                     end
                 end
             end
-            if FindADM then
-                FindAdvancedDealer()
-            end
         end
     end)
 end
@@ -2471,7 +2420,6 @@ function DisableSpamSkill()
         SpamSkill = false
     end
 end
-local tablelistmeterial = {"Magma Ore", "Mystic Droplet", "Radioactive Material", "Angel Wing", "Conjured Cocoa", "Dragon Scale", "Scrap Metal", "Fish Tail"}
 ItemTab:AddSection({Name = "Meterial Farm"})
 ItemTab:AddToggle({Name = "Auto Magma Ore [2]", Default = false, Callback = function(vMagmaOre)
     MagmaOre = vMagmaOre
@@ -2659,6 +2607,7 @@ spawn(function()
                 end
             else
                 ToTweenWithEntrace(CFrame.new(-507.7895202636719, 72.99479675292969, -126.45632934570312))
+                NoClip = true
             end
         end
     end
@@ -2715,6 +2664,7 @@ spawn(function()
                 end
             else
                 ToTweenWithEntrace(CFrame.new(5824.06982421875, 51.38640213012695, -1106.694580078125))
+                NoClip = true
             end
         end
     end
@@ -2768,6 +2718,7 @@ spawn(function()
                 end
             else
                 ToTweenWithEntrace(CFrame.new(-10961.0126953125, 331.7977600097656, -8914.29296875))
+                NoClip = true
             end
         end
     end
@@ -2793,7 +2744,8 @@ spawn(function()
                     end
                 end
             else
-                ToTween(RS:FindFirstChild("Vampire").HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                ToTween(CFrame.new(-6037.66796875, 32.18463897705078, -1340.6597900390625))
+                NoClip = true
             end
         end
     end
@@ -2867,7 +2819,7 @@ spawn(function()
             pcall(function()
                 if LP.Backpack:FindFirstChild("God's Chalice") or LP.Character:FindFirstChild("God's Chalice") then
                     if string.find(RS.Remotes.CommF_:InvokeServer("SweetChaliceNpc"),"Where") then
-                        Notify("Ninja Hub", "Not Enough Meterial", 10)
+                        Notify("Memories Hub", "Not Enough Meterial", 10)
                     else
                         RS.Remotes.CommF_:InvokeServer("SweetChaliceNpc")
                     end
@@ -3586,7 +3538,7 @@ spawn(function()
                     end
                 end
             else
-                Notify("Ninja Hub", "Not Found Near FM or FM, Start Hop", 5)
+                Notify("Memories Hub", "Not Found Near FM or FM, Start Hop", 5)
                 HopServer()
             end
         end

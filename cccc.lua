@@ -1903,7 +1903,7 @@ spawn(function()
                                 repeat task.wait()
                                     EWeapon()                                                                                                                    
                                     EBuso()
-                                    ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
                                     if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
                                         HealthM = v.Humanoid.Health <= v.Humanoid.MaxHealth * HealthStop / 100
                                         if HealthM then
@@ -2178,7 +2178,7 @@ spawn(function()
                             repeat task.wait()
                                 EWeapon()                                                                                                                    
                                 EBuso()
-                                ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))               
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))       
                                 PosMon = v.HumanoidRootPart.CFrame                                                                       
                                 v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
                                 v.HumanoidRootPart.CanCollide = false
@@ -2213,7 +2213,7 @@ spawn(function()
                                     EWeapon()
                                     EBuso()	   
                                     NoClip = true         
-                                    ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
                                     EClick()
                                 until not FarmSkip or not v:FindFirstChild("HumanoidRootPart") or v.Character.Humanoid.Health <= 0
                             end

@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #37.4
+--Memories Hub Hyper - Rewrite Fixed & Update #37.5
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -962,16 +962,47 @@ spawn(function()
         end
     end
 end)
+local FruitList = {
+    "Rocket-Rocket",
+    "Spike-Spike",
+    "Chop-Chop",
+    "Spring-Spring",
+    "Kilo-Kilo",
+    "Spin-Spin",
+    "Bird: Falcon",
+    "Smoke-Smoke",
+    "Flame-Flame",
+    "Ice-Ice",
+    "Sand-Sand",
+    "Dark-Dark",
+    "Revive-Revive",
+    "Diamond-Diamond",
+    "Light-Light",
+    "Rubber-Rubber",
+    "Barrier-Barrier",
+    "Magma-Magma",
+    "Quake-Quake",
+    "Human-Human: Buddha",
+    "Love-Love",
+    "String-String",
+    "Bird-Bird: Phoenix",
+    "Soul-Soul",
+    "Potal-Potal",
+    "Rumble-Rumble",
+    "Pain-Pain",
+    "Gravity-Gravity",
+    "Dough-Dough",
+    "Venom-Venom",
+    "Shadow-Shadow",
+    "Control-Control",
+    "Spirit-Spirit",
+    "Dragon-Dragon",
+    "Leopard-Leopard",
+    "Kitsune-Kitsune"
+}
 function StoreFruit()
-    for i,v in pairs(LP.Backpack:GetChildren()) do
-        if string.find(v.Name, "Fruit") then
-            RS.Remotes.CommF_:InvokeServer("StoreFruit", v)
-        end
-    end
-    for i, v in pairs(LP.Character:GetChildren()) do
-        if string.find(v.Name, "Fruit") then
-            RS.Remotes.CommF_:InvokeServer("StoreFruit", v)
-        end
+    for i,v in pairs(FruitList) do
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Store",v)
     end
 end
 function DFinBP()
@@ -5127,7 +5158,7 @@ DFTab:AddButton({
   	end    
 }) 
 DFTab:AddToggle({
-	Name = "Store Fruit",
+	Name = "Store Fruits",
 	Default = false,
 	Callback = function(vStoreFruit)
 		StoreFruit = vStoreFruit

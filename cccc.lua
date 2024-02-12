@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #37.3
+--Memories Hub Hyper - Rewrite Fixed & Update #37.4
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -964,13 +964,13 @@ spawn(function()
 end)
 function StoreFruit()
     for i,v in pairs(LP.Backpack:GetChildren()) do
-        if v:IsA("Tool") and string.find(v.Name, "Fruit") then
-            RS.Remotes.CommF_:InvokeServer("StoreFruit",v:GetAttribute("OriginalName"),v)
+        if string.find(v.Name, "Fruit") then
+            RS.Remotes.CommF_:InvokeServer("StoreFruit", v)
         end
     end
     for i, v in pairs(LP.Character:GetChildren()) do
-        if v:IsA("Tool") and string.find(v.Name, "Fruit") then
-            RS.Remotes.CommF_:InvokeServer("StoreFruit",v:GetAttribute("OriginalName"),v)
+        if string.find(v.Name, "Fruit") then
+            RS.Remotes.CommF_:InvokeServer("StoreFruit", v)
         end
     end
 end

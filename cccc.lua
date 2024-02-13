@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #37.5
+--Memories Hub Hyper - Rewrite Fixed & Update #37.6
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -941,6 +941,102 @@ function InstantChooseGear()
         task.wait(30)
     end
 end
+function FindPosBring(positionList)
+    local totalPosition = Vector3.new()
+    local validCount = 0
+    for i = 1, #positionList do
+        local position = positionList[i]
+        local isFarEnough = true
+        for j = 1, #positionList do
+            if i ~= j then
+                local distance = (position - positionList[j]).Magnitude
+                if distance >= (350 * j) then
+                    isFarEnough = false
+                    break
+                end
+            end
+        end
+        if isFarEnough then
+            totalPosition = totalPosition + position
+            validCount = validCount + 1
+        end
+    end
+    local averagePosition = totalPosition / validCount
+    return averagePosition
+end
+function checkfunc(a)
+    if a and a.Parent then
+        if a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") and a.Humanoid.Health > 0 and a.HumanoidRootPart.CFrame then
+            return true
+        else
+            return false
+        end
+    else
+        return false
+    end
+end 
+function KillMon(mon)
+    mon = MobGet(mon)
+    if mon and mon:FindFirstChild("HumanoidRootPart") and mon:FindFirstChild("Humanoid") and mon.Humanoid.Health > 0 then
+        repeat task.wait()
+            EBuso()
+            EWeapon()
+            ToTween(mon.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+            mon.HumanoidRootPart.CanCollide = false
+            if MasteryOption and HealthStop and mon.Humanoid.MaxHealth < 200000 then
+                HealthM = mon.Humanoid.Health <= mon.Humanoid.MaxHealth * HealthStop / 100
+                if HealthM then
+                    repeat task.wait()
+                        local va,ve = CheckMasSkill()
+                        ToTween(mon.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                        if va and ve then
+                            EquipWeaponName(va)
+                            SendKeyEvents(ve)
+                            NoClip = true
+                            task.wait(.2)
+                        end
+                        if SelectTypeMas == "Gun" then
+                            pcall(function()
+                                game:GetService("VirtualUser"):CaptureController()
+                                game:GetService("VirtualUser"):ClickButton1(Vector2.new(0,1 , 0,1), game.Workspace.CurrentCamera)
+                            end)
+                        end
+                        aim = true
+                        CFrameHunt = mon.HumanoidRootPart.Position
+                    until not mon or mon:FindFirstChild("Humanoid") or not mon:FindFirstChild("HumanoidRootPart") or mon.Humanoid.Health <= 0 or not MasteryOption
+                    aim = false
+                elseif HealthM and (LP.Backpack:FindFirstChild("Soul Guitar") or LP.Character:FindFirstChild("Soul Guitar")) then
+                    repeat task.wait()
+                        local va = CheckMasSkill()
+                        ToTween(mon.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                        if va then
+                            EquipWeaponName(va)
+                            SendKeyEvents("Z")
+                            SendKeyEvents("X")
+                            NoClip = true
+                            task.wait(.2)
+                        end
+                        if SelectTypeMas == "Gun" then
+                            pcall(function()
+                                game:GetService("VirtualUser"):CaptureController()
+                                game:GetService("VirtualUser"):ClickButton1(Vector2.new(0,1 , 0,1), game.Workspace.CurrentCamera)
+                            end)
+                        end
+                        aim = true
+                        CFrameHunt = mon.HumanoidRootPart.Position
+                    until not mon or not mon:FindFirstChild("Humanoid") or not mon:FindFirstChild("HumanoidRootPart") or mon.Humanoid.Health <= 0 or not MasteryOption
+                    aim = false
+                else
+                    EClick()
+                end
+            else
+                EClick()
+            end
+            BringPosition = mon.HumanoidRootPart.CFrame
+            NoClip = true
+        until not mon:FindFirstChild("HumanoidRootPart") or not mon:FindFirstChild("Humanoid") and mon.Humanoid.Health <= 0
+    end
+end
 spawn(function()
     while wait() do
         for i,v in pairs(Enemies:GetChildren()) do
@@ -962,47 +1058,40 @@ spawn(function()
         end
     end
 end)
-local FruitList = {
-    "Rocket-Rocket",
-    "Spike-Spike",
-    "Chop-Chop",
-    "Spring-Spring",
-    "Kilo-Kilo",
-    "Spin-Spin",
-    "Bird: Falcon",
-    "Smoke-Smoke",
-    "Flame-Flame",
-    "Ice-Ice",
-    "Sand-Sand",
-    "Dark-Dark",
-    "Revive-Revive",
-    "Diamond-Diamond",
-    "Light-Light",
-    "Rubber-Rubber",
-    "Barrier-Barrier",
-    "Magma-Magma",
-    "Quake-Quake",
-    "Human-Human: Buddha",
-    "Love-Love",
-    "String-String",
-    "Bird-Bird: Phoenix",
-    "Soul-Soul",
-    "Potal-Potal",
-    "Rumble-Rumble",
-    "Pain-Pain",
-    "Gravity-Gravity",
-    "Dough-Dough",
-    "Venom-Venom",
-    "Shadow-Shadow",
-    "Control-Control",
-    "Spirit-Spirit",
-    "Dragon-Dragon",
-    "Leopard-Leopard",
-    "Kitsune-Kitsune"
-}
+function getNil(name,class) for _,v in next, getnilinstances() do if v.ClassName==class and v.Name==name then return v;end end end
+local ckcaosdakso = game.Players.LocalPlayer.Backpack or game.Players.LocalPlayer.Character
+for i, v in pairs(ckcaosdakso:GetChildren()) do
+    if string.find(v.Name, "Fruit") then
+        for j,k in pairs(FruitList) do
+            local args = {
+                [1] = "StoreFruit",
+                [2] = k,
+                [3] = getNil(v.Name, "Tool")
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(unpack(args))
+        end
+    end
+end
 function StoreFruit()
-    for i,v in pairs(FruitList) do
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Store",v)
+    for i,v in pairs(LP.Backpack:GetChildren()) do
+        if string.find(v.Name, "Fruit") then
+            local args = {
+                [1] = "StoreFruit",
+                [2] = v:GetAttribute("OriginalName"),
+                [3] = v
+            }
+            RS:WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(unpack(args))  
+        end
+    end
+    for i, v in pairs(LP.Character:GetChildren()) do
+        if string.find(v.Name, "Fruit") then
+            local args = {
+                [1] = "StoreFruit",
+                [2] = v:GetAttribute("OriginalName"),
+                [3] = v
+            }
+            RS:WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(unpack(args))  
+        end
     end
 end
 function DFinBP()
@@ -2229,9 +2318,9 @@ spawn(function()
     end
 end)
 MainTab:AddToggle({
-	Name = "Mob Arua",
+	Name = "Mob Aura",
 	Default = false,
-	Flag = "Mob Arua",
+	Flag = "Mob Aura",
 	Save = true,
 	Callback = function(vMobArua)
 		MobArua = vMobArua
@@ -2244,18 +2333,9 @@ spawn(function()
 			for i,v in pairs(Enemies:GetChildren()) do
                 if v.Name and v:FindFirstChild("Humanoid") and GetDistance(v.HumanoidRootPart.Position) < 2000 then
 			        if v.Humanoid.Health > 0 then
-			            repeat task.wait()
-			                EWeapon()
-			                EBuso()
-			                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-			                v.HumanoidRootPart.CanCollide = false
-						    EClick()
-                            BringPos = v.HumanoidRootPart.CFrame
-                            NoClip = true
-                            StartBring = true
-			            until not MobArua or not v.Parent or v.Humanoid.Health <= 0 
-                        NoClip = false
-                        StartBring = false
+                        repeat task.wait()
+			                KillMon(v)
+                        until not MobArua or v.Humanoid.Health <= 0
 			        end
 			    end
 			end
@@ -5158,7 +5238,7 @@ DFTab:AddButton({
   	end    
 }) 
 DFTab:AddToggle({
-	Name = "Store Fruits",
+	Name = "Store Fruit",
 	Default = false,
 	Callback = function(vStoreFruit)
 		StoreFruit = vStoreFruit

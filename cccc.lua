@@ -2324,7 +2324,7 @@ spawn(function()
                 if v:FindFirstChild("Humanoid") and GetDistance(v.HumanoidRootPart.Position) < 2000 then
 			        if v.Humanoid.Health > 0 then
                         repeat task.wait()
-			                KillMon2(v)
+			                KillMon2(v, true)
                         until not MobArua or v.Humanoid.Health <= 0
 			        end
 			    end

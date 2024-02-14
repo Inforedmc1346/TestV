@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #37.7
+--Memories Hub Hyper - Rewrite Fixed & Update #37.8
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -981,9 +981,27 @@ function KillMon(mon)
         if MobGet(mobtable) then
             mon = MobGet(mobtable)
             if mon and mon:FindFirstChild("HumanoidRootPart") and mon:FindFirstChild("Humanoid") and mon.Humanoid.Health > 0 then
-                print("tao muon kill")
+                repeat task.wait()
+                    EWeapon()
+                    EBuso()
+                    ToTween(mon.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                    EClick()
+                    NoClip = true
+                until mon.Humnaoid.Health <= 0 or not mon:FindFirstChild("Humanoid") or not mon:FindFirstChild("HumanoidRootPart")
             end
         end
+    end
+end
+function KillMon2(mon2)
+    k = mon2
+    if Enemies:FindFirstChild(k.Name) and k:FindFirstChild("Humanoid") and k:FindFirstChild("HumanoidRootPart") and k.Humanoid.Health > 0 then
+        repeat task.wait()
+            EBuso()
+            EWeapon()
+            ToTween(k.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+            NoClip = true
+            EClick()
+        until not k or not k:FindFirstChild("Humanoid") or not k:FindFirstChild("HumanoidRootPart") or k.Humanoid.Health <= 0
     end
 end
 spawn(function()
@@ -2267,9 +2285,9 @@ spawn(function()
     end
 end)
 MainTab:AddToggle({
-	Name = "Mob Arua",
+	Name = "Mob Aura",
 	Default = false,
-	Flag = "Mob Arua",
+	Flag = "Mob Aura",
 	Save = true,
 	Callback = function(vMobArua)
 		MobArua = vMobArua
@@ -2280,10 +2298,10 @@ spawn(function()
 	while task.wait() do
 		if MobArua then
 			for i,v in pairs(Enemies:GetChildren()) do
-                if v.Name and v:FindFirstChild("Humanoid") and GetDistance(v.HumanoidRootPart.Position) < 2000 then
+                if v:FindFirstChild("Humanoid") and GetDistance(v.HumanoidRootPart.Position) < 2000 then
 			        if v.Humanoid.Health > 0 then
                         repeat task.wait()
-			                KillMon(v)
+			                KillMon2(v)
                         until not MobArua or v.Humanoid.Health <= 0
 			        end
 			    end

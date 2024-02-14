@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #37.7
+--Memories Hub Hyper - Rewrite Fixed & Update #37.8
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -975,66 +975,71 @@ function checkfunc(a)
         return false
     end
 end 
-function KillMon(mon)
-    mon = MobGet(mon)
-    if mon and mon:FindFirstChild("HumanoidRootPart") and mon:FindFirstChild("Humanoid") and mon.Humanoid.Health > 0 then
-        repeat task.wait()
-            EBuso()
-            EWeapon()
-            ToTween(mon.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-            mon.HumanoidRootPart.CanCollide = false
-            if MasteryOption and HealthStop and mon.Humanoid.MaxHealth < 200000 then
-                HealthM = mon.Humanoid.Health <= mon.Humanoid.MaxHealth * HealthStop / 100
-                if HealthM then
-                    repeat task.wait()
-                        local va,ve = CheckMasSkill()
-                        ToTween(mon.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                        if va and ve then
-                            EquipWeaponName(va)
-                            SendKeyEvents(ve)
-                            NoClip = true
-                            task.wait(.2)
+function KillMon(mon, tab)
+    mon = mobtotb
+    if type(mobtotb) == "table" and tab then
+        if MobGet(mon) then
+            mon = MobGet(mon)
+            if mon and mon:FindFirstChild("HumanoidRootPart") and mon:FindFirstChild("Humanoid") and mon.Humanoid.Health > 0 then
+                repeat task.wait()
+                    EBuso()
+                    EWeapon()
+                    ToTween(mon.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                    mon.HumanoidRootPart.CanCollide = false
+                    if MasteryOption and HealthStop and mon.Humanoid.MaxHealth < 200000 then
+                        HealthM = mon.Humanoid.Health <= mon.Humanoid.MaxHealth * HealthStop / 100
+                        if HealthM then
+                            repeat task.wait()
+                                local va,ve = CheckMasSkill()
+                                ToTween(mon.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                if va and ve then
+                                    EquipWeaponName(va)
+                                    SendKeyEvents(ve)
+                                    NoClip = true
+                                    task.wait(.2)
+                                end
+                                if SelectTypeMas == "Gun" then
+                                    pcall(function()
+                                        game:GetService("VirtualUser"):CaptureController()
+                                        game:GetService("VirtualUser"):ClickButton1(Vector2.new(0,1 , 0,1), game.Workspace.CurrentCamera)
+                                    end)
+                                end
+                                aim = true
+                                CFrameHunt = mon.HumanoidRootPart.Position
+                            until not mon or mon:FindFirstChild("Humanoid") or not mon:FindFirstChild("HumanoidRootPart") or mon.Humanoid.Health <= 0 or not MasteryOption
+                            aim = false
+                        elseif HealthM and (LP.Backpack:FindFirstChild("Soul Guitar") or LP.Character:FindFirstChild("Soul Guitar")) then
+                            repeat task.wait()
+                                local va = CheckMasSkill()
+                                ToTween(mon.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                if va then
+                                    EquipWeaponName(va)
+                                    SendKeyEvents("Z")
+                                    SendKeyEvents("X")
+                                    NoClip = true
+                                    task.wait(.2)
+                                end
+                                if SelectTypeMas == "Gun" then
+                                    pcall(function()
+                                        game:GetService("VirtualUser"):CaptureController()
+                                        game:GetService("VirtualUser"):ClickButton1(Vector2.new(0,1 , 0,1), game.Workspace.CurrentCamera)
+                                    end)
+                                end
+                                aim = true
+                                CFrameHunt = mon.HumanoidRootPart.Position
+                            until not mon or not mon:FindFirstChild("Humanoid") or not mon:FindFirstChild("HumanoidRootPart") or mon.Humanoid.Health <= 0 or not MasteryOption
+                            aim = false
+                        else
+                            EClick()
                         end
-                        if SelectTypeMas == "Gun" then
-                            pcall(function()
-                                game:GetService("VirtualUser"):CaptureController()
-                                game:GetService("VirtualUser"):ClickButton1(Vector2.new(0,1 , 0,1), game.Workspace.CurrentCamera)
-                            end)
-                        end
-                        aim = true
-                        CFrameHunt = mon.HumanoidRootPart.Position
-                    until not mon or mon:FindFirstChild("Humanoid") or not mon:FindFirstChild("HumanoidRootPart") or mon.Humanoid.Health <= 0 or not MasteryOption
-                    aim = false
-                elseif HealthM and (LP.Backpack:FindFirstChild("Soul Guitar") or LP.Character:FindFirstChild("Soul Guitar")) then
-                    repeat task.wait()
-                        local va = CheckMasSkill()
-                        ToTween(mon.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                        if va then
-                            EquipWeaponName(va)
-                            SendKeyEvents("Z")
-                            SendKeyEvents("X")
-                            NoClip = true
-                            task.wait(.2)
-                        end
-                        if SelectTypeMas == "Gun" then
-                            pcall(function()
-                                game:GetService("VirtualUser"):CaptureController()
-                                game:GetService("VirtualUser"):ClickButton1(Vector2.new(0,1 , 0,1), game.Workspace.CurrentCamera)
-                            end)
-                        end
-                        aim = true
-                        CFrameHunt = mon.HumanoidRootPart.Position
-                    until not mon or not mon:FindFirstChild("Humanoid") or not mon:FindFirstChild("HumanoidRootPart") or mon.Humanoid.Health <= 0 or not MasteryOption
-                    aim = false
-                else
-                    EClick()
-                end
-            else
-                EClick()
+                    else
+                        EClick()
+                    end
+                    BringPosition = mon.HumanoidRootPart.CFrame
+                    NoClip = true
+                until not mon:FindFirstChild("HumanoidRootPart") or not mon:FindFirstChild("Humanoid") and mon.Humanoid.Health <= 0
             end
-            BringPosition = mon.HumanoidRootPart.CFrame
-            NoClip = true
-        until not mon:FindFirstChild("HumanoidRootPart") or not mon:FindFirstChild("Humanoid") and mon.Humanoid.Health <= 0
+        end
     end
 end
 spawn(function()

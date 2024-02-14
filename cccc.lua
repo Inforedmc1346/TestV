@@ -964,9 +964,9 @@ function FindPosBring(positionList)
     local averagePosition = totalPosition / validCount
     return averagePosition
 end
-function checkfunc(a)
-    if a and a.Parent then
-        if a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") and a.Humanoid.Health > 0 and a.HumanoidRootPart.CFrame then
+function CheckPart(v1)
+    if v1.Parent then
+        if v1:FindFirstChild("Humanoid") and v1:FindFirstChild("HumanoidRootPart") and v1.Humanoid.Health > 0 and v1.HumanoidRootPart.CFrame then
             return true
         else
             return false
@@ -974,7 +974,7 @@ function checkfunc(a)
     else
         return false
     end
-end 
+end
 function KillMon(mon)
     mobtable = mon
     if type(mobtable) == "table" then
@@ -992,9 +992,32 @@ function KillMon(mon)
         end
     end
 end
-function KillMon2(mon2)
+function KillMon2(mon2, Bring)
     k = mon2
     if Enemies:FindFirstChild(k.Name) and k:FindFirstChild("Humanoid") and k:FindFirstChild("HumanoidRootPart") and k.Humanoid.Health > 0 then
+        if Bring then
+            BringList = {}
+            BringPosition = nil
+            for i,v in pairs(Enemies:GetChildren()) do
+                if CheckPart(k) and v.Name == mon then
+                    table.insert(BringList, v.HumanoidRootPart.Position)
+                end
+            end
+            BringPosition = FindPosBring(BringList)
+            if BringPosition == nil then 
+                return 
+            end
+        end
+        for o,g in pairs(Enemies:GetChildren()) do
+            if g.Name == k.Name and (g.HumanoidRootPart.Position - BringPosition).Magnitude <= 360 then
+                g.HumanoidRootPart.CFrame = BringPosition
+                g.Humanoid.JumpPower = 0
+                g.Humanoid.WalkSpeed = 0
+                g.HumanoidRootPart.CanCollide = false
+                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                k.Humanoid:ChangeState(14)
+            end
+        end
         repeat task.wait()
             EBuso()
             EWeapon()
@@ -2303,6 +2326,32 @@ spawn(function()
                         repeat task.wait()
 			                KillMon2(v)
                         until not MobArua or v.Humanoid.Health <= 0
+			        end
+			    end
+			end
+		end
+	end
+end)
+MainTab:AddToggle({
+	Name = "Mob Aura 2 [Bone]",
+	Default = false,
+	Flag = "Mob Aura 2",
+	Save = true,
+	Callback = function(vMobArua2)
+		MobArua2 = vMobArua2
+		DisableTween(MobArua2)
+	end    
+})
+spawn(function()
+	while task.wait() do
+		if MobArua2 then
+			for i,v in pairs(Enemies:GetChildren()) do
+                if CheckBoneMob() and v:FindFirstChild("Humanoid") and GetDistance(v.HumanoidRootPart.Position) < 2000 then
+                    v = CheckBoneMob()
+			        if v.Humanoid.Health > 0 then
+                        repeat task.wait()
+			                KillMon(v)
+                        until not MobArua2 or v.Humanoid.Health <= 0
 			        end
 			    end
 			end

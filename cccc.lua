@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #37.8
+--Memories Hub Hyper - Rewrite Fixed & Update #37.9
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()

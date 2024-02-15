@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #37.10
+--Memories Hub Hyper - Rewrite Fixed & Update #37.11
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -941,18 +941,7 @@ function InstantChooseGear()
         task.wait(30)
     end
 end
-function MobGet2(tablemob)
-    Mob = nil
-    DistMob = math.huge
-    for r, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-        if table.find(tablemob, v.Name) and checkfunc(v) and calcpos(v.HumanoidRootPart.CFrame, lp.Character.HumanoidRootPart.CFrame) < DistMob then
-            Mob = v 
-            DistMob = calcpos(v.HumanoidRootPart.CFrame, lp.Character.HumanoidRootPart.CFrame)
-        end
-    end
-    return Mob
-end
-function checkfunc(a)
+function CheckPart(a)
     if a and a.Parent then
         if a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") and a.Humanoid.Health > 0 and a.HumanoidRootPart.CFrame then
             return true
@@ -964,8 +953,8 @@ function checkfunc(a)
     end
 end 
 function KillMon(Mon, Bring, StopFunction)
-    NearestMon = MobGet2(Mon)
-    if checkfunc(NearestMon) then
+    NearestMon = MobGet(Mon)
+    if CheckPart(NearestMon) then
         repeat task.wait()
             if Bring then
                 BringPos = NearestMon.HumanoidRootPart.CFrame
@@ -2270,7 +2259,7 @@ spawn(function()
     end
 end)
 MainTab:AddToggle({
-	Name = "Mob Aura 21",
+	Name = "Mob Aura 23",
 	Default = false,
 	Flag = "Mob Aura",
 	Save = true,
@@ -2279,20 +2268,24 @@ MainTab:AddToggle({
 		DisableTween(MobArua)
 	end    
 })
+MobAruaTable = {}
+for mob,ar in pairs(Enemies:GetChildren()) do
+    if ar:FindFirstChild("Humanoid") and GetDistance(ar.HumanoidRootPart.Position) < 2000 then
+        table.insert(MobAruaTable, ar.Name)
+    end
+end
 spawn(function()
 	while task.wait() do
 		if MobArua then
 			for i,v in pairs(Enemies:GetChildren()) do
-                if v:FindFirstChild("Humanoid") and GetDistance(v.HumanoidRootPart.Position) < 2000 then
-			        if v.Humanoid.Health > 0 then
-                        repeat task.wait()
-			                KillMon({v}, true, function()
-                                return MobArua
-                            end)
-                        until not MobArua or v.Humanoid.Health <= 0
-			        end
-			    end
-			end
+                if table.find(MobAruaTable, v.Name) and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
+                    KillMon(MobAruaTable, true, function()
+                        return MobArua
+                    end)
+                elseif not MobArua then
+                    MobAruaTable = {}
+                end
+            end
 		end
 	end
 end)

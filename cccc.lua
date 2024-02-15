@@ -941,32 +941,20 @@ function InstantChooseGear()
         task.wait(30)
     end
 end
-function FindPosBring(positionList)
-    local totalPosition = Vector3.new()
-    local validCount = 0
-    for i = 1, #positionList do
-        local position = positionList[i]
-        local isFarEnough = true
-        for j = 1, #positionList do
-            if i ~= j then
-                local distance = (position - positionList[j]).Magnitude
-                if distance >= (350 * j) then
-                    isFarEnough = false
-                    break
-                end
-            end
-        end
-        if isFarEnough then
-            totalPosition = totalPosition + position
-            validCount = validCount + 1
+function MobGet2(tablemob)
+    Mob = nil
+    DistMob = math.huge
+    for r, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+        if table.find(tablemob, v.Name) and checkfunc(v) and calcpos(v.HumanoidRootPart.CFrame, lp.Character.HumanoidRootPart.CFrame) < DistMob then
+            Mob = v 
+            DistMob = calcpos(v.HumanoidRootPart.CFrame, lp.Character.HumanoidRootPart.CFrame)
         end
     end
-    local averagePosition = totalPosition / validCount
-    return averagePosition
+    return Mob
 end
-function CheckPart(v1)
-    if v1.Parent then
-        if v1:FindFirstChild("Humanoid") and v1:FindFirstChild("HumanoidRootPart") and v1.Humanoid.Health > 0 and v1.HumanoidRootPart.CFrame then
+function checkfunc(a)
+    if a and a.Parent then
+        if a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") and a.Humanoid.Health > 0 and a.HumanoidRootPart.CFrame then
             return true
         else
             return false
@@ -974,57 +962,31 @@ function CheckPart(v1)
     else
         return false
     end
-end
-function KillMon(mon)
-    mobtable = mon
-    if type(mobtable) == "table" then
-        if MobGet(mobtable) then
-            mon = MobGet(mobtable)
-            if mon and mon:FindFirstChild("HumanoidRootPart") and mon:FindFirstChild("Humanoid") and mon.Humanoid.Health > 0 then
-                repeat task.wait()
-                    EWeapon()
-                    EBuso()
-                    ToTween(mon.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-                    EClick()
-                    NoClip = true
-                until mon.Humnaoid.Health <= 0 or not mon:FindFirstChild("Humanoid") or not mon:FindFirstChild("HumanoidRootPart")
-            end
-        end
-    end
-end
-function KillMon2(mon2, Bring)
-    k = mon2
-    if Enemies:FindFirstChild(k.Name) and k:FindFirstChild("Humanoid") and k:FindFirstChild("HumanoidRootPart") and k.Humanoid.Health > 0 then
-        if Bring then
-            BringList = {}
-            BringPosition = nil
-            for i,v in pairs(Enemies:GetChildren()) do
-                if CheckPart(k) and v.Name == mon then
-                    table.insert(BringList, v.HumanoidRootPart.Position)
+end 
+function KillMon(Mon, Bring, StopFunction)
+    NearestMon = MobGet2(Mon)
+    if checkfunc(NearestMon) then
+        repeat task.wait()
+            if Bring then
+                BringPos = NearestMon.HumanoidRootPart.CFrame
+                for j, k in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                    if checkfunc(k) and k.Name == MobNearest.Name and (k.HumanoidRootPart.Position - BringPos.Position).Magnitude <= 350 then
+                        k.HumanoidRootPart.CFrame = BringPos
+                        k.Humanoid.JumpPower = 0
+                        k.Humanoid.WalkSpeed = 0
+                        k.HumanoidRootPart.CanCollide = false
+                        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                        k.Humanoid:ChangeState(14)
+                    end
                 end
             end
-            BringPosition = FindPosBring(BringList)
-            if BringPosition == nil then 
-                return 
-            end
-        end
-        for o,g in pairs(Enemies:GetChildren()) do
-            if g.Name == k.Name and (g.HumanoidRootPart.Position - BringPosition).Magnitude <= 360 then
-                g.HumanoidRootPart.CFrame = BringPosition
-                g.Humanoid.JumpPower = 0
-                g.Humanoid.WalkSpeed = 0
-                g.HumanoidRootPart.CanCollide = false
-                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                k.Humanoid:ChangeState(14)
-            end
-        end
-        repeat task.wait()
             EBuso()
             EWeapon()
-            ToTween(k.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-            NoClip = true
+            ToTween(NearestMon.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
             EClick()
-        until not k or not k:FindFirstChild("Humanoid") or not k:FindFirstChild("HumanoidRootPart") or k.Humanoid.Health <= 0
+            NearestMon.HumanoidRootPart.CanCollide = false
+            NoClip = true
+        until not checkfunc(NearestMon) or not Stopfunction
     end
 end
 spawn(function()
@@ -2308,7 +2270,7 @@ spawn(function()
     end
 end)
 MainTab:AddToggle({
-	Name = "Mob Aura",
+	Name = "Mob Aura 22",
 	Default = false,
 	Flag = "Mob Aura",
 	Save = true,
@@ -2324,7 +2286,9 @@ spawn(function()
                 if v:FindFirstChild("Humanoid") and GetDistance(v.HumanoidRootPart.Position) < 2000 then
 			        if v.Humanoid.Health > 0 then
                         repeat task.wait()
-			                KillMon2(v, true)
+			                KillMon(v, true, function()
+                                return MobArua
+                            end)
                         until not MobArua or v.Humanoid.Health <= 0
 			        end
 			    end

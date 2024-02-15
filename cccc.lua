@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #37.14
+--Memories Hub Hyper - Rewrite Fixed & Update #37.15
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -3550,16 +3550,13 @@ end
 spawn(function()
     while task.wait() do
         if KitsuneI then
-			while wait() do
-					if WS.Map:FindFirstChild("KitsuneIsland"):FindFirstChild("ShrineActive") then
-						for i,v in pairs(WS.Map:FindFirstChild("KitsuneIsland"):FindFirstChild("ShrineActive"):GetDescendants()) do
-							if v:IsA("BasePart") and v.Name:find("NeonShrinePart") then
-								ToTween(v.CFrame)
-							end
-						end
-					end
-				end
-			end
+            if WS.Map:FindFirstChild("KitsuneIsland"):FindFirstChild("ShrineActive") then
+                for i,v in pairs(WS.Map:FindFirstChild("KitsuneIsland"):FindFirstChild("ShrineActive"):GetDescendants()) do
+                    if v:IsA("BasePart") and v.Name:find("NeonShrinePart") then
+                        ToTween(v.CFrame)
+                    end
+                end
+            end
         end
     end
 end)

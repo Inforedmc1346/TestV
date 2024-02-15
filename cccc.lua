@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #37.11
+--Memories Hub Hyper - Rewrite Fixed & Update #37.14
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -959,7 +959,7 @@ function KillMon(Mon, Bring, StopFunction)
             if Bring then
                 BringPos = NearestMon.HumanoidRootPart.CFrame
                 for j, k in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                    if checkfunc(k) and k.Name == MobNearest.Name and (k.HumanoidRootPart.Position - BringPos.Position).Magnitude <= 350 then
+                    if CheckPart(k) and k.Name == MobNearest.Name and (k.HumanoidRootPart.Position - BringPos.Position).Magnitude <= 350 then
                         k.HumanoidRootPart.CFrame = BringPos
                         k.Humanoid.JumpPower = 0
                         k.Humanoid.WalkSpeed = 0
@@ -975,7 +975,7 @@ function KillMon(Mon, Bring, StopFunction)
             EClick()
             NearestMon.HumanoidRootPart.CanCollide = false
             NoClip = true
-        until not checkfunc(NearestMon) or not Stopfunction
+        until not CheckPart(NearestMon) or not Stopfunction
     end
 end
 spawn(function()
@@ -3550,27 +3550,33 @@ end
 spawn(function()
     while task.wait() do
         if KitsuneI then
-            for i,v in pairs(WO.Locations:GetChildren()) do
-                if v:FindFirstChild("Kitsune Island") then
-                    ToTween(v:FindFirstChild("Kitsune Island"))
-                    NoClip = true
-                else
-                    NoClip = false
-                end
-            end
-        end
-        if AzuEmber then
-            if game:GetService("Workspace"):FindFirstChild("AttachedAzureEmber") then
-                LP.Character.HumanoidRootPart.CFrame = game:GetService("Workspace"):WaitForChild("EmberTemplate"):FindFirstChild("Part").CFrame
-            end
+			while wait() do
+					if WS.Map:FindFirstChild("KitsuneIsland"):FindFirstChild("ShrineActive") then
+						for i,v in pairs(WS.Map:FindFirstChild("KitsuneIsland"):FindFirstChild("ShrineActive"):GetDescendants()) do
+							if v:IsA("BasePart") and v.Name:find("NeonShrinePart") then
+								ToTween(v.CFrame)
+							end
+						end
+					end
+				end
+			end
         end
     end
 end)
-local FarmAzure = ItemTab:AddToggle({Name = "Auto Collect Azure Ember", Default = false, Callback = function(vAzuEmber)
+local FarmAzure = ItemTab:AddToggle({Name = "Auto Collect Azure Embers", Default = false, Callback = function(vAzuEmber)
     AzuEmber = vAzuEmber
     DisableTween(AzuEmber)
 end    
 })
+spawn(function()
+    while task.wait() do
+        if AzuEmber then
+            if WS:FindFirstChild("AttachedAzureEmber") then
+                ToTween(WS:WaitForChild("EmberTemplate"):FindFirstChild("Part").CFrame)
+            end
+        end
+    end
+end)
 ItemTab:AddToggle({Name = "Auto Summon Kitsune Island", Default = false, Flag = "Summon Kitsune Island", Save = true, Callback = function(vSummonKitsuneIsland)
     SummonKitsuneIsland = vSummonKitsuneIsland
         DisableTween(SummonKitsuneIsland)
@@ -3636,8 +3642,7 @@ spawn(function()
                     end
                 end
             else
-                Notify("Memories Hub", "Not Found Near FM or FM, Start Hop", 5)
-                HopServer()
+                Notify("Memories Hub", "Not Found Near FM or FM, Please Hop Server", 5)
             end
         end
     end
@@ -3656,7 +3661,7 @@ spawn(function()
         if AutoYama then
             if RS.Remotes.CommF_:InvokeServer("EliteHunter","Progress") >= 30 then
                 repeat wait(.1)
-                    fireclickdetector(game:GetService("Workspace").Map.Waterfall.SealedKatana.Handle.ClickDetector)
+                    fireclickdetector(WS.Map.Waterfall.SealedKatana.Handle.ClickDetector)
                 until LP.Backpack:FindFirstChild("Yama") or not AutoYama
             end
         end

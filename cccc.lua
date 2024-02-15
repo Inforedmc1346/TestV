@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #37.15
+--Memories Hub Hyper - Rewrite Fixed & Update #37.16
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -959,7 +959,7 @@ function KillMon(Mon, Bring, StopFunction)
             if Bring then
                 BringPos = NearestMon.HumanoidRootPart.CFrame
                 for j, k in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                    if CheckPart(k) and k.Name == MobNearest.Name and (k.HumanoidRootPart.Position - BringPos.Position).Magnitude <= 350 then
+                    if CheckPart(k) and (k.HumanoidRootPart.Position - BringPos.Position).Magnitude <= 350 then
                         k.HumanoidRootPart.CFrame = BringPos
                         k.Humanoid.JumpPower = 0
                         k.Humanoid.WalkSpeed = 0

@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #37.9
+--Memories Hub Hyper - Rewrite Fixed & Update #37.10
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -2270,7 +2270,7 @@ spawn(function()
     end
 end)
 MainTab:AddToggle({
-	Name = "Mob Aura 22",
+	Name = "Mob Aura 21",
 	Default = false,
 	Flag = "Mob Aura",
 	Save = true,
@@ -2286,7 +2286,7 @@ spawn(function()
                 if v:FindFirstChild("Humanoid") and GetDistance(v.HumanoidRootPart.Position) < 2000 then
 			        if v.Humanoid.Health > 0 then
                         repeat task.wait()
-			                KillMon(v, true, function()
+			                KillMon({v}, true, function()
                                 return MobArua
                             end)
                         until not MobArua or v.Humanoid.Health <= 0

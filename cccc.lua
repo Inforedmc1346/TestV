@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #37.16
+--Memories Hub Hyper - Rewrite Fixed & Update #37.17
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -952,49 +952,75 @@ function CheckPart(a)
         return false
     end
 end 
-function KillMon(Mon, Bring, StopFunction)
-    NearestMon = MobGet(Mon)
-    if CheckPart(NearestMon) then
-        repeat task.wait()
-            if Bring then
-                BringPos = NearestMon.HumanoidRootPart.CFrame
-                for j, k in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                    if CheckPart(k) and (k.HumanoidRootPart.Position - BringPos.Position).Magnitude <= 350 then
-                        k.HumanoidRootPart.CFrame = BringPos
-                        k.Humanoid.JumpPower = 0
-                        k.Humanoid.WalkSpeed = 0
-                        k.HumanoidRootPart.CanCollide = false
-                        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                        k.Humanoid:ChangeState(14)
+function function01(aj)
+    tb2 = 0
+    for r, v in pairs(aj) do
+        if v > tb2 then
+            tb2 = v
+        end
+    end
+    return tb2
+end
+function SkidSeaHub()
+    local s = {}
+    local ak = false
+    for al, am in pairs(game.workspace.Enemies:GetChildren()) do
+        if CheckPart(am) then
+            for al, an in pairs(game.workspace.Enemies:GetChildren()) do
+                if CheckPart(an) and CheckPart(am) then
+                    if (an.HumanoidRootPart.Position - am.HumanoidRootPart.Position).Magnitude < 350 then
+                        if not s[am.HumanoidRootPart.CFrame] then
+                            s[am.HumanoidRootPart.CFrame] = 1
+                        else
+                            s[am.HumanoidRootPart.CFrame] = s[am.HumanoidRootPart.CFrame] + 1
+                        end
                     end
                 end
             end
-            EBuso()
-            EWeapon()
-            ToTween(NearestMon.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-            EClick()
-            NearestMon.HumanoidRootPart.CanCollide = false
-            NoClip = true
-        until not CheckPart(NearestMon) or not Stopfunction
+        end
     end
+    local s2 = function01(s)
+    for r, v in pairs(s) do
+        if v == s2 then
+            ak = r
+        end
+    end
+    return ak
 end
 spawn(function()
     while wait() do
         for i,v in pairs(Enemies:GetChildren()) do
-            if ((StartFarms and SelectFarm == "Level" and StartBring and v.Name == CheckQuest()["MobName"]) or (FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob()) or (MobArua and StartBring) or (MagmaOre and v.Name == "Lava Pirate" and StartBring) or (MysticDroplet and v.Name == "Water Fighter" and StartBring) or (AngelWings and v.Name == "Royal Soldier" and StartBring) or (ConjuredCocoa and v.Name == "Chocolate Bar Battler" and StartBring) or (RadioactiveMaterial and v.Name == "Factory Staff" and StartBring) or (Ectoplasm and (v.Name == "Ship Officer" or v.Name == "Ship Steward" or "Ship Engineer" or "Ship Deckhand") and StartBring) or (DragonScale and v.Name == "Dragon Crew Warrior" and StartBring) or (MiniTusk and v.Name == "Mythological Pirate" and StartBring) or (FishTail and v.Name == "Fishman Captain" and StartBring) or (VampireFang and v.Name == "Vampire" and StartBring)) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 350 then
-                v.HumanoidRootPart.CFrame = BringPos
-                v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)                                                  
-                v.HumanoidRootPart.Transparency = 1
-                v.HumanoidRootPart.CanCollide = false
-                v.Head.CanCollide = false
-                v.Humanoid.JumpPower = 0
-                v.Humanoid.WalkSpeed = 0
-                if v.Humanoid:FindFirstChild("Animator") then
-                    v.Humanoid.Animator:Destroy()
+            if ((StartFarms and SelectFarm == "Level" and StartBring and v.Name == CheckQuest()["MobName"]) or (FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob()) or (MobArua and StartBring) or (MagmaOre and v.Name == "Lava Pirate" and StartBring) or (MysticDroplet and v.Name == "Water Fighter" and StartBring) or (AngelWings and v.Name == "Royal Soldier" and StartBring) or (ConjuredCocoa and v.Name == "Chocolate Bar Battler" and StartBring) or (RadioactiveMaterial and v.Name == "Factory Staff" and StartBring) or (Ectoplasm and (v.Name == "Ship Officer" or v.Name == "Ship Steward" or "Ship Engineer" or "Ship Deckhand") and StartBring) or (DragonScale and v.Name == "Dragon Crew Warrior" and StartBring) or (MiniTusk and v.Name == "Mythological Pirate" and StartBring) or (FishTail and v.Name == "Fishman Captain" and StartBring) or (VampireFang and v.Name == "Vampire" and StartBring)) and CheckPart(v) and (v.HumanoidRootPart.Position - c.Position).Magnitude < 350 then
+                local c = SkidSeaHub()
+                local ao = Enemies:GetChildren()
+                if #ao > 1 then
+                    for ap = 1, #ao do
+                        for j,k in pairs(Enemies:GetChildren()) do
+                            if CheckPart(k) and (k.HumanoidRootPart.Position - c.Position).Magnitude < 350 then
+                                k.HumanoidRootPart.CFrame = c
+                                k.Humanoid:ChangeState(11)
+                                k.HumanoidRootPart.CanCollide = false
+                                k.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
+                                k.HumanoidRootPart.Transparency = 1
+                                for al, f in pairs(k:GetChildren()) do
+                                    if f:IsA("BasePart") then
+                                        f.Velocity = Vector3.new(0, 0, 0)
+                                        f.CanCollide = 0
+                                        f.Anchored = true
+                                    end
+                                end
+                                if k:FindFirstChild("Humanoid") then
+                                    k.Humanoid.WalkSpeed = 0
+                                    k.Humanoid.JumpPower = 0
+                                end
+                                if v.Humanoid:FindFirstChild("Animator") then
+                                    v.Humanoid.Animator:Destroy()
+                                end
+                                v.Humanoid:ChangeState(11)
+                            end
+                        end
+                    end
                 end
-                v.Humanoid:ChangeState(11)
-                v.Humanoid:ChangeState(14)
-                sethiddenproperty(LP, "SimulationRadius",  math.huge)
             end
         end
     end
@@ -2050,7 +2076,7 @@ spawn(function()
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)  
                             v.HumanoidRootPart.CanCollide = false
                             NoClip = true
-                        until not StartFarms or not SelectFarm == "Bone" or not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or MasteryOption
+                        until not StartFarms or not SelectFarm == "Bone" or not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0
                         StartBring = false
                     end
                 else
@@ -2286,32 +2312,6 @@ spawn(function()
                     MobAruaTable = {}
                 end
             end
-		end
-	end
-end)
-MainTab:AddToggle({
-	Name = "Mob Aura 2 [Bone]",
-	Default = false,
-	Flag = "Mob Aura 2",
-	Save = true,
-	Callback = function(vMobArua2)
-		MobArua2 = vMobArua2
-		DisableTween(MobArua2)
-	end    
-})
-spawn(function()
-	while task.wait() do
-		if MobArua2 then
-			for i,v in pairs(Enemies:GetChildren()) do
-                if CheckBoneMob() and v:FindFirstChild("Humanoid") and GetDistance(v.HumanoidRootPart.Position) < 2000 then
-                    v = CheckBoneMob()
-			        if v.Humanoid.Health > 0 then
-                        repeat task.wait()
-			                KillMon(v)
-                        until not MobArua2 or v.Humanoid.Health <= 0
-			        end
-			    end
-			end
 		end
 	end
 end)

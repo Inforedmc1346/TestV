@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #37.20
+--Memories Hub Hyper - Rewrite Fixed & Update #37.21
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -491,24 +491,15 @@ function getNextPosition2(center)
 end
 spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
-        if NoClip and LP.Character and LP.Character:FindFirstChild("Humanoid") then
-            setfflag("HumanoidParallelRemoveNoPhysics", "False")
-            setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
-            if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-                local ag = Instance.new("BodyVelocity")
-                ag.Velocity = Vector3.new(0, 0, 0)
-                ag.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-                ag.P = 9000
-                ag.Parent = game.Players.LocalPlayer.Character.Head
-                for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-                    if v:IsA("BasePart") then
-                        v.CanCollide = false
-                    end
-                end
-            end
-            for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
+        if NoClip and not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
+            local ag = Instance.new("BodyVelocity")
+            ag.Velocity = Vector3.new(0, 0, 0)
+            ag.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+            ag.P = 9000
+            ag.Parent = game.Players.LocalPlayer.Character.Head
+            for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
                 if v:IsA("BasePart") then
-                    v.CanCollide = false    
+                    v.CanCollide = false
                 end
             end
         elseif not NoClip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
@@ -1933,7 +1924,7 @@ spawn(function()
                                         EWeapon()                                                                                                                    
                                         EBuso()
                                         ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
-                                        BringPos = v.HumanoidRootPart.CFrame
+                                        PosBring = v.HumanoidRootPart.CFrame
                                         StartBring = true
                                         if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
                                             HealthM = v.Humanoid.Health <= v.Humanoid.MaxHealth * HealthStop / 100
@@ -2088,7 +2079,7 @@ spawn(function()
                             EWeapon()                                                                                                                    
                             EBuso()
                             if not ClaimQuest then
-                                ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                             else
                                 questt = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
                                 if not string.find(questt, "Cookie Crafter") then
@@ -2105,12 +2096,12 @@ spawn(function()
                                     ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                 end
                             end
-                            BringPos = v.HumanoidRootPart.CFrame
+                            PosBring = v.HumanoidRootPart.CFrame
                             StartBring = true
                             if HealthM then
                                 repeat task.wait()
                                     local va,ve = CheckMasSkill()
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 15, 0))
                                     if va and ve then
                                         EquipWeaponName(va)
                                         SendKeyEvents(ve)
@@ -2124,7 +2115,7 @@ spawn(function()
                             elseif HealthM and (LP.Backpack:FindFirstChild("Soul Guitar") or LP.Character:FindFirstChild("Soul Guitar")) then
                                 repeat task.wait()
                                     local va = CheckMasSkill()
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 15, 0))
                                     if va then
                                         EquipWeaponName(va)
                                         SendKeyEvents("Z")

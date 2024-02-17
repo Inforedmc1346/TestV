@@ -975,23 +975,17 @@ function FindPosBring(positionList)
     local averagePosition = totalPosition / validCount
     return averagePosition
 end
-BringList = {}
-BringPosition = nil
 spawn(function()
-    while wait() do
+    while task.wait() do
         for i,v in pairs(Enemies:GetChildren()) do
             if ((StartFarms and SelectFarm == "Level" and StartBring and v.Name == CheckQuest()["MobName"]) or (FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob()) or (MobArua and StartBring) or (MagmaOre and v.Name == "Lava Pirate" and StartBring) or (MysticDroplet and v.Name == "Water Fighter" and StartBring) or (AngelWings and v.Name == "Royal Soldier" and StartBring) or (ConjuredCocoa and v.Name == "Chocolate Bar Battler" and StartBring) or (RadioactiveMaterial and v.Name == "Factory Staff" and StartBring) or (Ectoplasm and (v.Name == "Ship Officer" or v.Name == "Ship Steward" or "Ship Engineer" or "Ship Deckhand") and StartBring) or (DragonScale and v.Name == "Dragon Crew Warrior" and StartBring) or (MiniTusk and v.Name == "Mythological Pirate" and StartBring) or (FishTail and v.Name == "Fishman Captain" and StartBring) or (VampireFang and v.Name == "Vampire" and StartBring)) and CheckPart(v) then
-                table.insert(BringList, v.HumanoidRootPart.Position)
-                BringPosition = FindPosBring(BringList)
-                for j,k in pairs(Enemies:GetChildren()) do
-                    if ((StartFarms and SelectFarm == "Level" and StartBring and k.Name == CheckQuest()["MobName"]) or (FarmSkip and StartBring and k.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob()) or (MobArua and StartBring) or (MagmaOre and k.Name == "Lava Pirate" and StartBring) or (MysticDroplet and k.Name == "Water Fighter" and StartBring) or (AngelWings and k.Name == "Royal Soldier" and StartBring) or (ConjuredCocoa and k.Name == "Chocolate Bar Battler" and StartBring) or (RadioactiveMaterial and k.Name == "Factory Staff" and StartBring) or (Ectoplasm and (k.Name == "Ship Officer" or k.Name == "Ship Steward" or "Ship Engineer" or "Ship Deckhand") and StartBring) or (DragonScale and k.Name == "Dragon Crew Warrior" and StartBring) or (MiniTusk and k.Name == "Mythological Pirate" and StartBring) or (FishTail and k.Name == "Fishman Captain" and StartBring) or (VampireFang and k.Name == "Vampire" and StartBring)) and (k.HumanoidRootPart.Position - BringPosition).Magnitude <= 360 then
-                        k.HumanoidRootPart.CFrame = BringPosition
-                        k.Humanoid.JumpPower = 0
-                        k.Humanoid.WalkSpeed = 0
-                        k.HumanoidRootPart.CanCollide = false
-                        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                        k.Humanoid:ChangeState(14)
-                    end
+                if GetDistance(v.HumanoidRootPart.Position) <= DistanceFromBring then
+                    v.HumanoidRootPart.CFrame = PosBring
+                    v.Humanoid.JumpPower = 0
+                    v.Humanoid.WalkSpeed = 0
+                    v.HumanoidRootPart.CanCollide = false
+                    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                    v.Humanoid:ChangeState(14)
                 end
             end
         end
@@ -1516,6 +1510,11 @@ end
 MainTab:AddSection({Name = "Select Mode"})
 local selecttool = MainTab:AddDropdown({Name = "Select Tool", Default = "", Options = {"Melee","Sword"},Callback = function(vSelecttool)
 		Selecttool = vSelecttool
+	end    
+})
+MainTab:AddSection({Name = "Bring Setting"})
+MainTab:AddSlider({Name = "Distance From Bring Mob", Min = 10, Max = 500, Default = 350, Color = Color3.fromRGB(255,255,255), Increment = 1, ValueName = "Health", Callback = function(vDistanceFromBring)
+    DistanceFromBring = vDistanceFromBring
 	end    
 })
 MainTab:AddSection({Name = "Fast Attack"})

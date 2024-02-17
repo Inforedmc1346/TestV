@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #37.18
+--Memories Hub Hyper - Rewrite Fixed & Update #37.19
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -952,73 +952,45 @@ function CheckPart(a)
         return false
     end
 end 
-function function01(aj)
-    tb2 = 0
-    for r, v in pairs(aj) do
-        if v > tb2 then
-            tb2 = v
-        end
-    end
-    return tb2
-end
-function SkidSeaHub()
-    local s = {}
-    local ak = false
-    for al, am in pairs(game.workspace.Enemies:GetChildren()) do
-        if CheckPart(am) then
-            for al, an in pairs(game.workspace.Enemies:GetChildren()) do
-                if CheckPart(an) and CheckPart(am) then
-                    if (an.HumanoidRootPart.Position - am.HumanoidRootPart.Position).Magnitude < 350 then
-                        if not s[am.HumanoidRootPart.CFrame] then
-                            s[am.HumanoidRootPart.CFrame] = 1
-                        else
-                            s[am.HumanoidRootPart.CFrame] = s[am.HumanoidRootPart.CFrame] + 1
-                        end
-                    end
+function FindPosBring(positionList)
+    local totalPosition = Vector3.new()
+    local validCount = 0
+    for i = 1, #positionList do
+        local position = positionList[i]
+        local isFarEnough = true
+        for j = 1, #positionList do
+            if i ~= j then
+                local distance = (position - positionList[j]).Magnitude
+                if distance >= (350 * j) then
+                    isFarEnough = false
+                    break
                 end
             end
         end
-    end
-    local s2 = function01(s)
-    for r, v in pairs(s) do
-        if v == s2 then
-            ak = r
+        if isFarEnough then
+            totalPosition = totalPosition + position
+            validCount = validCount + 1
         end
     end
-    return ak
+    local averagePosition = totalPosition / validCount
+    return averagePosition
 end
+BringList = {}
+BringPosition = nil
 spawn(function()
     while wait() do
         for i,v in pairs(Enemies:GetChildren()) do
-            if ((StartFarms and SelectFarm == "Level" and StartBring and v.Name == CheckQuest()["MobName"]) or (FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob()) or (MobArua and StartBring) or (MagmaOre and v.Name == "Lava Pirate" and StartBring) or (MysticDroplet and v.Name == "Water Fighter" and StartBring) or (AngelWings and v.Name == "Royal Soldier" and StartBring) or (ConjuredCocoa and v.Name == "Chocolate Bar Battler" and StartBring) or (RadioactiveMaterial and v.Name == "Factory Staff" and StartBring) or (Ectoplasm and (v.Name == "Ship Officer" or v.Name == "Ship Steward" or "Ship Engineer" or "Ship Deckhand") and StartBring) or (DragonScale and v.Name == "Dragon Crew Warrior" and StartBring) or (MiniTusk and v.Name == "Mythological Pirate" and StartBring) or (FishTail and v.Name == "Fishman Captain" and StartBring) or (VampireFang and v.Name == "Vampire" and StartBring)) and CheckPart(v) and (v.HumanoidRootPart.Position - PosBring.Position).Magnitude < 350 then
-                local PosBring = SkidSeaHub()
-                local ao = Enemies:GetChildren()
-                if #ao > 1 then
-                    for ap = 1, #ao do
-                        for j,k in pairs(Enemies:GetChildren()) do
-                            if CheckPart(k) and (k.HumanoidRootPart.Position - PosBring.Position).Magnitude < 350 then
-                                k.HumanoidRootPart.CFrame = PosBring
-                                k.Humanoid:ChangeState(11)
-                                k.HumanoidRootPart.CanCollide = false
-                                k.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
-                                k.HumanoidRootPart.Transparency = 1
-                                for al, f in pairs(k:GetChildren()) do
-                                    if f:IsA("BasePart") then
-                                        f.Velocity = Vector3.new(0, 0, 0)
-                                        f.CanCollide = 0
-                                        f.Anchored = true
-                                    end
-                                end
-                                if k:FindFirstChild("Humanoid") then
-                                    k.Humanoid.WalkSpeed = 0
-                                    k.Humanoid.JumpPower = 0
-                                end
-                                if v.Humanoid:FindFirstChild("Animator") then
-                                    v.Humanoid.Animator:Destroy()
-                                end
-                                v.Humanoid:ChangeState(11)
-                            end
-                        end
+            if ((StartFarms and SelectFarm == "Level" and StartBring and v.Name == CheckQuest()["MobName"]) or (FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob()) or (MobArua and StartBring) or (MagmaOre and v.Name == "Lava Pirate" and StartBring) or (MysticDroplet and v.Name == "Water Fighter" and StartBring) or (AngelWings and v.Name == "Royal Soldier" and StartBring) or (ConjuredCocoa and v.Name == "Chocolate Bar Battler" and StartBring) or (RadioactiveMaterial and v.Name == "Factory Staff" and StartBring) or (Ectoplasm and (v.Name == "Ship Officer" or v.Name == "Ship Steward" or "Ship Engineer" or "Ship Deckhand") and StartBring) or (DragonScale and v.Name == "Dragon Crew Warrior" and StartBring) or (MiniTusk and v.Name == "Mythological Pirate" and StartBring) or (FishTail and v.Name == "Fishman Captain" and StartBring) or (VampireFang and v.Name == "Vampire" and StartBring)) and CheckPart(v) then
+                table.insert(BringList, v.HumanoidRootPart.Position)
+                BringPosition = FindPosBring(BringList)
+                for j,k in pairs(Enemies:GetChildren()) do
+                    if ((StartFarms and SelectFarm == "Level" and StartBring and k.Name == CheckQuest()["MobName"]) or (FarmSkip and StartBring and k.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob()) or (MobArua and StartBring) or (MagmaOre and k.Name == "Lava Pirate" and StartBring) or (MysticDroplet and k.Name == "Water Fighter" and StartBring) or (AngelWings and k.Name == "Royal Soldier" and StartBring) or (ConjuredCocoa and k.Name == "Chocolate Bar Battler" and StartBring) or (RadioactiveMaterial and k.Name == "Factory Staff" and StartBring) or (Ectoplasm and (k.Name == "Ship Officer" or k.Name == "Ship Steward" or "Ship Engineer" or "Ship Deckhand") and StartBring) or (DragonScale and k.Name == "Dragon Crew Warrior" and StartBring) or (MiniTusk and k.Name == "Mythological Pirate" and StartBring) or (FishTail and k.Name == "Fishman Captain" and StartBring) or (VampireFang and k.Name == "Vampire" and StartBring)) and (k.HumanoidRootPart.Position - BringPosition).Magnitude <= 360 then
+                        k.HumanoidRootPart.CFrame = BringPosition
+                        k.Humanoid.JumpPower = 0
+                        k.Humanoid.WalkSpeed = 0
+                        k.HumanoidRootPart.CanCollide = false
+                        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                        k.Humanoid:ChangeState(14)
                     end
                 end
             end

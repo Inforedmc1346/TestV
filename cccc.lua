@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #37.17
+--Memories Hub Hyper - Rewrite Fixed & Update #37.18
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -990,14 +990,14 @@ end
 spawn(function()
     while wait() do
         for i,v in pairs(Enemies:GetChildren()) do
-            if ((StartFarms and SelectFarm == "Level" and StartBring and v.Name == CheckQuest()["MobName"]) or (FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob()) or (MobArua and StartBring) or (MagmaOre and v.Name == "Lava Pirate" and StartBring) or (MysticDroplet and v.Name == "Water Fighter" and StartBring) or (AngelWings and v.Name == "Royal Soldier" and StartBring) or (ConjuredCocoa and v.Name == "Chocolate Bar Battler" and StartBring) or (RadioactiveMaterial and v.Name == "Factory Staff" and StartBring) or (Ectoplasm and (v.Name == "Ship Officer" or v.Name == "Ship Steward" or "Ship Engineer" or "Ship Deckhand") and StartBring) or (DragonScale and v.Name == "Dragon Crew Warrior" and StartBring) or (MiniTusk and v.Name == "Mythological Pirate" and StartBring) or (FishTail and v.Name == "Fishman Captain" and StartBring) or (VampireFang and v.Name == "Vampire" and StartBring)) and CheckPart(v) and (v.HumanoidRootPart.Position - c.Position).Magnitude < 350 then
-                local c = SkidSeaHub()
+            if ((StartFarms and SelectFarm == "Level" and StartBring and v.Name == CheckQuest()["MobName"]) or (FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob()) or (MobArua and StartBring) or (MagmaOre and v.Name == "Lava Pirate" and StartBring) or (MysticDroplet and v.Name == "Water Fighter" and StartBring) or (AngelWings and v.Name == "Royal Soldier" and StartBring) or (ConjuredCocoa and v.Name == "Chocolate Bar Battler" and StartBring) or (RadioactiveMaterial and v.Name == "Factory Staff" and StartBring) or (Ectoplasm and (v.Name == "Ship Officer" or v.Name == "Ship Steward" or "Ship Engineer" or "Ship Deckhand") and StartBring) or (DragonScale and v.Name == "Dragon Crew Warrior" and StartBring) or (MiniTusk and v.Name == "Mythological Pirate" and StartBring) or (FishTail and v.Name == "Fishman Captain" and StartBring) or (VampireFang and v.Name == "Vampire" and StartBring)) and CheckPart(v) and (v.HumanoidRootPart.Position - PosBring.Position).Magnitude < 350 then
+                local PosBring = SkidSeaHub()
                 local ao = Enemies:GetChildren()
                 if #ao > 1 then
                     for ap = 1, #ao do
                         for j,k in pairs(Enemies:GetChildren()) do
-                            if CheckPart(k) and (k.HumanoidRootPart.Position - c.Position).Magnitude < 350 then
-                                k.HumanoidRootPart.CFrame = c
+                            if CheckPart(k) and (k.HumanoidRootPart.Position - PosBring.Position).Magnitude < 350 then
+                                k.HumanoidRootPart.CFrame = PosBring
                                 k.Humanoid:ChangeState(11)
                                 k.HumanoidRootPart.CanCollide = false
                                 k.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
@@ -2034,7 +2034,7 @@ spawn(function()
                             else
                                 ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
                             end
-                            BringPos = v.HumanoidRootPart.CFrame
+                            PosBring = v.HumanoidRootPart.CFrame
                             StartBring = true
                             if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
                                 HealthM = v.Humanoid.Health <= v.Humanoid.MaxHealth * HealthStop / 100
@@ -2156,8 +2156,11 @@ spawn(function()
                                         end
                                         if SelectTypeMas == "Gun" then
                                             pcall(function()
-                                                game:GetService("VirtualUser"):CaptureController()
-                                                game:GetService("VirtualUser"):ClickButton1(Vector2.new(0,1 , 0,1), game.Workspace.CurrentCamera)
+                                                local args = {
+                                                    [1] = "TAP",
+                                                    [2] = v.HumanoidRootPart.Position
+                                                }
+                                                LP.Character.Humanoid:FindFirstChild("Soul Guitar"):InvokeServer(unpack(args))
                                             end)
                                         end
                                         aim = true

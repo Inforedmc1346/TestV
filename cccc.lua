@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #37.21
+--Memories Hub Hyper - Rewrite Fixed & Update #37.23
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -1942,21 +1942,6 @@ spawn(function()
                                                     aim = true
                                                 until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MasteryOption
                                                 aim = false
-                                            elseif HealthM and (LP.Backpack:FindFirstChild("Soul Guitar") or LP.Character:FindFirstChild("Soul Guitar")) then
-                                                repeat task.wait()
-                                                    local va = CheckMasSkill()
-                                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                                                    if va then
-                                                        EquipWeaponName(va)
-                                                        SendKeyEvents("Z")
-                                                        SendKeyEvents("X")
-                                                        NoClip = true
-                                                        task.wait(.2)
-                                                    end
-                                                    CFrameHunt = LP.Character.HumanoidRootPart.CFrame * CFrame.new(0, -5, 0)
-                                                    aim = true
-                                                until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MasteryOption
-                                                aim = false
                                             else
                                                 EClick()
                                             end
@@ -2029,21 +2014,6 @@ spawn(function()
                                         aim = true
                                     until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MasteryOption
                                     aim = false
-                                elseif HealthM and (LP.Backpack:FindFirstChild("Soul Guitar") or LP.Character:FindFirstChild("Soul Guitar")) then
-                                    repeat task.wait()
-                                        local va = CheckMasSkill()
-                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                                        if va then
-                                            EquipWeaponName(va)
-                                            SendKeyEvents("Z")
-                                            SendKeyEvents("X")
-                                            NoClip = true
-                                            task.wait(.2)
-                                        end
-                                        CFrameHunt = LP.Character.HumanoidRootPart.CFrame * CFrame.new(0, -5, 0)
-                                        aim = true
-                                    until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MasteryOption
-                                    aim = false
                                 else
                                     EClick()
                                 end
@@ -2098,35 +2068,25 @@ spawn(function()
                             end
                             PosBring = v.HumanoidRootPart.CFrame
                             StartBring = true
-                            if HealthM then
-                                repeat task.wait()
-                                    local va,ve = CheckMasSkill()
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 15, 0))
-                                    if va and ve then
-                                        EquipWeaponName(va)
-                                        SendKeyEvents(ve)
-                                        NoClip = true
-                                        task.wait(.2)
-                                    end
-                                    CFrameHunt = LP.Character.HumanoidRootPart.CFrame * CFrame.new(0, -5, 0)
-                                    aim = true
-                                until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MasteryOption
-                                aim = false
-                            elseif HealthM and (LP.Backpack:FindFirstChild("Soul Guitar") or LP.Character:FindFirstChild("Soul Guitar")) then
-                                repeat task.wait()
-                                    local va = CheckMasSkill()
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 15, 0))
-                                    if va then
-                                        EquipWeaponName(va)
-                                        SendKeyEvents("Z")
-                                        SendKeyEvents("X")
-                                        NoClip = true
-                                        task.wait(.2)
-                                    end
-                                    CFrameHunt = LP.Character.HumanoidRootPart.CFrame * CFrame.new(0, -5, 0)
-                                    aim = true
-                                until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MasteryOption
-                                aim = false
+                            if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
+                                HealthM = v.Humanoid.Health <= v.Humanoid.MaxHealth * HealthStop / 100
+                                if HealthM then
+                                    repeat task.wait()
+                                        local va,ve = CheckMasSkill()
+                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                        if va and ve then
+                                            EquipWeaponName(va)
+                                            SendKeyEvents(ve)
+                                            NoClip = true
+                                            task.wait(.2)
+                                        end
+                                        CFrameHunt = LP.Character.HumanoidRootPart.CFrame * CFrame.new(0, -5, 0)
+                                        aim = true
+                                    until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MasteryOption
+                                    aim = false
+                                else
+                                    EClick()
+                                end
                             else
                                 EClick()
                             end

@@ -1261,6 +1261,15 @@ function IsWpSKillLoaded(bW)
         return true
     end
 end
+function CheckSpawnStack()
+    local Actv = nil
+    if StackElite and CheckElite() ~= nil then
+        Actv = "Start Auto Elite"
+    elseif not CheckElite() or not StackElite then
+        Actv = "Start Mode Farm"
+    end
+    return Actv
+end
 function EquipAllWeapon()
     u3 = {"Melee", "Blox Fruit", "Sword", "Gun"}
     u3_2 = {}
@@ -1433,6 +1442,7 @@ end
 local Window = OrionLib:MakeWindow({Name = "Memories Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "Memories Hub"})
 local SettingsTab = Window:MakeTab({Name = "About", Icon = "rbxassetid://16161703575", PremiumOnly = false})
 local MainTab = Window:MakeTab({Name = "Main", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local StackFTab = Window:MakeTab({Name = "Stack Farm", Icon = "rbxassetid://16161703575", PremiumOnly = false})
 local SettingTab = Window:MakeTab({Name = "Setting", Icon = "rbxassetid://11446835336", PremiumOnly = false})
 local ItemTab = Window:MakeTab({Name = "Item", Icon = "rbxassetid://9606626859", PremiumOnly = false})
 local StatusTab = Window:MakeTab({Name = "Status", Icon = "rbxassetid://11156061121", PremiumOnly = false})
@@ -1513,7 +1523,7 @@ local selecttool = MainTab:AddDropdown({Name = "Select Tool", Default = "", Opti
 	end    
 })
 MainTab:AddSection({Name = "Bring Setting"})
-MainTab:AddSlider({Name = "Distance From Bring Mob", Min = 10, Max = 500, Default = 350, Color = Color3.fromRGB(255,255,255), Increment = 1, ValueName = "Health", Callback = function(vDistanceFromBring)
+MainTab:AddSlider({Name = "Distance From Bring Mob", Min = 10, Max = 500, Default = 250, Color = Color3.fromRGB(255,255,255), Increment = 1, ValueName = "Health", Callback = function(vDistanceFromBring)
     DistanceFromBring = vDistanceFromBring
 	end    
 })
@@ -1905,77 +1915,82 @@ end
 spawn(function()
     while task.wait() do
         pcall(function()
-            if StartFarms and SelectFarm == "Level" then         
-                local Quest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
-                local QuestTitle = PG.Main.Quest.Container.QuestTitle.Title.Text
-                if not string.find(QuestTitle, CheckQuest()["MobName"]) then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                end
-                if Quest.Visible == true then    
-                    if game.Workspace.Enemies:FindFirstChild(CheckQuest()["MobName"]) then     
-                        for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-                            if v.Name == CheckQuest()["MobName"] and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                                repeat task.wait()
-                                    EWeapon()                                                                                                                    
-                                    EBuso()
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
-                                    BringPos = v.HumanoidRootPart.CFrame
-                                    StartBring = true
-                                    if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
-                                        HealthM = v.Humanoid.Health <= v.Humanoid.MaxHealth * HealthStop / 100
-                                        if HealthM then
-                                            repeat task.wait()
-                                                local va,ve = CheckMasSkill()
-                                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
-                                                if va and ve then
-                                                    EquipWeaponName(va)
-                                                    SendKeyEvents(ve)
-                                                    NoClip = true
-                                                    task.wait(.2)
-                                                end
-                                                aim = true
-                                                CFrameHunt = v.HumanoidRootPart.CFrame
-                                            until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MasteryOption
-                                            aim = false
-                                        elseif HealthM and (LP.Backpack:FindFirstChild("Soul Guitar") or LP.Character:FindFirstChild("Soul Guitar")) then
-                                            repeat task.wait()
-                                                local va = CheckMasSkill()
-                                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                                                if va then
-                                                    EquipWeaponName(va)
-                                                    SendKeyEvents("Z")
-                                                    SendKeyEvents("X")
-                                                    NoClip = true
-                                                    task.wait(.2)
-                                                end
-                                                aim = true
-                                                CFrameHunt = v.HumanoidRootPart.CFrame
-                                            until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MasteryOption
-                                            aim = false
+            if StartFarms and SelectFarm == "Level" then 
+                local CheckActivites = CheckSpawnStack()
+                if CheckActivites == "Start Auto Elite" then
+                    EliteToggle:Set(true)
+                elseif CheckActivites == "Start Mode Farm" then
+                    local Quest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
+                    local QuestTitle = PG.Main.Quest.Container.QuestTitle.Title.Text
+                    if not string.find(QuestTitle, CheckQuest()["MobName"]) then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                    end
+                    if Quest.Visible == true then    
+                        if game.Workspace.Enemies:FindFirstChild(CheckQuest()["MobName"]) then     
+                            for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+                                if v.Name == CheckQuest()["MobName"] and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                                    repeat task.wait()
+                                        EWeapon()                                                                                                                    
+                                        EBuso()
+                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
+                                        BringPos = v.HumanoidRootPart.CFrame
+                                        StartBring = true
+                                        if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
+                                            HealthM = v.Humanoid.Health <= v.Humanoid.MaxHealth * HealthStop / 100
+                                            if HealthM then
+                                                repeat task.wait()
+                                                    local va,ve = CheckMasSkill()
+                                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                                    if va and ve then
+                                                        EquipWeaponName(va)
+                                                        SendKeyEvents(ve)
+                                                        NoClip = true
+                                                        task.wait(.2)
+                                                    end
+                                                    CFrameHunt = LP.Character.HumanoidRootPart.CFrame * CFrame.new(0, -5, 0)
+                                                    aim = true
+                                                until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MasteryOption
+                                                aim = false
+                                            elseif HealthM and (LP.Backpack:FindFirstChild("Soul Guitar") or LP.Character:FindFirstChild("Soul Guitar")) then
+                                                repeat task.wait()
+                                                    local va = CheckMasSkill()
+                                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                                    if va then
+                                                        EquipWeaponName(va)
+                                                        SendKeyEvents("Z")
+                                                        SendKeyEvents("X")
+                                                        NoClip = true
+                                                        task.wait(.2)
+                                                    end
+                                                    CFrameHunt = LP.Character.HumanoidRootPart.CFrame * CFrame.new(0, -5, 0)
+                                                    aim = true
+                                                until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MasteryOption
+                                                aim = false
+                                            else
+                                                EClick()
+                                            end
                                         else
                                             EClick()
                                         end
-                                    else
-                                        EClick()
-                                    end
-                                    v.HumanoidRootPart.Size = Vector3.new(50,50,50)  
-                                    v.HumanoidRootPart.CanCollide = false
-                                    NoClip = true
-                                until not StartFarms or not SelectFarm == "Level" or v.Humanoid.Health <= 0 or not v:FindFirstChild("HumanoidRootPart")
-                                StartBring = false
-                            end
-                        end
-                    else
-                        if EnemySpawns:FindFirstChild(CheckQuest()["MobName"]) then
-                            for i,v in pairs(EnemySpawns:GetChildren()) do
-                                if v.Name == RemoveLvTitle(CheckQuest()["MobName"]) then
-                                    ToTween(getNextPosition2(v.CFrame * CFrame.new(0,15,0)))
+                                        v.HumanoidRootPart.Size = Vector3.new(50,50,50)  
+                                        v.HumanoidRootPart.CanCollide = false
+                                        NoClip = true
+                                    until not StartFarms or not SelectFarm == "Level" or v.Humanoid.Health <= 0 or not v:FindFirstChild("HumanoidRootPart")
+                                    StartBring = false
                                 end
                             end
-                        end
-                    end  
-                else
-                    GetQuest()
+                        else
+                            if EnemySpawns:FindFirstChild(CheckQuest()["MobName"]) then
+                                for i,v in pairs(EnemySpawns:GetChildren()) do
+                                    if v.Name == CheckQuest()["MobName"] then
+                                        ToTween(getNextPosition(v.CFrame * CFrame.new(0,15,0)))
+                                    end
+                                end
+                            end
+                        end  
+                    else
+                        GetQuest()
+                    end
                 end
             elseif StartFarms and SelectFarm == "Bone" then
                 if not Zou then
@@ -2019,8 +2034,8 @@ spawn(function()
                                             NoClip = true
                                             task.wait(.2)
                                         end
-                                        aim = true
                                         CFrameHunt = LP.Character.HumanoidRootPart.CFrame * CFrame.new(0, -5, 0)
+                                        aim = true
                                     until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MasteryOption
                                     aim = false
                                 elseif HealthM and (LP.Backpack:FindFirstChild("Soul Guitar") or LP.Character:FindFirstChild("Soul Guitar")) then
@@ -2034,8 +2049,8 @@ spawn(function()
                                             NoClip = true
                                             task.wait(.2)
                                         end
-                                        aim = true
                                         CFrameHunt = LP.Character.HumanoidRootPart.CFrame * CFrame.new(0, -5, 0)
+                                        aim = true
                                     until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MasteryOption
                                     aim = false
                                 else
@@ -2092,55 +2107,35 @@ spawn(function()
                             end
                             BringPos = v.HumanoidRootPart.CFrame
                             StartBring = true
-                            if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
-                                HealthM = v.Humanoid.Health <= v.Humanoid.MaxHealth * HealthStop / 100
-                                if HealthM then
-                                    repeat task.wait()
-                                        local va,ve = CheckMasSkill()
-                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                                        if va and ve then
-                                            EquipWeaponName(va)
-                                            SendKeyEvents(ve)
-                                            NoClip = true
-                                            task.wait(.2)
-                                        end
-                                        if SelectTypeMas == "Gun" then
-                                            pcall(function()
-                                                game:GetService("VirtualUser"):CaptureController()
-                                                game:GetService("VirtualUser"):ClickButton1(Vector2.new(0,1 , 0,1), game.Workspace.CurrentCamera)
-                                            end)
-                                        end
-                                        aim = true
-                                        CFrameHunt = v.HumanoidRootPart.CFrame
-                                    until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MasteryOption
-                                    aim = false
-                                elseif HealthM and (LP.Backpack:FindFirstChild("Soul Guitar") or LP.Character:FindFirstChild("Soul Guitar")) then
-                                    repeat task.wait()
-                                        local va = CheckMasSkill()
-                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                                        if va then
-                                            EquipWeaponName(va)
-                                            SendKeyEvents("Z")
-                                            SendKeyEvents("X")
-                                            NoClip = true
-                                            task.wait(.2)
-                                        end
-                                        if SelectTypeMas == "Gun" then
-                                            pcall(function()
-                                                local args = {
-                                                    [1] = "TAP",
-                                                    [2] = v.HumanoidRootPart.Position
-                                                }
-                                                LP.Character.Humanoid:FindFirstChild("Soul Guitar"):InvokeServer(unpack(args))
-                                            end)
-                                        end
-                                        aim = true
-                                        CFrameHunt = v.HumanoidRootPart.CFrame
-                                    until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MasteryOption
-                                    aim = false
-                                else
-                                    EClick()
-                                end
+                            if HealthM then
+                                repeat task.wait()
+                                    local va,ve = CheckMasSkill()
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                    if va and ve then
+                                        EquipWeaponName(va)
+                                        SendKeyEvents(ve)
+                                        NoClip = true
+                                        task.wait(.2)
+                                    end
+                                    CFrameHunt = LP.Character.HumanoidRootPart.CFrame * CFrame.new(0, -5, 0)
+                                    aim = true
+                                until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MasteryOption
+                                aim = false
+                            elseif HealthM and (LP.Backpack:FindFirstChild("Soul Guitar") or LP.Character:FindFirstChild("Soul Guitar")) then
+                                repeat task.wait()
+                                    local va = CheckMasSkill()
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                    if va then
+                                        EquipWeaponName(va)
+                                        SendKeyEvents("Z")
+                                        SendKeyEvents("X")
+                                        NoClip = true
+                                        task.wait(.2)
+                                    end
+                                    CFrameHunt = LP.Character.HumanoidRootPart.CFrame * CFrame.new(0, -5, 0)
+                                    aim = true
+                                until not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not MasteryOption
+                                aim = false
                             else
                                 EClick()
                             end
@@ -2989,6 +2984,9 @@ spawn(function()
             else
                 ToTweenWithEntrace(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
                 NoClip = true
+            end
+            if not Enemies:FindFirstChild(v.Name) and not RS:FindFirstChild(v.Name) then
+                EliteToggle:Set(false)
             end
         end
     end
@@ -4099,6 +4097,11 @@ spawn(function()
         end
     end
 end)
+StackFTab:AddToggle({Name = "Auto Elite", Default = false, Callback = function(vStackElite)
+	StackElite = vStackElite
+	DisableTween(StackElite)
+end    
+})
 SettingTab:AddSlider({Name = "Stop Health Mastery", Min = 0, Max = 100, Default = 28, Color = Color3.fromRGB(255,255,255), Increment = 1, ValueName = "%", Callback = function(vHealthm)
     HealthStop = vHealthm
 end    

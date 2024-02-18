@@ -755,7 +755,7 @@ DropShadow.Name = "DropShadow"
 DropShadow.Parent = DropShadowHolder
 
 Frame.AnchorPoint = Vector2.new(0.5, 0.5)
-Frame.BackgroundColor3 = Color3.fromRGB(131.00000739097595, 181.0000044107437, 255)
+Frame.BackgroundColor3 = Color3.fromRGB(96, 23, 192)
 Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 Frame.BorderSizePixel = 0
 Frame.Position = UDim2.new(0.5, 0, 0.5, 0)
@@ -805,7 +805,7 @@ UIStroke.Thickness = 0.30000001192092896
 UIStroke.Parent = TextLabel
 
 TextLabel1.Font = Enum.Font.GothamBold
-TextLabel1.Text = "Rewrite Beta V2"
+TextLabel1.Text = "https://discord.gg/RtWeughmYp"
 TextLabel1.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextLabel1.TextSize = 16
 TextLabel1.TextTransparency = 0.800000011920929

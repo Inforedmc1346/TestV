@@ -805,7 +805,7 @@ UIStroke.Thickness = 0.30000001192092896
 UIStroke.Parent = TextLabel
 
 TextLabel1.Font = Enum.Font.GothamBold
-TextLabel1.Text = "https://discord.gg/RtWeughmYp"
+TextLabel1.Text = "discord.gg/RtWeughmYp"
 TextLabel1.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextLabel1.TextSize = 16
 TextLabel1.TextTransparency = 0.800000011920929

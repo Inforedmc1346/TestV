@@ -1,5 +1,5 @@
 --[[
-Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 1
+Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 2
 Mkhoi 20-10-2009_14-9-2009
 ]]--
 ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -4373,7 +4373,7 @@ spawn(function()
     end
 end)
 local SailBoatNguVcl = Tabs.Main:AddToggle("SailBoatNguVcl", {Title = "Auto Sail Boat",Description = "", Default = false })
-ToggleMirage:OnChanged(function(vSailBoatm)
+SailBoatNguVcl:OnChanged(function(vSailBoatm)
     SailBoatm = vSailBoatm
 end) 
 function CheckSeaBeast()
@@ -4733,7 +4733,7 @@ task.spawn(function()
     end
 end)
 local SeaBeastNgu = Tabs.SeaETab:AddToggle("SeaBeastNgu", {Title = "Auto Sea Beast",Description = "", Default = false })
-ToggleMirage:OnChanged(function(vSeaBeastNguhetcuu)
+SeaBeastNgu:OnChanged(function(vSeaBeastNguhetcuu)
     SeaBeastNguhetcuu = vSeaBeastNguhetcuu
 end) 
 spawn(function()
@@ -4762,7 +4762,7 @@ spawn(function()
     end
 end)
 local GSNgu = Tabs.SeaETab:AddToggle("GSNgu", {Title = "Auto Ghost Ship",Description = "", Default = false })
-ToggleMirage:OnChanged(function(vGSNgu11111)
+GSNgu:OnChanged(function(vGSNgu11111)
     GSNgu11111 = vGSNgu11111
 end) 
 spawn(function()

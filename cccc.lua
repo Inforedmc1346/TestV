@@ -1,5 +1,5 @@
 --[[
-Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 4
+Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 5
 Mkhoi 20-10-2009_14-9-2009
 ]]--
 ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -4372,10 +4372,10 @@ spawn(function()
         end
     end
 end)
-local hihisdadkha = Tabs.SeaETab:AddToggle("SailBoatNguVcl", {Title = "Auto Sail Boat",Description = "", Default = false })
-hihisdadkha:OnChanged(function(vSailBoat)
+local SailBoatT = A:AddToggle("Auto Sail Boat", {Title = "Auto Sail Boat", Callback = function(vSailBoat)
     SailBoat = vSailBoat
-end)
+    end 
+})
 function CheckSeaBeast()
     for r, v in next, game.Workspace.SeaBeasts:GetChildren() do
         if v.Name == "SeaBeast1" then

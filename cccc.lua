@@ -1,5 +1,5 @@
 --[[
-Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ.
+Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 1
 Mkhoi 20-10-2009_14-9-2009
 ]]--
 ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -4351,8 +4351,8 @@ local ZoneSelectS = Tabs.SeaETab:AddDropdown("ZoneSelectS", {
     Multi = false,
     Default = 1,
 })
-SeaEventShip:SetValue("6")
-SeaEventShip:OnChanged(function(vSelectZone)
+ZoneSelectS:SetValue("6")
+ZoneSelectS:OnChanged(function(vSelectZone)
     SelectZone = vSelectZone
 end)
 spawn(function()

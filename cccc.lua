@@ -1,5 +1,5 @@
 --[[
-Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 67
+Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 68
 Mkhoi 20-10-2009_14-9-2009
 ]]--
 ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -3652,19 +3652,7 @@ if Third_Sea then
                             if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false then
                                 TweenBoat(game:GetService("Workspace").Boats.PirateGrandBrigade.VehicleSeat.CFrame * CFrame.new(0,1,0))
                             else
-                                for i,v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
-                                    if v.Name == "PirateGrandBrigade" then
-                                        repeat wait()
-                                            if (CFrame.new(-17013.80078125, 10.962434768676758, 438.0169982910156).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 10 then
-                                                TweenShip(CFrame.new(-33163.1875, 10.964323997497559, -324.4842224121094))
-                                            elseif (CFrame.new(-33163.1875, 10.964323997497559, -324.4842224121094).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 10 then
-                                                TweenShip(CFrame.new(-37952.49609375, 10.96342945098877, -1324.12109375))
-                                            elseif (CFrame.new(-37952.49609375, 10.96342945098877, -1324.12109375).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 10 then
-                                                TweenShip(CFrame.new(-33163.1875, 10.964323997497559, -324.4842224121094))
-                                            end 
-                                        until game:GetService("Workspace").Enemies:FindFirstChild("Shark") or game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") or game:GetService("Workspace").Enemies:FindFirstChild("Piranha") or game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") or _G.SailBoat == false
-                                    end
-                                end
+                                
                             end
                         end
                     end
@@ -4705,9 +4693,8 @@ task.spawn(function()
                             end
                         end
                     elseif checkboat() then
-                        print("ngu")
-                        if not LP.Character.Humanoid.Sit then
-                            toTarget(checkboat().VehicleSeat.CFrame)
+                        if not game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit then
+                            TweenBoat(game:GetService("Workspace").Boats.PirateGrandBrigade.VehicleSeat.CFrame * CFrame.new(0,1,0))
                             NoClip = true
                             task.spawn(function()
                                 local v1 = tick()

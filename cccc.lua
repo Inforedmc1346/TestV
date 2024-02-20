@@ -4398,7 +4398,7 @@ function CheckSeaBeast()
     return false
 end
 function checkboat()
-    for r, v in next, game.Workspace.Boats:GetChildren() do
+    for r, v in next, WS.Boats:GetChildren() do
         if v:IsA("Model") then
             if v:FindFirstChild("Owner") and tostring(v.Owner.Value) == LP.Name and v.Humanoid.Value > 0 then
                 return v
@@ -4705,6 +4705,7 @@ task.spawn(function()
                             end
                         end
                     elseif checkboat() then
+                        print("ngu")
                         if not LP.Character.Humanoid.Sit then
                             toTarget(checkboat().VehicleSeat.CFrame)
                             NoClip = true

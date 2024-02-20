@@ -1,5 +1,5 @@
 --[[
-Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 3
+Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 4
 Mkhoi 20-10-2009_14-9-2009
 ]]--
 ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -4414,10 +4414,10 @@ function CheckPirateBoat()
         end
     end
 end
-if Dressora then
+if Second_Sea then
     CFrameBoat = CFrame.new(-13.488054275512695, 10.311711311340332, 2927.69287109375)
     Vector3Boat = Vector3.new(-13.488054275512695, 10.311711311340332, 2927.69287109375)
-elseif Zou then
+elseif Third_Sea then
     CFrameBoat = CFrame.new(-16927.17578125, 9.056343078613281, 435.248779296875)
     Vector3Boat = Vector3.new(-16927.17578125, 9.056343078613281, 435.248779296875)
 end

@@ -1,5 +1,5 @@
 --[[
-Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 5
+Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 6
 Mkhoi 20-10-2009_14-9-2009
 ]]--
 ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -4372,7 +4372,7 @@ spawn(function()
         end
     end
 end)
-local SailBoatT = A:AddToggle("Auto Sail Boat", {Title = "Auto Sail Boat", Callback = function(vSailBoat)
+local SailBoatT = Tabs.SeaETab:AddToggle("Auto Sail Boat", {Title = "Auto Sail Boat", Callback = function(vSailBoat)
     SailBoat = vSailBoat
     end 
 })

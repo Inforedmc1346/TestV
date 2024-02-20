@@ -1,5 +1,5 @@
 --[[
-Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 2
+Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 3
 Mkhoi 20-10-2009_14-9-2009
 ]]--
 ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -4372,10 +4372,10 @@ spawn(function()
         end
     end
 end)
-local SailBoatNguVcl = Tabs.Main:AddToggle("SailBoatNguVcl", {Title = "Auto Sail Boat",Description = "", Default = false })
-SailBoatNguVcl:OnChanged(function(vSailBoatm)
-    SailBoatm = vSailBoatm
-end) 
+local hihisdadkha = Tabs.SeaETab:AddToggle("SailBoatNguVcl", {Title = "Auto Sail Boat",Description = "", Default = false })
+hihisdadkha:OnChanged(function(vSailBoat)
+    SailBoat = vSailBoat
+end)
 function CheckSeaBeast()
     for r, v in next, game.Workspace.SeaBeasts:GetChildren() do
         if v.Name == "SeaBeast1" then
@@ -4408,7 +4408,7 @@ function checkboat()
 end
 function CheckPirateBoat()
     local boat = {"PirateBrigade", "PirateGrandBrigade"}
-    for i, v in pairs(Enemies:GetChildren()) do
+    for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
         if table.find(boat, v.Name) then
             return v
         end

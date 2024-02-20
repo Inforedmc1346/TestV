@@ -1,5 +1,5 @@
 --[[
-Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 6
+Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 67
 Mkhoi 20-10-2009_14-9-2009
 ]]--
 ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -2123,6 +2123,7 @@ function Tween(Pos)
     if _G.StopTween == true then
         tween:Cancel()
         _G.Clip = false
+        NoClip = false
     end
 end
 
@@ -4424,6 +4425,7 @@ end
 local LP = game.Players.LocalPlayer
 local WO = game.Workspace["_WorldOrigin"]
 local WS = game.Workspace
+local RS = game.ReplicatedStorage
 function TweenObject(TweenCFrame,obj,ts)
     if not ts then ts = 350 end
     local tween_s = game:GetService("TweenService")

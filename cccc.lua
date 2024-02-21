@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #37.5
+--Memories Hub Hyper - Rewrite Fixed & Update #37.6
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -975,111 +975,18 @@ function checkfunc(a)
         return false
     end
 end 
-function KillMon(mon, BringEnable, UntilStop)
-    if not UntilStop then 
-        return 
-    end
-    mon = MobGet(mon)
-    if Bring then
-        BringList = {}
-        BringPosition = nil
-        for i,v in pairs(Enemies:GetChildren()) do
-            if checkfunc(k) and v.Name == mon then
-                table.insert(BringList, v.HumanoidRootPart.Position)
-            end
-        end
-        BringPosition = FindPosBring(BringList)
-        if BringPosition == nil then 
-            return 
-        end
-        for j,k in pairs(Enemies:GetChildren()) do
-            if k.Name == mon and (k.HumanoidRootPart.Position - BringPosition).Magnitude <= 360 then
-                k.HumanoidRootPart.CFrame = BringPosition
-                k.Humanoid.JumpPower = 0
-                k.Humanoid.WalkSpeed = 0
-                k.HumanoidRootPart.CanCollide = false
-                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                k.Humanoid:ChangeState(14)
-            end
-        end
-    end
-    if mon and mon:FindFirstChild("HumanoidRootPart") and mon:FindFirstChild("Humanoid") and mon.Humanoid.Health > 0 then
-        repeat task.wait()
-            EBuso()
-            EWeapon()
-            ToTween(mon.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-            mon.HumanoidRootPart.CanCollide = false
-            if MasteryOption and HealthStop and mon.Humanoid.MaxHealth < 200000 then
-                HealthM = mon.Humanoid.Health <= mon.Humanoid.MaxHealth * HealthStop / 100
-                if HealthM then
-                    repeat task.wait()
-                        local va,ve = CheckMasSkill()
-                        ToTween(mon.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                        if va and ve then
-                            EquipWeaponName(va)
-                            SendKeyEvents(ve)
-                            NoClip = true
-                            task.wait(.2)
-                        end
-                        if SelectTypeMas == "Gun" then
-                            pcall(function()
-                                game:GetService("VirtualUser"):CaptureController()
-                                game:GetService("VirtualUser"):ClickButton1(Vector2.new(0,1 , 0,1), game.Workspace.CurrentCamera)
-                            end)
-                        end
-                        aim = true
-                        CFrameHunt = mon.HumanoidRootPart.Position
-                    until not mon or mon:FindFirstChild("Humanoid") or not mon:FindFirstChild("HumanoidRootPart") or mon.Humanoid.Health <= 0 or not MasteryOption
-                    aim = false
-                elseif HealthM and (LP.Backpack:FindFirstChild("Soul Guitar") or LP.Character:FindFirstChild("Soul Guitar")) then
-                    repeat task.wait()
-                        local va = CheckMasSkill()
-                        ToTween(mon.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                        if va then
-                            EquipWeaponName(va)
-                            SendKeyEvents("Z")
-                            SendKeyEvents("X")
-                            NoClip = true
-                            task.wait(.2)
-                        end
-                        if SelectTypeMas == "Gun" then
-                            pcall(function()
-                                game:GetService("VirtualUser"):CaptureController()
-                                game:GetService("VirtualUser"):ClickButton1(Vector2.new(0,1 , 0,1), game.Workspace.CurrentCamera)
-                            end)
-                        end
-                        aim = true
-                        CFrameHunt = mon.HumanoidRootPart.Position
-                    until not mon or not mon:FindFirstChild("Humanoid") or not mon:FindFirstChild("HumanoidRootPart") or mon.Humanoid.Health <= 0 or not MasteryOption
-                    aim = false
-                else
-                    EClick()
-                end
-            else
-                EClick()
-            end
-            BringPosition = mon.HumanoidRootPart.CFrame
-            NoClip = true
-        until not mon:FindFirstChild("HumanoidRootPart") or not mon:FindFirstChild("Humanoid") and mon.Humanoid.Health <= 0 or UntilStop
-    end
-end
 spawn(function()
-    while wait() do
+    while task.wait() do
         for i,v in pairs(Enemies:GetChildren()) do
-            if ((StartFarms and SelectFarm == "Level" and StartBring and v.Name == CheckQuest()["MobName"]) or (FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob()) or (MobArua and StartBring) or (MagmaOre and v.Name == "Lava Pirate" and StartBring) or (MysticDroplet and v.Name == "Water Fighter" and StartBring) or (AngelWings and v.Name == "Royal Soldier" and StartBring) or (ConjuredCocoa and v.Name == "Chocolate Bar Battler" and StartBring) or (RadioactiveMaterial and v.Name == "Factory Staff" and StartBring) or (Ectoplasm and (v.Name == "Ship Officer" or v.Name == "Ship Steward" or "Ship Engineer" or "Ship Deckhand") and StartBring) or (DragonScale and v.Name == "Dragon Crew Warrior" and StartBring) or (MiniTusk and v.Name == "Mythological Pirate" and StartBring) or (FishTail and v.Name == "Fishman Captain" and StartBring) or (VampireFang and v.Name == "Vampire" and StartBring)) and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and GetDistance(v.HumanoidRootPart.Position) <= 350 then
-                v.HumanoidRootPart.CFrame = BringPos
-                v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)                                                  
-                v.HumanoidRootPart.Transparency = 1
-                v.HumanoidRootPart.CanCollide = false
-                v.Head.CanCollide = false
-                v.Humanoid.JumpPower = 0
-                v.Humanoid.WalkSpeed = 0
-                if v.Humanoid:FindFirstChild("Animator") then
-                    v.Humanoid.Animator:Destroy()
+            if ((StartFarms and SelectFarm == "Level" and StartBring and v.Name == CheckQuest()["MobName"]) or (FarmSkip and StartBring and v.Name == "Shanda") or (StartFarms and SelectFarm == "Bone" and StartBring and CheckBoneMob()) or (StartFarms and SelectFarm == "Cake Prince" and StartBring and CheckCakeMob()) or (MobArua and StartBring) or (MagmaOre and v.Name == "Lava Pirate" and StartBring) or (MysticDroplet and v.Name == "Water Fighter" and StartBring) or (AngelWings and v.Name == "Royal Soldier" and StartBring) or (ConjuredCocoa and v.Name == "Chocolate Bar Battler" and StartBring) or (RadioactiveMaterial and v.Name == "Factory Staff" and StartBring) or (Ectoplasm and (v.Name == "Ship Officer" or v.Name == "Ship Steward" or "Ship Engineer" or "Ship Deckhand") and StartBring) or (DragonScale and v.Name == "Dragon Crew Warrior" and StartBring) or (MiniTusk and v.Name == "Mythological Pirate" and StartBring) or (FishTail and v.Name == "Fishman Captain" and StartBring) or (VampireFang and v.Name == "Vampire" and StartBring)) and CheckPart(v) then
+                if GetDistance(v.HumanoidRootPart.Position) <= DistanceFromBring then
+                    v.HumanoidRootPart.CFrame = PosBring
+                    v.Humanoid.JumpPower = 0
+                    v.Humanoid.WalkSpeed = 0
+                    v.HumanoidRootPart.CanCollide = false
+                    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                    v.Humanoid:ChangeState(14)
                 end
-                v.Humanoid:ChangeState(11)
-                v.Humanoid:ChangeState(14)
-                sethiddenproperty(LP, "SimulationRadius",  math.huge)
             end
         end
     end
@@ -1605,6 +1512,11 @@ local selecttool = MainTab:AddDropdown({Name = "Select Tool", Default = "", Opti
 		Selecttool = vSelecttool
 	end    
 })
+MainTab:AddSection({Name = "Bring Setting"})
+MainTab:AddSlider({Name = "Distance From Bring Mob", Min = 10, Max = 500, Default = 250, Color = Color3.fromRGB(255,255,255), Increment = 1, ValueName = "Health", Callback = function(vDistanceFromBring)
+    DistanceFromBring = vDistanceFromBring
+	end    
+})
 MainTab:AddSection({Name = "Fast Attack"})
 local FastAttackD = MainTab:AddDropdown({Name = "Delay Attack", Default = "0.175", Options = {"0.1","0.15","0.175","0.2", "0.9"},Callback = function(vFastDelay)
     FastDelay = vFastDelay
@@ -2006,15 +1918,15 @@ spawn(function()
                                 repeat task.wait()
                                     EWeapon()                                                                                                                    
                                     EBuso()
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-                                    BringPos = v.HumanoidRootPart.CFrame
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
+                                    PosBring = v.HumanoidRootPart.CFrame
                                     StartBring = true
                                     if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
                                         HealthM = v.Humanoid.Health <= v.Humanoid.MaxHealth * HealthStop / 100
                                         if HealthM then
                                             repeat task.wait()
                                                 local va,ve = CheckMasSkill()
-                                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                                 if va and ve then
                                                     EquipWeaponName(va)
                                                     SendKeyEvents(ve)
@@ -2028,7 +1940,7 @@ spawn(function()
                                         elseif HealthM and (LP.Backpack:FindFirstChild("Soul Guitar") or LP.Character:FindFirstChild("Soul Guitar")) then
                                             repeat task.wait()
                                                 local va = CheckMasSkill()
-                                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                                 if va then
                                                     EquipWeaponName(va)
                                                     SendKeyEvents("Z")
@@ -2088,19 +2000,19 @@ spawn(function()
                                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
                                     end
                                 elseif ClaimQuest and game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                 end
                             else
-                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                             end
-                            BringPos = v.HumanoidRootPart.CFrame
+                            PosBring = v.HumanoidRootPart.CFrame
                             StartBring = true
                             if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
                                 HealthM = v.Humanoid.Health <= v.Humanoid.MaxHealth * HealthStop / 100
                                 if HealthM then
                                     repeat task.wait()
                                         local va,ve = CheckMasSkill()
-                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                         if va and ve then
                                             EquipWeaponName(va)
                                             SendKeyEvents(ve)
@@ -2114,7 +2026,7 @@ spawn(function()
                                 elseif HealthM and (LP.Backpack:FindFirstChild("Soul Guitar") or LP.Character:FindFirstChild("Soul Guitar")) then
                                     repeat task.wait()
                                         local va = CheckMasSkill()
-                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                         if va then
                                             EquipWeaponName(va)
                                             SendKeyEvents("Z")
@@ -2135,7 +2047,7 @@ spawn(function()
                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)  
                             v.HumanoidRootPart.CanCollide = false
                             NoClip = true
-                        until not StartFarms or not SelectFarm == "Bone" or not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or MasteryOption
+                        until not StartFarms or not SelectFarm == "Bone" or not v or not v:FindFirstChild("Humanoid") or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0
                         StartBring = false
                     end
                 else
@@ -2169,23 +2081,23 @@ spawn(function()
                                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
                                 end
                                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                     if (LP.Character.HumanoidRootPart.Position - CFrame.new(-2020.6177978515625, 37.793975830078125, -12029.17578125).Position).Magnitude <= 5 then
                                         local args = {[1] = "StartQuest", [2] = "CakeQuest1", [3] = 1}
                                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
                                     end
                                 elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                 end
                             end
-                            BringPos = v.HumanoidRootPart.CFrame
+                            PosBring = v.HumanoidRootPart.CFrame
                             StartBring = true
                             if MasteryOption and HealthStop and v.Humanoid.MaxHealth < 200000 then
                                 HealthM = v.Humanoid.Health <= v.Humanoid.MaxHealth * HealthStop / 100
                                 if HealthM then
                                     repeat task.wait()
                                         local va,ve = CheckMasSkill()
-                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                         if va and ve then
                                             EquipWeaponName(va)
                                             SendKeyEvents(ve)
@@ -2205,7 +2117,7 @@ spawn(function()
                                 elseif HealthM and (LP.Backpack:FindFirstChild("Soul Guitar") or LP.Character:FindFirstChild("Soul Guitar")) then
                                     repeat task.wait()
                                         local va = CheckMasSkill()
-                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                         if va then
                                             EquipWeaponName(va)
                                             SendKeyEvents("Z")
@@ -2239,7 +2151,7 @@ spawn(function()
                     repeat task.wait()
                         EWeapon()                                                                                                                    
                         EBuso()
-                        ToTween(getNextPosition(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0)))
+                        ToTween(getNextPosition(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0)))
                         v.HumanoidRootPart.Size = Vector3.new(50,50,50)  
                         v.HumanoidRootPart.CanCollide = false
                         PosMon = v.HumanoidRootPart.CFrame
@@ -2282,7 +2194,7 @@ spawn(function()
                                 EWeapon()                                                                                                                    
                                 EBuso()
                                 ToTween(CFrame.new(v.HumanoidRootPart.Position + Vector3.new(math.random(-15,15), 20, math.random(-15,15))))               
-                                BringPos = v.HumanoidRootPart.CFrame                                                                    
+                                PosBring = v.HumanoidRootPart.CFrame                                                                    
                                 v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
                                 v.HumanoidRootPart.CanCollide = false
                                 v.Humanoid.WalkSpeed = 0
@@ -2622,9 +2534,9 @@ spawn(function()
                             repeat task.wait()
                                 EBuso()
                                 EWeapon()
-                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                 EClick()
-                                BringPos = v.HumanoidRootPart.CFrame
+                                PosBring = v.HumanoidRootPart.CFrame
                                 v.HumanoidRootPart.CanCollide = false
                                 NoClip = true
                                 StartBring = true
@@ -2650,9 +2562,9 @@ spawn(function()
                             repeat task.wait()
                                 EBuso()
                                 EWeapon()
-                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                 EClick()
-                                BringPos = v.HumanoidRootPart.CFrame
+                                PosBring = v.HumanoidRootPart.CFrame
                                 v.HumanoidRootPart.CanCollide = false
                                 NoClip = true
                                 StartBring = true
@@ -2680,9 +2592,9 @@ spawn(function()
                                     repeat task.wait()
                                         EBuso()
                                         EWeapon()
-                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                         EClick()
-                                        BringPos = v.HumanoidRootPart.CFrame
+                                        PosBring = v.HumanoidRootPart.CFrame
                                         v.HumanoidRootPart.CanCollide = false
                                         NoClip = true
                                         StartBring = true
@@ -2710,9 +2622,9 @@ spawn(function()
                             repeat task.wait()
                                 EBuso()
                                 EWeapon()
-                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                 EClick()
-                                BringPos = v.HumanoidRootPart.CFrame
+                                PosBring = v.HumanoidRootPart.CFrame
                                 v.HumanoidRootPart.CanCollide = false
                                 NoClip = true
                                 StartBring = true
@@ -2739,9 +2651,9 @@ spawn(function()
                                 repeat task.wait()
                                     EBuso()
                                     EWeapon()
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                     EClick()
-                                    BringPos = v.HumanoidRootPart.CFrame
+                                    PosBring = v.HumanoidRootPart.CFrame
                                     v.HumanoidRootPart.CanCollide = false
                                     NoClip = true
                                     StartBring = true
@@ -2769,9 +2681,9 @@ spawn(function()
                             repeat task.wait()
                                 EBuso()
                                 EWeapon()
-                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                 EClick()
-                                BringPos = v.HumanoidRootPart.CFrame
+                                PosBring = v.HumanoidRootPart.CFrame
                                 v.HumanoidRootPart.CanCollide = false
                                 NoClip = true
                                 StartBring = true
@@ -2799,9 +2711,9 @@ spawn(function()
                             repeat task.wait()
                                 EBuso()
                                 EWeapon()
-                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                 EClick()
-                                BringPos = v.HumanoidRootPart.CFrame
+                                PosBring = v.HumanoidRootPart.CFrame
                                 v.HumanoidRootPart.CanCollide = false
                                 NoClip = true
                                 StartBring = true
@@ -2827,9 +2739,9 @@ spawn(function()
                             repeat task.wait()
                                 EBuso()
                                 EWeapon()
-                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                 EClick()
-                                BringPos = v.HumanoidRootPart.CFrame
+                                PosBring = v.HumanoidRootPart.CFrame
                                 v.HumanoidRootPart.CanCollide = false
                                 NoClip = true
                                 StartBring = true
@@ -2855,9 +2767,9 @@ spawn(function()
                             repeat task.wait()
                                 EBuso()
                                 EWeapon()
-                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                 EClick()
-                                BringPos = v.HumanoidRootPart.CFrame
+                                PosBring = v.HumanoidRootPart.CFrame
                                 v.HumanoidRootPart.CanCollide = false
                                 NoClip = true
                                 StartBring = true
@@ -2883,9 +2795,9 @@ spawn(function()
                             repeat task.wait()
                                 EBuso()
                                 EWeapon()
-                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                 EClick()
-                                BringPos = v.HumanoidRootPart.CFrame
+                                PosBring = v.HumanoidRootPart.CFrame
                                 v.HumanoidRootPart.CanCollide = false
                                 NoClip = true
                                 StartBring = true
@@ -2932,8 +2844,8 @@ spawn(function()
                                             repeat task.wait()
                                                 EBuso()
                                                 EWeapon()
-                                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-                                                BringPos = v.HumanoidRootPart.CFrame
+                                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
+                                                PosBring = v.HumanoidRootPart.CFrame
                                                 v.HumanoidRootPart.CanCollide = false
                                                 EClick()
                                                 NoClip = true
@@ -2987,8 +2899,8 @@ spawn(function()
                                         EWeapon()
                                         v.HumanoidRootPart.CanCollide = false
                                         v.Head.CanCollide = false 
-                                        BringPos = v.HumanoidRootPart.CFrame
-                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                        PosBring = v.HumanoidRootPart.CFrame
+                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                         EClick()
                                         NoClip = true
                                     until not DoughKingKill or RS:FindFirstChild("Dough King") or v.Humanoid.Health <= 0
@@ -3026,7 +2938,7 @@ spawn(function()
                                     v.HumanoidRootPart.CanCollide = false
                                     v.Humanoid.WalkSpeed = 0
                                     v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                     EClick()
                                     sethiddenproperty(LP,"SimulationRadius",math.huge)
                                     NoClip = true
@@ -3059,14 +2971,14 @@ spawn(function()
                     repeat task.wait()
                         EBuso()
                         EWeapon()
-                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                         EClick()
                         NoClip = true
                     until not v or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") and v.Humanoid.Health <= 0 or not Elite
                     NoClip = false
                 end
             else
-                ToTweenWithEntrace(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+                ToTweenWithEntrace(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                 NoClip = true
             end
         end
@@ -3321,14 +3233,14 @@ spawn(function()
                             EBuso()
                             EWeapon()
                             if game.Players.LocalPlayer.Character.Humanoid.Health > 8000 then
-                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                 NoClip = true
                             elseif game.Players.LocalPlayer.Character.Humanoid.Health <= healthlow then
                                 if YTween then
                                     ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,600,0))
                                     NoClip = true
                                 else
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                     NoClip = true
                                 end
                             end
@@ -3350,14 +3262,14 @@ spawn(function()
                             EBuso()
                             EWeapon()
                             if game.Players.LocalPlayer.Character.Humanoid.Health > 8000 then
-                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                 NoClip = true
                             elseif game.Players.LocalPlayer.Character.Humanoid.Health <= healthlow then
                                 if YTween then
                                     ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,600,0))
                                     NoClip = true
                                 else
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                     NoClip = true
                                 end
                             end
@@ -3385,14 +3297,14 @@ spawn(function()
                             EBuso()
                             EWeapon()
                             if game.Players.LocalPlayer.Character.Humanoid.Health > 8000 then
-                                ToTween(getNextPosition(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0)))
+                                ToTween(getNextPosition(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0)))
                                 NoClip = true
                             elseif game.Players.LocalPlayer.Character.Humanoid.Health <= healthlow then
                                 if YTween then
                                     ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,600,0))
                                     NoClip = true
                                 else
-                                    ToTween(getNextPosition(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0)))
+                                    ToTween(getNextPosition(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0)))
                                     NoClip = true
                                 end
                             end
@@ -3566,7 +3478,7 @@ spawn(function()
                                     EWeapon()
                                     v.HumanoidRootPart.CanCollide = false
                                     v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                     EClick()
                                 end)
                             until not ARipInd or v.Humanoid.Health <= 0
@@ -3596,34 +3508,31 @@ local KisuneUpToggle = ItemTab:AddToggle({Name = "Tween to Kitsune Island", Defa
     KitsuneI = vKitsuneI
     DisableTween(KitsuneI)
     if KitsuneI then
-        repeat ToTween(WO.Locations:FindFirstChild("Kitsune Island").CFrame) wait() until KitsuneI == false
+        repeat ToTween(WO.Locations:FindFirstChild("Kitsune Island").CFrame) task.wait() until KitsuneI == false
     end
 end    
 })
 spawn(function()
     while task.wait() do
         if KitsuneI then
-            for i,v in pairs(WO.Locations:GetChildren()) do
-                if v:FindFirstChild("Kitsune Island") then
-                    ToTween(v:FindFirstChild("Kitsune Island"))
-                    NoClip = true
-                else
-                    NoClip = false
-                end
-            end
-        end
-        if AzuEmber then
-            if game:GetService("Workspace"):FindFirstChild("AttachedAzureEmber") then
-                LP.Character.HumanoidRootPart.CFrame = game:GetService("Workspace"):WaitForChild("EmberTemplate"):FindFirstChild("Part").CFrame
-            end
+            ToTween(WS.Map.KitsuneIsland.ShrineActive.NeonShrinePart.CFrame * CFrame.new(0, 100, 0))
         end
     end
 end)
-local FarmAzure = ItemTab:AddToggle({Name = "Auto Collect Azure Ember", Default = false, Callback = function(vAzuEmber)
+local FarmAzure = ItemTab:AddToggle({Name = "Auto Collect Azure Embers", Default = false, Callback = function(vAzuEmber)
     AzuEmber = vAzuEmber
     DisableTween(AzuEmber)
 end    
 })
+spawn(function()
+    while task.wait() do
+        if AzuEmber then
+            if WS:FindFirstChild("AttachedAzureEmber") then
+                ToTween(WS:WaitForChild("EmberTemplate"):FindFirstChild("Part").CFrame)
+            end
+        end
+    end
+end)
 ItemTab:AddToggle({Name = "Auto Summon Kitsune Island", Default = false, Flag = "Summon Kitsune Island", Save = true, Callback = function(vSummonKitsuneIsland)
     SummonKitsuneIsland = vSummonKitsuneIsland
         DisableTween(SummonKitsuneIsland)
@@ -3689,8 +3598,7 @@ spawn(function()
                     end
                 end
             else
-                Notify("Memories Hub", "Not Found Near FM or FM, Start Hop", 5)
-                HopServer()
+                Notify("Memories Hub", "Not Found Near FM or FM, Please Hop Server", 5)
             end
         end
     end
@@ -3793,14 +3701,14 @@ spawn(function()
                                                         EWeapon()
                                                         v.HumanoidRootPart.CanCollide = false
                                                         v.HumanoidRootPart.Size = Vector3.new(80,80,80)                             
-                                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                                         EClick()
                                                         sethiddenproperty(LP,"SimulationRadius",math.huge)
                                                         until v.Humanoid.Health <= 0 or not ClaimSaber
                                                     end
                                                 end
                                                 if RS:FindFirstChild("Mob Leader") then
-                                                    ToTween(RS:FindFirstChild("Mob Leader").HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                                    ToTween(RS:FindFirstChild("Mob Leader").HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                                 end
                                             end
                                         end
@@ -3822,7 +3730,7 @@ spawn(function()
                                 if v.Name == "Saber Expert" then
                                     repeat task.wait()
                                         EWeapon()
-                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                        ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                         v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                         v.HumanoidRootPart.CanCollide = false
                                         EClick()
@@ -3900,7 +3808,7 @@ spawn(function()
                                             EWeapon()
                                             EBuso()
                                             v.HumanoidRootPart.Size = Vector3.new(50,50,50)
-                                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                             v.HumanoidRootPart.CanCollide = false
                                             game:GetService'VirtualUser':CaptureController()
                                             game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
@@ -3980,7 +3888,7 @@ spawn(function()
                             if v.Name == "Soul Reaper" then
                                 repeat task.wait()
                                     EWeapon()
-                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                    ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                     v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                     v.HumanoidRootPart.CanCollide = false
                                     EClick()
@@ -4085,7 +3993,7 @@ spawn(function()
                                 EWeapon()
                                 v.HumanoidRootPart.CanCollide = false
                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                 Click()
                             until v.Humanoid.Health <= 0 or not v.Parent or not RaidPirate
                         end
@@ -5235,7 +5143,7 @@ spawn(function()
                                 EBuso()
                                 EWeapon()
                                 v.HumanoidRootPart.CanCollide = false
-                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                                ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
                                 EClick()
                                 sethiddenproperty(LP,"SimulationRadius",math.huge)
                             until not LawBoss or not v.Parent or v.Humanoid.Health <= 0

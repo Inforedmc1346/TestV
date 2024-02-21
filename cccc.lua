@@ -1,5 +1,5 @@
 --[[
-Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 68
+Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 69
 Mkhoi 20-10-2009_14-9-2009
 ]]--
 ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -1291,6 +1291,318 @@ for i,v in pairs(game.Workspace.AppleSpawner:GetChildren()) do
         end 
     end
 end
+function CheckSeaBeast()
+    for r, v in next, game.Workspace.SeaBeasts:GetChildren() do
+        if v.Name == "SeaBeast1" then
+            local s = v.HealthBBG.Frame.TextLabel.Text
+            local c5 = s:gsub("/%d+,%d+", "")
+            local a = v.HealthBBG.Frame.TextLabel.Text
+            local ab
+            if string.find(c5, ",") then
+                ab = a:gsub("%d+,%d+/", "")
+            else
+                ab = a:gsub("%d+/", "")
+            end
+            local c = ab:gsub(",", "")
+            if tonumber(c) >= 34500 then
+                return v
+            end
+        end
+    end
+    return false
+end
+function checkboat()
+    for r, v in next, WS.Boats:GetChildren() do
+        if v:IsA("Model") then
+            if v:FindFirstChild("Owner") and tostring(v.Owner.Value) == game.Players.LocalPlayer.Name and v.Humanoid.Value > 0 then
+                return v
+            end
+        end
+    end
+    return false
+end
+function CheckPirateBoat()
+    local boat = {"PirateBrigade", "PirateGrandBrigade"}
+    for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+        if table.find(boat, v.Name) then
+            return v
+        end
+    end
+end
+if game.PlaceId == 4442272183 then
+    CFrameBoat = CFrame.new(-13.488054275512695, 10.311711311340332, 2927.69287109375)
+    Vector3Boat = Vector3.new(-13.488054275512695, 10.311711311340332, 2927.69287109375)
+elseif game.PlaceId == 7449423635 then
+    CFrameBoat = CFrame.new(-16927.17578125, 9.056343078613281, 435.248779296875)
+    Vector3Boat = Vector3.new(-16927.17578125, 9.056343078613281, 435.248779296875)
+end
+local LP = game.Players.LocalPlayer
+local WO = game.Workspace["_WorldOrigin"]
+local WS = game.Workspace
+local RS = game.ReplicatedStorage
+function TweenObject(TweenCFrame,obj,ts)
+    if not ts then ts = 350 end
+    local tween_s = game:GetService("TweenService")
+    local info =
+        TweenInfo.new(
+        (TweenCFrame.Position -
+            obj.Position).Magnitude /
+            ts,
+        Enum.EasingStyle.Linear
+    )
+    tween =
+        tween_s:Create(
+            obj,
+        info,
+        {CFrame = TweenCFrame}
+    )
+    tween:Play() 
+end
+function NameMelee()
+    for r, v in next, LP.Backpack:GetChildren() do
+        if v:IsA("Tool") and v.ToolTip == "Melee" then
+            return v.Name
+        end
+    end
+    for r, v in next, LP.Character:GetChildren() do
+        if v:IsA("Tool") and v.ToolTip == "Melee" then
+            return v.Name
+        end
+    end
+end
+function NameSword()
+    for r, v in next, LP.Backpack:GetChildren() do
+        if v:IsA("Tool") and v.ToolTip == "Sword" then
+            return v.Name
+        end
+    end
+    for r, v in next, LP.Character:GetChildren() do
+        if v:IsA("Tool") and v.ToolTip == "Sword" then
+            return v.Name
+        end
+    end
+end
+function checkskillDF()
+    if not LP.PlayerGui.Main.Skills:FindFirstChild(LP.Data.DevilFruit.Value) then
+        equipweapon(LP.Data.DevilFruit.Value)
+        return false
+    end
+    for r, v in next, LP.PlayerGui.Main.Skills[LP.Data.DevilFruit.Value]:GetChildren() do
+        if v:IsA("Frame") then
+            if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1)then
+                return v.Name
+            end
+        end
+    end
+end
+function checkskillSword()
+    if not NameSword() then
+        return
+    end
+    if not LP.PlayerGui.Main.Skills:FindFirstChild(NameSword()) then
+        equipweapon(NameSword())
+        return false
+    end
+    for r, v in next, LP.PlayerGui.Main.Skills[NameSword()]:GetChildren() do
+        if v:IsA("Frame") then
+            if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1) then
+                return v.Name
+            end
+        end
+    end
+end
+function NameGun()
+    dick = LP.Backpack or LP.Character
+    for r, v in pairs(dick:GetChildren()) do
+        if v:IsA("Tool") and v.ToolTip == "Gun" then
+            return v.Name
+        end
+    end
+end
+function checkskillGun()
+    if not NameGun() then
+        return nil
+    end
+    if not LP.PlayerGui.Main.Skills:FindFirstChild(NameGun()) then
+        equipweapon(NameGun())
+        return false
+    end
+    for r, v in next, LP.PlayerGui.Main.Skills[NameGun()]:GetChildren() do
+        if v:IsA("Frame") then
+            if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1) then
+                return v.Name
+            end
+        end
+    end
+end
+function equipweapon(aq)
+    local c6 = tostring(aq)
+    local c7 = LP.Backpack:FindFirstChild(c6)
+    local c8 = LP.Character:FindFirstChild("Humanoid") or LP.Character:WaitForChild("Humanoid")
+    if c7 then
+        c8:EquipTool(c7)
+    end
+end
+function checkskillMelee()
+    if not LP.PlayerGui.Main.Skills:FindFirstChild(NameMelee()) then
+        equipweapon(NameMelee())
+        return false
+    end
+    for r, v in next, LP.PlayerGui.Main.Skills[NameMelee()]:GetChildren() do
+        if v:IsA("Frame") then
+            if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1) then
+                return v.Name
+            end
+        end
+    end
+end
+function EquipWeaponName(m)
+    if not m then
+        return
+    end
+    NoClip = true
+    ToolSe = m
+    if LP.Backpack:FindFirstChild(ToolSe) then
+        local bi = LP.Backpack:FindFirstChild(ToolSe)
+        wait(.4)
+        LP.Character.Humanoid:EquipTool(bi)
+    end
+end
+function GetWeapon(bh)
+    s = ""
+    for r, v in pairs(LP.Backpack:GetChildren()) do
+        if v:IsA("Tool") and v.ToolTip == bh then
+            s = v.Name
+        end
+    end
+    for r, v in pairs(LP.Character:GetChildren()) do
+        if v:IsA("Tool") and v.ToolTip == bh then
+            s = v.Name
+        end
+    end
+    return s
+end
+function IsWpSKillLoaded(bW)
+    if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Skills:FindFirstChild(bW) then
+        return true
+    end
+end
+function EquipAllWeapon()
+    u3 = {"Melee", "Blox Fruit", "Sword", "Gun"}
+    u3_2 = {}
+    for r, v in pairs(u3) do
+        u3_3 = GetWeapon(v)
+        table.insert(u3_2, u3_3)
+    end
+    for r, v in pairs(u3_2) do
+        if not IsWpSKillLoaded(v) then
+            print(v)
+            EquipWeaponName(v)
+        end
+    end
+end
+spawn(function()
+    while task.wait() do
+        if tuaddspamskillok then
+            sword = checkskillSword()
+            meele = checkskillMelee()
+            df = checkskillDF()
+            gun = checkskillGun()
+            if df and SpamDFs and not string.find(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value, "Portal") and df ~= "F" then
+                print("Spam Status: Devil Fruit")
+                EquipWeaponName(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
+                local condimebeo = checkskillDF()
+                if condimebeo then
+                    SendKeyEvents(condimebeo)
+                end
+            elseif checkskillMelee() and SpamMelees then
+                print("Spam Status: Melee")
+                EquipWeaponName(NameMelee())
+                local condimebeo = checkskillMelee()
+                if condimebeo then
+                    SendKeyEvents(condimebeo)
+                end
+            elseif checkskillSword() and SpamSwords then
+                print("Spam Status: Sword")
+                EquipWeaponName(NameSword())
+                local condimebeo = checkskillSword()
+                if condimebeo then
+                    SendKeyEvents(condimebeo)
+                end
+            elseif checkskillGun() and SpamGuns then
+                print("Spam Status: Gun")
+                local condimebeo = checkskillGun()
+                EquipWeaponName(NameGun())
+                if condimebeo then
+                    SendKeyEvents(condimebeo)
+                end
+            else
+                EquipAllWeapon()
+            end
+        end
+    end
+end)
+spawn(function()
+    game:GetService("RunService").Stepped:Connect(function()
+        if NoClip and not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
+            local ag = Instance.new("BodyVelocity")
+            ag.Velocity = Vector3.new(0, 0, 0)
+            ag.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+            ag.P = 9000
+            ag.Parent = game.Players.LocalPlayer.Character.Head
+            for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                if v:IsA("BasePart") then
+                    v.CanCollide = false
+                end
+            end
+        elseif not NoClip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
+            game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
+        end
+    end)
+end)
+loadstring(
+    [[
+    local gg = getrawmetatable(game)
+    local old = gg.__namecall
+    setreadonly(gg, false)
+    gg.__namecall =
+        newcclosure(
+        function(...)
+            local method = getnamecallmethod()
+            local args = {...}
+            if tostring(method) == "FireServer" then
+                if tostring(args[1]) == "RemoteEvent" then
+                    if tostring(args[2]) ~= "true" and tostring(args[2]) ~= "false" then
+                        if (CFrameHunt and aim) then
+                            args[2] = CFrameHunt
+                        end
+                        return old(unpack(args))
+                    end
+                end
+            end
+            return old(...)
+        end
+    )
+]]
+)()
+loadstring(
+    [[
+    local gt = getrawmetatable(game)
+	local old = gt.__namecall
+	setreadonly(gt,false)
+	gt.__namecall = newcclosure(function(...)
+		local args = {...}
+		if getnamecallmethod() == "InvokeServer" then 
+            if tostring(args[2]) == "TAP" then
+                if CFrameHunt and aim then
+                    args[3] = CFrameHunt
+                end
+            end
+		end
+		return old(unpack(args))
+	end)
+]]
+)()
 for i,v in pairs(game.Workspace.PineappleSpawner:GetChildren()) do
     if v:IsA("Tool") then
         if RealFruitESP then 
@@ -3652,7 +3964,7 @@ if Third_Sea then
                             if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false then
                                 TweenBoat(game:GetService("Workspace").Boats.PirateGrandBrigade.VehicleSeat.CFrame * CFrame.new(0,1,0))
                             else
-                                
+                                TweenObject(ZoneCFrame,game:GetService("Workspace").Boats.PirateGrandBrigade.VehicleSeat,350)
                             end
                         end
                     end
@@ -4356,320 +4668,8 @@ spawn(function()
 end)
 local SailBoatT = Tabs.SeaETab:AddToggle("Auto Sail Boat", {Title = "Auto Sail Boat", Callback = function(vSailBoat)
     SailBoat = vSailBoat
-    end 
+end 
 })
-function CheckSeaBeast()
-    for r, v in next, game.Workspace.SeaBeasts:GetChildren() do
-        if v.Name == "SeaBeast1" then
-            local s = v.HealthBBG.Frame.TextLabel.Text
-            local c5 = s:gsub("/%d+,%d+", "")
-            local a = v.HealthBBG.Frame.TextLabel.Text
-            local ab
-            if string.find(c5, ",") then
-                ab = a:gsub("%d+,%d+/", "")
-            else
-                ab = a:gsub("%d+/", "")
-            end
-            local c = ab:gsub(",", "")
-            if tonumber(c) >= 34500 then
-                return v
-            end
-        end
-    end
-    return false
-end
-function checkboat()
-    for r, v in next, WS.Boats:GetChildren() do
-        if v:IsA("Model") then
-            if v:FindFirstChild("Owner") and tostring(v.Owner.Value) == LP.Name and v.Humanoid.Value > 0 then
-                return v
-            end
-        end
-    end
-    return false
-end
-function CheckPirateBoat()
-    local boat = {"PirateBrigade", "PirateGrandBrigade"}
-    for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-        if table.find(boat, v.Name) then
-            return v
-        end
-    end
-end
-if game.PlaceId == 4442272183 then
-    CFrameBoat = CFrame.new(-13.488054275512695, 10.311711311340332, 2927.69287109375)
-    Vector3Boat = Vector3.new(-13.488054275512695, 10.311711311340332, 2927.69287109375)
-elseif game.PlaceId == 7449423635 then
-    CFrameBoat = CFrame.new(-16927.17578125, 9.056343078613281, 435.248779296875)
-    Vector3Boat = Vector3.new(-16927.17578125, 9.056343078613281, 435.248779296875)
-end
-local LP = game.Players.LocalPlayer
-local WO = game.Workspace["_WorldOrigin"]
-local WS = game.Workspace
-local RS = game.ReplicatedStorage
-function TweenObject(TweenCFrame,obj,ts)
-    if not ts then ts = 350 end
-    local tween_s = game:GetService("TweenService")
-    local info =
-        TweenInfo.new(
-        (TweenCFrame.Position -
-            obj.Position).Magnitude /
-            ts,
-        Enum.EasingStyle.Linear
-    )
-    tween =
-        tween_s:Create(
-            obj,
-        info,
-        {CFrame = TweenCFrame}
-    )
-    tween:Play() 
-end
-function NameMelee()
-    for r, v in next, LP.Backpack:GetChildren() do
-        if v:IsA("Tool") and v.ToolTip == "Melee" then
-            return v.Name
-        end
-    end
-    for r, v in next, LP.Character:GetChildren() do
-        if v:IsA("Tool") and v.ToolTip == "Melee" then
-            return v.Name
-        end
-    end
-end
-function NameSword()
-    for r, v in next, LP.Backpack:GetChildren() do
-        if v:IsA("Tool") and v.ToolTip == "Sword" then
-            return v.Name
-        end
-    end
-    for r, v in next, LP.Character:GetChildren() do
-        if v:IsA("Tool") and v.ToolTip == "Sword" then
-            return v.Name
-        end
-    end
-end
-function checkskillDF()
-    if not LP.PlayerGui.Main.Skills:FindFirstChild(LP.Data.DevilFruit.Value) then
-        equipweapon(LP.Data.DevilFruit.Value)
-        return false
-    end
-    for r, v in next, LP.PlayerGui.Main.Skills[LP.Data.DevilFruit.Value]:GetChildren() do
-        if v:IsA("Frame") then
-            if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1)then
-                return v.Name
-            end
-        end
-    end
-end
-function checkskillSword()
-    if not NameSword() then
-        return
-    end
-    if not LP.PlayerGui.Main.Skills:FindFirstChild(NameSword()) then
-        equipweapon(NameSword())
-        return false
-    end
-    for r, v in next, LP.PlayerGui.Main.Skills[NameSword()]:GetChildren() do
-        if v:IsA("Frame") then
-            if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1) then
-                return v.Name
-            end
-        end
-    end
-end
-function NameGun()
-    dick = LP.Backpack or LP.Character
-    for r, v in pairs(dick:GetChildren()) do
-        if v:IsA("Tool") and v.ToolTip == "Gun" then
-            return v.Name
-        end
-    end
-end
-function checkskillGun()
-    if not NameGun() then
-        return nil
-    end
-    if not LP.PlayerGui.Main.Skills:FindFirstChild(NameGun()) then
-        equipweapon(NameGun())
-        return false
-    end
-    for r, v in next, LP.PlayerGui.Main.Skills[NameGun()]:GetChildren() do
-        if v:IsA("Frame") then
-            if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1) then
-                return v.Name
-            end
-        end
-    end
-end
-function equipweapon(aq)
-    local c6 = tostring(aq)
-    local c7 = LP.Backpack:FindFirstChild(c6)
-    local c8 = LP.Character:FindFirstChild("Humanoid") or LP.Character:WaitForChild("Humanoid")
-    if c7 then
-        c8:EquipTool(c7)
-    end
-end
-function checkskillMelee()
-    if not LP.PlayerGui.Main.Skills:FindFirstChild(NameMelee()) then
-        equipweapon(NameMelee())
-        return false
-    end
-    for r, v in next, LP.PlayerGui.Main.Skills[NameMelee()]:GetChildren() do
-        if v:IsA("Frame") then
-            if v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or v.Cooldown.Size == UDim2.new(1, 0, 1, -1) then
-                return v.Name
-            end
-        end
-    end
-end
-function EquipWeaponName(m)
-    if not m then
-        return
-    end
-    NoClip = true
-    ToolSe = m
-    if LP.Backpack:FindFirstChild(ToolSe) then
-        local bi = LP.Backpack:FindFirstChild(ToolSe)
-        wait(.4)
-        LP.Character.Humanoid:EquipTool(bi)
-    end
-end
-function GetWeapon(bh)
-    s = ""
-    for r, v in pairs(LP.Backpack:GetChildren()) do
-        if v:IsA("Tool") and v.ToolTip == bh then
-            s = v.Name
-        end
-    end
-    for r, v in pairs(LP.Character:GetChildren()) do
-        if v:IsA("Tool") and v.ToolTip == bh then
-            s = v.Name
-        end
-    end
-    return s
-end
-function IsWpSKillLoaded(bW)
-    if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Skills:FindFirstChild(bW) then
-        return true
-    end
-end
-function EquipAllWeapon()
-    u3 = {"Melee", "Blox Fruit", "Sword", "Gun"}
-    u3_2 = {}
-    for r, v in pairs(u3) do
-        u3_3 = GetWeapon(v)
-        table.insert(u3_2, u3_3)
-    end
-    for r, v in pairs(u3_2) do
-        if not IsWpSKillLoaded(v) then
-            print(v)
-            EquipWeaponName(v)
-        end
-    end
-end
-spawn(function()
-    while task.wait() do
-        if tuaddspamskillok then
-            sword = checkskillSword()
-            meele = checkskillMelee()
-            df = checkskillDF()
-            gun = checkskillGun()
-            if df and SpamDFs and not string.find(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value, "Portal") and df ~= "F" then
-                print("Spam Status: Devil Fruit")
-                EquipWeaponName(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
-                local condimebeo = checkskillDF()
-                if condimebeo then
-                    SendKeyEvents(condimebeo)
-                end
-            elseif checkskillMelee() and SpamMelees then
-                print("Spam Status: Melee")
-                EquipWeaponName(NameMelee())
-                local condimebeo = checkskillMelee()
-                if condimebeo then
-                    SendKeyEvents(condimebeo)
-                end
-            elseif checkskillSword() and SpamSwords then
-                print("Spam Status: Sword")
-                EquipWeaponName(NameSword())
-                local condimebeo = checkskillSword()
-                if condimebeo then
-                    SendKeyEvents(condimebeo)
-                end
-            elseif checkskillGun() and SpamGuns then
-                print("Spam Status: Gun")
-                local condimebeo = checkskillGun()
-                EquipWeaponName(NameGun())
-                if condimebeo then
-                    SendKeyEvents(condimebeo)
-                end
-            else
-                EquipAllWeapon()
-            end
-        end
-    end
-end)
-spawn(function()
-    game:GetService("RunService").Stepped:Connect(function()
-        if NoClip and not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-            local ag = Instance.new("BodyVelocity")
-            ag.Velocity = Vector3.new(0, 0, 0)
-            ag.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-            ag.P = 9000
-            ag.Parent = game.Players.LocalPlayer.Character.Head
-            for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-                if v:IsA("BasePart") then
-                    v.CanCollide = false
-                end
-            end
-        elseif not NoClip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-            game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
-        end
-    end)
-end)
-loadstring(
-    [[
-    local gg = getrawmetatable(game)
-    local old = gg.__namecall
-    setreadonly(gg, false)
-    gg.__namecall =
-        newcclosure(
-        function(...)
-            local method = getnamecallmethod()
-            local args = {...}
-            if tostring(method) == "FireServer" then
-                if tostring(args[1]) == "RemoteEvent" then
-                    if tostring(args[2]) ~= "true" and tostring(args[2]) ~= "false" then
-                        if (CFrameHunt and aim) then
-                            args[2] = CFrameHunt
-                        end
-                        return old(unpack(args))
-                    end
-                end
-            end
-            return old(...)
-        end
-    )
-]]
-)()
-loadstring(
-    [[
-    local gt = getrawmetatable(game)
-	local old = gt.__namecall
-	setreadonly(gt,false)
-	gt.__namecall = newcclosure(function(...)
-		local args = {...}
-		if getnamecallmethod() == "InvokeServer" then 
-            if tostring(args[2]) == "TAP" then
-                if CFrameHunt and aim then
-                    args[3] = CFrameHunt
-                end
-            end
-		end
-		return old(unpack(args))
-	end)
-]]
-)()
 task.spawn(function()
     while task.wait() do
         if SailBoat then

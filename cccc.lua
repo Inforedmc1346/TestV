@@ -3963,9 +3963,6 @@ if Third_Sea then
                         elseif game:GetService("Workspace").Boats:FindFirstChild("PirateGrandBrigade") then
                             if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false then
                                 TweenBoat(game:GetService("Workspace").Boats.PirateGrandBrigade.VehicleSeat.CFrame * CFrame.new(0,1,0))
-                            else
-                                if checkboat() then
-                                TweenObject(ZoneCFrame,checkboat().VehicleSeat,350)
                             end
                         end
                     end
@@ -4695,7 +4692,8 @@ local ToggleSailBoat = Tabs.SeaETab:AddToggle("ToggleSailBoat", {Title = "Auto S
                                 TweenBoat(game:GetService("Workspace").Boats.PirateGrandBrigade.VehicleSeat.CFrame * CFrame.new(0,1,0))
                             else
                                 if checkboat() then
-                                TweenObject(ZoneCFrame,checkboat().VehicleSeat,350)
+                                    TweenObject(ZoneCFrame,checkboat().VehicleSeat,350)
+                                end
                             end
                         end
                     end

@@ -1,5 +1,5 @@
 --[[
-Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 69
+Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 70
 Mkhoi 20-10-2009_14-9-2009
 ]]--
 ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -1312,7 +1312,7 @@ function CheckSeaBeast()
     return false
 end
 function checkboat()
-    for r, v in next, WS.Boats:GetChildren() do
+    for r, v in next, game:GetService("Workspace").Boats:GetChildren() do
         if v:IsA("Model") then
             if v:FindFirstChild("Owner") and tostring(v.Owner.Value) == game.Players.LocalPlayer.Name and v.Humanoid.Value > 0 then
                 return v
@@ -4666,28 +4666,30 @@ spawn(function()
         end
     end
 end)
-local SailBoatT = Tabs.SeaETab:AddToggle("Auto Sail Boat", {Title = "Auto Sail Boat", Callback = function(vSailBoat)
-    SailBoat = vSailBoat
-end 
-})
+local ToggleSailBoat = Tabs.SeaETab:AddToggle("ToggleSailBoat", {Title = "Auto Sail Boat",Description = "Sail To Zone Selected", Default = false })
+ToggleSailBoat:OnChanged(function(Value)
+    SailBoate = Value
+end)
+Options.ToggleSailBoat:SetValue(false)
 task.spawn(function()
     while task.wait() do
-        if SailBoat then
+        if SailBoate then
             pcall(function()
                 if not CheckSeaBeast() and not CheckPirateBoat() and not game:GetService("Workspace").Enemies:FindFirstChild("Shark") and not game:GetService("Workspace").Enemies:FindFirstChild("Piranha") and not game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") and not game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and not game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and not WO.Locations:FindFirstChild("Rough Sea") then
                     if not checkboat() then
-                        if (Vector3Boat - LP.Character.HumanoidRootPart.Position).Magnitude >= 2000 then
-                            BTP(CFrameBoat)
+                        if (Vector3.new(-16927.17578125, 9.056343078613281, 435.248779296875) - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 2000 then
+                            BTP(CFrame.new(-16927.17578125, 9.056343078613281, 435.248779296875))
                         else
-                            toTarget(CFrameBoat)
+                            toTarget(CFrame.new(-16927.17578125, 9.056343078613281, 435.248779296875))
                             NoClip = true
-                            if (Vector3Boat - LP.Character.HumanoidRootPart.Position).Magnitude < 20 and LP.Character.Humanoid.Health > 0 then
+                            if (Vector3.new(-16927.17578125, 9.056343078613281, 435.248779296875) - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 20 and LP.Character.Humanoid.Health > 0 then
                                 RS.Remotes.CommF_:InvokeServer("BuyBoat", "PirateGrandBrigade")
                             end
                         end
-                    elseif checkboat() then
+                    end
+                    if checkboat() then
                         if not game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit then
-                            TweenBoat(game:GetService("Workspace").Boats.PirateGrandBrigade.VehicleSeat.CFrame * CFrame.new(0,1,0))
+                            TweenBoat(checkboat().VehicleSeat.CFrame)
                             NoClip = true
                             task.spawn(function()
                                 local v1 = tick()

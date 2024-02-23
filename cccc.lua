@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #37.7
+--Memories Hub Hyper - Rewrite Fixed & Update #37.8
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -501,19 +501,16 @@ function CheckVerRace()
     end
     return LP.Data.Race.Value .. " V1"
 end
-local radius = 25
 local angle = 0
-function getNextPosition(center)
+function getNextPosition(center, radius)
+    if radius == nil then
+        radius = 25
+    end
     angle = angle + 5
     return center + Vector3.new(math.sin(math.rad(angle)) * radius, 0, math.cos(math.rad(angle)) * radius)
 end
-local radius2 = 120
-function getNextPosition2(center)
-    angle = angle + 5
-    return center + Vector3.new(math.sin(math.rad(angle)) * radius2, 0, math.cos(math.rad(angle)) * radius2)
-end
 spawn(function()
-    while task.wait()
+    while task.wait() do
         if NoClip and LP.Character and LP.Character:FindFirstChild("Humanoid") then
             setfflag("HumanoidParallelRemoveNoPhysics", "False")
             setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
@@ -627,7 +624,7 @@ function CheckStatusF()
     local StatusQuest
     if EliteStack and CheckElite() then
         StatusQuest = "Start Auto Elite"
-    else not CheckElite() then
+    elseif not CheckElite() then
         StatusQuest = "Start Auto Farm"
     end
     return StatusQuest

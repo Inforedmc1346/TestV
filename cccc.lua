@@ -4685,7 +4685,7 @@ spawn(function()
         end
     end
 end)
-local ToggleSailBoat = Tabs.SeaETab:AddToggle("ToggleSailBoat", {Title = "Auto Sail Boat To Zone 6",Description = "wait update", Default = false })
+local ToggleSailBoat = Tabs.SeaETab:AddToggle("ToggleSailBoat", {Title = "Auto Sail Boats To Zone 6",Description = "wait update", Default = false })
     ToggleSailBoat:OnChanged(function(Value)
         _G.SailBoat = Value
     end)
@@ -4709,11 +4709,13 @@ local ToggleSailBoat = Tabs.SeaETab:AddToggle("ToggleSailBoat", {Title = "Auto S
                                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
                             end
                         elseif checkboat() then
-                            if (CFrame.new(-32704.103515625, 45.90665817260742, 24089.923828125).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 50 then
+                            if (checkboat().VehicleSeat.Position - Vector3.new(-32704.103515625, 45.90665817260742, 24089.923828125)).Magnitude > 50 then
                                 checkboat().VehicleSeat.CFrame = CFrame.new(-32704.103515625, 45.90665817260742, 24089.923828125)
                             end
-                            if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false then
-                                TweenBoat(checkboat().VehicleSeat.CFrame)
+                            if (checkboat().VehicleSeat.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 50 then
+                                if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false then
+                                    TweenBoat(checkboat().VehicleSeat.CFrame)
+                                end
                             end
                         end
                     end

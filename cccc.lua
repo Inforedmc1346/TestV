@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #37.8
+--Memories Hub Hyper - Rewrite Fixed & Update #37.9
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -203,29 +203,6 @@ function ToTween(Pos, SpeedT)
     end
     if Distance <= 220 then
         LP.Character.PrimaryPart.CFrame = Pos
-    end
-    if Distance > 2 and LP.Character and LP.Character:FindFirstChild("Humanoid") then
-        setfflag("HumanoidParallelRemoveNoPhysics", "False")
-        setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
-        if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-            local ag = Instance.new("BodyVelocity")
-            ag.Velocity = Vector3.new(0, 0, 0)
-            ag.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-            ag.P = 9000
-            ag.Parent = game.Players.LocalPlayer.Character.Head
-            for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-                if v:IsA("BasePart") then
-                    v.CanCollide = false
-                end
-            end
-        end
-        for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
-            if v:IsA("BasePart") then
-                v.CanCollide = false    
-            end
-        end
-    elseif not Distance <= 2 and  game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-        game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
     end
     tween = game:GetService("TweenService"):Create(
         game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
@@ -515,11 +492,15 @@ spawn(function()
             setfflag("HumanoidParallelRemoveNoPhysics", "False")
             setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
             if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
-                local ag = Instance.new("BodyVelocity")
-                ag.Velocity = Vector3.new(0, 0, 0)
-                ag.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-                ag.P = 9000
-                ag.Parent = game.Players.LocalPlayer.Character.Head
+                local Hold = Instance.new("BodyVelocity", game.Players.LocalPlayer.Character.PrimaryPart)
+                Hold.Name = "Hold"
+                Hold.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+                Hold.Velocity = Vector3.new(0, 0, 0)
+                for a, b in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                    if b:IsA("BasePart") then
+                        b.CanCollide = false
+                    end
+                end
                 for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
                     if v:IsA("BasePart") then
                         v.CanCollide = false

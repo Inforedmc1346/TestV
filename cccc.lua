@@ -1,5 +1,5 @@
 --[[
-Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 703
+Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 7034
 Mkhoi 20-10-2009_14-9-2009
 ]]--
 ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -3958,7 +3958,7 @@ end
 if Third_Sea then
     local RoughSea = Tabs.Main:AddSection("Rough Sea wait update")
 
-    local ToggleSailBoat = Tabs.SeaETab:AddToggle("ToggleSailBoat", {Title = "Auto Sail Boat",Description = "wait update", Default = false })
+    local ToggleSailBoat = Tabs.SeaETab:AddToggle("ToggleSailBoat", {Title = "Auto Sail Boat To Zone 6",Description = "wait update", Default = false })
     ToggleSailBoat:OnChanged(function(Value)
         _G.SailBoat = Value
     end)
@@ -3966,7 +3966,7 @@ if Third_Sea then
 
 
     spawn(function()
-        while wait() do
+        while task.wait() do
             pcall(function()
                 if _G.SailBoat then
                     if not game:GetService("Workspace").Enemies:FindFirstChild("Shark") or not game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") or not game:GetService("Workspace").Enemies:FindFirstChild("Piranha") or not game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") then
@@ -4669,31 +4669,10 @@ end)
     end
     end)
 end
-local ZoneSelectT = Tabs.SeaETab:AddDropdown("Select Zone",{Title = "Select Zone", Values = {"1", "2", "3", "4", "5", "6"}, Multi = false, Callback = function(vSelectZone)
-    SelectZone = vSelectZone
-    end
-})
-spawn(function()
-    while wait() do 
-        if SelectZone == "1" then
-            ZoneCFrame = CFrame.new(-21313.607421875, 45.90665817260742, 1330.6165771484375)
-        elseif SelectZone == "2" then
-            ZoneCFrame = CFrame.new(-24815.267578125, 45.90665817260742, 5262.62060546875)
-        elseif SelectZone == "3" then
-            ZoneCFrame = CFrame.new(-28464.876953125, 45.90665817260742, 6896.8076171875)
-        elseif SelectZone == "4" then
-            ZoneCFrame = CFrame.new(-30294.8515625, 45.95185470581055, 10409.8564453125)
-        elseif SelectZone == "5" then
-            ZoneCFrame = CFrame.new(-37704.828125, 45.90665817260742, 6750.69873046875)
-        elseif SelectZone == "6" or SelectZone == nil then
-            ZoneCFrame = CFrame.new(-32704.103515625, 45.90665817260742, 24089.923828125)
-        end
-    end
-end)
-local SeaBeastNgu = Tabs.SeaETab:AddToggle("SeaBeastNgu", {Title = "Auto Sea Beast",Description = "", Default = false })
-SeaBeastNgu:OnChanged(function(vSeaBeastNguhetcuu)
+local SeaBeastNgu = Tabs.SeaETab:AddToggle("Auto Sea Beast", {Title = "Auto Sea Beast", Callback = function(vSeaBeastNguhetcuu)
     SeaBeastNguhetcuu = vSeaBeastNguhetcuu
-end) 
+    end 
+})
 spawn(function()
     while task.wait() do
         if SeaBeastNguhetcuu then
@@ -4719,10 +4698,10 @@ spawn(function()
         end
     end
 end)
-local GSNgu = Tabs.SeaETab:AddToggle("GSNgu", {Title = "Auto Ghost Ship",Description = "", Default = false })
-GSNgu:OnChanged(function(vGSNgu11111)
+local GSNGU = Tabs.SeaETab:AddToggle("Auto Ghost Ship", {Title = "Auto Ghost Ship", Callback = function(vGSNgu11111)
     GSNgu11111 = vGSNgu11111
-end) 
+    end 
+})
 spawn(function()
     while task.wait() do
         if GSNgu11111 then

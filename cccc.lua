@@ -1,5 +1,5 @@
 --[[
-Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 70
+Cảm Ơn Bạn Đã Sử Dụng Dịch Vụ của Minh Khôi, Chúc Bạn Có 1 Trải Nghiệm Vui Vẻ. --fix 701
 Mkhoi 20-10-2009_14-9-2009
 ]]--
 ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -40,20 +40,23 @@ if id == 2753915549 then First_Sea = true; elseif id == 4442272183 then Second_S
 --Flag Player
 Tabs.Main:AddButton({
     Title = "Check Boat",
-    Description = "",
+    Description = "Check Đi Địt Mẹ Mày",
     Callback = function()
-        local dcm
         if checkboat() then
-            dcm = "có nha mẹ mày"
+            Fluent:Notify({
+                Title = "GrayX Hub",
+                Content = "múp",
+                SubContent = "", -- Optional
+                Duration = 5 -- Set to nil to make the notification not disappear
+            })
         else
-            dcm = "có cái lồn mẹ mày"
+            Fluent:Notify({
+                Title = "GrayX Hub",
+                Content = "Nigga",
+                SubContent = "", -- Optional
+                Duration = 5 -- Set to nil to make the notification not disappear
+            })
         end
-        Fluent:Notify({
-            Title = "GrayX Hub",
-            Content = dcm,
-            SubContent = "", -- Optional
-            Duration = 5 -- Set to nil to make the notification not disappear
-        })
     end
 })
 --------------------------------------------------------------------------------------------------------------------------------------------
@@ -4682,7 +4685,7 @@ spawn(function()
         end
     end
 end)
-local ToggleSailBoat = Tabs.SeaETab:AddToggle("ToggleSailBoat", {Title = "Auto Sail Boat",Description = "wait update", Default = false })
+local ToggleSailBoat = Tabs.SeaETab:AddToggle("ToggleSailBoat", {Title = "Auto Sails Boat",Description = "wait update", Default = false })
     ToggleSailBoat:OnChanged(function(Value)
         _G.SailBoat = Value
     end)
@@ -4709,8 +4712,8 @@ local ToggleSailBoat = Tabs.SeaETab:AddToggle("ToggleSailBoat", {Title = "Auto S
                             if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false then
                                 TweenBoat(game:GetService("Workspace").Boats.PirateGrandBrigade.VehicleSeat.CFrame * CFrame.new(0,1,0))
                             end
-                            if checkboat() and game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == true then
-                                TweenObject(ZoneCFrame,checkboat().VehicleSeat,350)
+                            if game:GetService("Workspace").Boats.PirateGrandBrigade and game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == true then
+                                TweenObject(CFrame.new(-32704.103515625, 45.90665817260742, 24089.923828125),game:GetService("Workspace").Boats.PirateGrandBrigade.VehicleSeat,350)
                             end
                         end
                     end

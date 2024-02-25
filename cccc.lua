@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #38.5
+--Memories Hub Hyper - Rewrite Fixed & Update #38.6
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -199,7 +199,7 @@ end
 function ToTween(Pos, SpeedT)
     Distance = GetDistance(Pos.Position)
     if not SpeedT or typeof(SpeedT) ~= "number" then
-        Speed = 330
+        Speed = TweenSpeed
     end
     if Distance <= 220 then
         LP.Character.PrimaryPart.CFrame = Pos
@@ -214,7 +214,7 @@ end
 function ToTweenWithEntrace(Positions)
     if LP.Character and LP.Character:FindFirstChild("Humanoid") and LP.Character.Humanoid.Health > 0 then
         if not Speed or typeof(Speed) ~= "number" then
-            Speed = 325
+            Speed = TweenSpeed
         end
         Dis = GetDistance(Positions)       
         if Dis <= 300 then
@@ -1636,9 +1636,13 @@ local selecttool = MainTab:AddDropdown({Name = "Select Tool", Default = "", Opti
 		Selecttool = vSelecttool
 	end    
 })
-MainTab:AddSection({Name = "Bring Setting"})
+MainTab:AddSection({Name = "Setting"})
 MainTab:AddSlider({Name = "Distance From Bring Mob", Min = 10, Max = 500, Default = 250, Color = Color3.fromRGB(255,255,255), Increment = 1, ValueName = "Health", Callback = function(vDistanceFromBring)
     DistanceFromBring = vDistanceFromBring
+	end    
+})
+MainTab:AddSlider({Name = "Tween Speed", Min = 10, Max = 400, Default = 300, Color = Color3.fromRGB(255,255,255), Increment = 1, ValueName = "Health", Callback = function(vTweenSpeed)
+    TweenSpeed = vTweenSpeed
 	end    
 })
 MainTab:AddSection({Name = "Fast Attack"})
@@ -2334,10 +2338,10 @@ spawn(function()
                                 if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameCI.Position).Magnitude > 2000 then
                                     BypassTele(CFrameCI)
                                 elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameCI.Position).Magnitude < 2000 then
-                                    ToTween(CFrameCI)
+                                    ToTweenWithEntrace(CFrameCI)
                                 end
                             else
-                                ToTween(CFrameCI)
+                                ToTweenWithEntrace(CFrameCI)
                             end
                         end
                     end
@@ -3297,23 +3301,7 @@ task.spawn(function()
                         if not LP.Character.Humanoid.Sit then
                             ToTween(checkboat().VehicleSeat.CFrame)
                             NoClip = true
-                            task.spawn(function()
-                                local v1 = tick()
-                                repeat task.wait() until game:GetService("Players").LocalPlayer.Character.Humanoid.Sit or tick()-v1 > 5 
-                                if game:GetService("Players").LocalPlayer.Character.Humanoid.Sit then  
-                                    local Nigga = {}
-                                    for i,v in pairs(checkboat():GetDescendants()) do 
-                                        pcall(function() 
-                                            v.CanCollide = false
-                                            table.insert(Nigga,v) 
-                                        end)
-                                    end
-                                    repeat task.wait() until not LP.Character.Humanoid.Sit 
-                                    for i,v in pairs(Nigga) do 
-                                        v.CanCollide = true 
-                                    end
-                                end
-                            end)
+                            
                         elseif LP.Character.Humanoid.Sit and (checkboat().VehicleSeat.Position - ZoneCFrame.Position).Magnitude >= 50 then
                             TweenObject(ZoneCFrame,checkboat().VehicleSeat,350)
                         end
@@ -3588,6 +3576,18 @@ spawn(function()
         end
     end
 end)
+SeaTab:AddButton({Name = "Remove Fog + Sea Terror", Callback = function()
+    local c = game.Lighting
+    c.FogEnd = 100000
+    for r, v in pairs(c:GetDescendants()) do
+        if v:IsA("Atmosphere") then
+            v:Destroy()
+        end
+    end
+    c.LightingLayers:Destroy()
+    c.SeaTerrorCC:Destroy()
+end    
+})
 SeaTab:AddSection({Name = "Misc Sea Event"})
 SeaTab:AddButton({Name = "Teleport Ship To Player", Callback = function()
     checkboat().VehicleSeat.CFrame = LP.Character.HumanoidRootPart.CFrame

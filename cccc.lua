@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #38.4
+--Memories Hub Hyper - Rewrite Fixed & Update #38.5
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -2498,12 +2498,7 @@ spawn(function()
                 changesword()
             elseif v09 < 600 then
                 repeat wait()
-                    if SelectFarm == nil then
-                        Selectmodef:Set("Bone")
-                    else
-                        Farmop:Set(true)
-                        selecttool:Set("Sword")
-                    end
+                    selecttool:Set("Sword")
                 until not FarmMastery600 or CheckMasSelect("Sword") >= 600
             end
         end

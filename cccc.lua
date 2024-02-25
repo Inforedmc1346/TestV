@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #38.1
+--Memories Hub Hyper - Rewrite Fixed & Update #38.2
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -1629,6 +1629,7 @@ MainTab:AddButton({
   	end    
 })
 MainTab:AddButton({Name = "Stop Tween", Callback = function()
+    NoClip = false
     StopTween()
 end    
 })
@@ -3202,7 +3203,7 @@ SeaTab:AddSection({Name = "Sea Event"})
 local BoatDropDown = SeaTab:AddDropdown({
 	Name = "Select Boat",
 	Default = "",
-	Options = {"PirateBrigade", "PirateGrandBrigade", "BeastHunter"},
+	Options = {"PirateBrigade", "PirateGrandBrigade", "BeastHunter", "MarineBrigade", "MarineGrandBrigade"},
 	Callback = function(vsboatc)
 		BoatSelect = vsboatc
 	end    
@@ -3214,7 +3215,11 @@ spawn(function()
         elseif BoatSelect == "PirateGrandBrigade" then
             BoatNameBuy = "PirateGrandBrigade"
         elseif BoatSelect == "BeastHunter" then
-            BoatNameBuy = "BeastHunter"
+            BoatNameBuy = "Beast Hunter"
+        elseif BoatSelect == "MarineBrigade" then
+            BoatNameBuy = "MarineBrigade"
+        elseif BoatSelect == "MarineGrandBrigade" then
+            BoatNameBuy = "MarineGrandBrigade"
         end
     end
 end)
@@ -3229,39 +3234,39 @@ SeaTab:AddDropdown({
 spawn(function()
     while wait() do 
         if ZoneSelect == "Zone 1" then
-            if BoatSelect == "PirateBrigade" then
+            if BoatSelect == "PirateBrigade" or BoatSelect == "MarineBrigade" then
                 ZoneCFrame = CFrame.new(-21313.607421875, 12.560698509216309, 1330.6165771484375)
-            elseif BoatSelect == "PirateGrandBrigade" then
+            elseif BoatSelect == "PirateGrandBrigade" or BoatSelect == "Beast Hunter" or BoatSelect == "MarineGrandBrigade" then
                 ZoneCFrame = CFrame.new(-21313.607421875, 45.95185470581055, 1330.6165771484375)
             end
         elseif ZoneSelect == "Zone 2" then
-            if BoatSelect == "PirateBrigade" then
+            if BoatSelect == "PirateBrigade" or BoatSelect == "MarineBrigade" then
                 ZoneCFrame = CFrame.new(-24815.267578125, 12.560657501220703, 5262.62060546875)
-            elseif BoatSelect == "PirateGrandBrigade" then
+            elseif BoatSelect == "PirateGrandBrigade" or BoatSelect == "Beast Hunter" or BoatSelect == "MarineGrandBrigade" then
                 ZoneCFrame = CFrame.new(-24815.267578125, 45.90665817260742, 5262.62060546875)
             end
         elseif ZoneSelect == "Zone 3" then
-            if BoatSelect == "PirateBrigade" then
+            if BoatSelect == "PirateBrigade" or BoatSelect == "MarineBrigade" then
                 ZoneCFrame = CFrame.new(-28464.876953125, 12.553319931030273, 6896.8076171875)
-            elseif BoatSelect == "PirateGrandBrigade" then
+            elseif BoatSelect == "PirateGrandBrigade" or BoatSelect == "Beast Hunter" or BoatSelect == "MarineGrandBrigade" then
                 ZoneCFrame = CFrame.new(-28464.876953125, 45.90665817260742, 6896.8076171875)
             end
         elseif ZoneSelect == "Zone 4" then
-            if BoatSelect == "PirateBrigade" then
+            if BoatSelect == "PirateBrigade" or BoatSelect == "MarineBrigade" then
                 ZoneCFrame = CFrame.new(-30294.8515625, 12.554117202758789, 10409.8564453125)
-            elseif BoatSelect == "PirateGrandBrigade" then
+            elseif BoatSelect == "PirateGrandBrigade" or BoatSelect == "Beast Hunter" or BoatSelect == "MarineGrandBrigade" then
                 ZoneCFrame = CFrame.new(-30294.8515625, 45.95185470581055, 10409.8564453125)
             end
         elseif ZoneSelect == "Zone 5" then
-            if BoatSelect == "PirateBrigade" then
+            if BoatSelect == "PirateBrigade" or BoatSelect == "MarineBrigade" then
                 ZoneCFrame = CFrame.new(-37704.828125, 12.561018943786621, 6750.69873046875)
-            elseif BoatSelect == "PirateGrandBrigade" then
+            elseif BoatSelect == "PirateGrandBrigade" or BoatSelect == "Beast Hunter" or BoatSelect == "MarineGrandBrigade" then
                 ZoneCFrame = CFrame.new(-37704.828125, 45.90665817260742, 6750.69873046875)
             end
         elseif ZoneSelect == "Zone 6" or ZoneSelect == nil then
-            if BoatSelect == "PirateBrigade" then
+            if BoatSelect == "PirateBrigade" or BoatSelect == "MarineBrigade" then
                 ZoneCFrame = CFrame.new(-32704.103515625, 12.557344436645508, 24089.923828125)
-            elseif BoatSelect == "PirateGrandBrigade" then
+            elseif BoatSelect == "PirateGrandBrigade" or BoatSelect == "Beast Hunter" or BoatSelect == "MarineGrandBrigade" then
                 ZoneCFrame = CFrame.new(-32704.103515625, 45.90665817260742, 24089.923828125)
             end
         end
@@ -3395,6 +3400,24 @@ task.spawn(function()
                         truespam2 = false
                         NoClip = false
                         aim = false
+                    end
+                end
+            elseif not game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") then
+                for i,v in pairs(Enemies:GetChildren()) do
+                    if v.Name == "Fish Crew Member" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                        if LP.Character.Humanoid.Sit then
+                            LP.Character.Humanoid.Sit = false
+                        end
+                        repeat task.wait()
+                            EBuso()
+                            EWeapon()
+                            ToTween(v.HumanoidRootPart.CFrame * CFrame.new(0,15,0))
+                            NoClip = true
+                            EClick()
+                            v.Humanoid.WalkSpeed = 0
+                            NoClip = true
+                        until not TerrorShark or not v:FindFirstChild("Terrorshark") or not v:FindFirstChild("HumanoidRootPart") or not v:FindFirstChild("Humanoid") or v.Humanoid.Health <= 0
+                        NoClip = false
                     end
                 end
             end
@@ -3583,7 +3606,7 @@ end
 })
 SeaTab:AddSection({Name = "Leviathan"})
 local AutoFindLevi = SeaTab:AddToggle({
-    Name = "Auto Find Leviathan [BETA]",
+    Name = "Auto Find Leviathan",
     Default = false,
     Flag = "FindLeviathan",
     Save = false,

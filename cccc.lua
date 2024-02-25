@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #38.2
+--Memories Hub Hyper - Rewrite Fixed & Update #38.3
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -618,20 +618,14 @@ function CheckStatusF()
     local StatusQuest
     if EliteStack and CheckElite() then
         StatusQuest = "Start Auto Elite"
+    elseif CheckFruitSpawn() and FruitStack then
+        StatusQuest = "Start Collect Fruit"
+    elseif IndraStack and RS:FindFirstChild("rip_indra True Form") or RS:FindFirstChild("rip_indra") or Enemies:FindFirstChild("rip_indra True Form") or Enemies:FindFirstChild("rip_indra") then
+        StatusQuest = "Start Auto Rip"
+    elseif DoughKStack and RS:FindFirstChild("Dough King") or Enemies:FindFirstChild("Dough King") then
+        StatusQuest = "Start Auto Dough King"
     else
-        if CheckFruitSpawn() and FruitStack then
-            StatusQuest = "Start Collect Fruit"
-        else
-            if IndraStack and RS:FindFirstChild("rip_indra True Form") or RS:FindFirstChild("rip_indra") or Enemies:FindFirstChild("rip_indra True Form") or Enemies:FindFirstChild("rip_indra") then
-                StatusQuest = "Start Auto Rip"
-            else
-                if DoughKStack and RS:FindFirstChild("Dough King") or Enemies:FindFirstChild("Dough King") then
-                    StatusQuest = "Start Auto Dough King"
-                else
-                    StatusQuest = "Start Auto Farm"
-                end
-            end
-        end
+        StatusQuest = "Start Auto Farm"
     end
     return StatusQuest
 end
@@ -3236,37 +3230,37 @@ spawn(function()
         if ZoneSelect == "Zone 1" then
             if BoatSelect == "PirateBrigade" or BoatSelect == "MarineBrigade" then
                 ZoneCFrame = CFrame.new(-21313.607421875, 12.560698509216309, 1330.6165771484375)
-            elseif BoatSelect == "PirateGrandBrigade" or BoatSelect == "Beast Hunter" or BoatSelect == "MarineGrandBrigade" then
+            elseif BoatSelect == "PirateGrandBrigade" or BoatSelect == "BeastHunter" or BoatSelect == "MarineGrandBrigade" then
                 ZoneCFrame = CFrame.new(-21313.607421875, 45.95185470581055, 1330.6165771484375)
             end
         elseif ZoneSelect == "Zone 2" then
             if BoatSelect == "PirateBrigade" or BoatSelect == "MarineBrigade" then
                 ZoneCFrame = CFrame.new(-24815.267578125, 12.560657501220703, 5262.62060546875)
-            elseif BoatSelect == "PirateGrandBrigade" or BoatSelect == "Beast Hunter" or BoatSelect == "MarineGrandBrigade" then
+            elseif BoatSelect == "PirateGrandBrigade" or BoatSelect == "BeastHunter" or BoatSelect == "MarineGrandBrigade" then
                 ZoneCFrame = CFrame.new(-24815.267578125, 45.90665817260742, 5262.62060546875)
             end
         elseif ZoneSelect == "Zone 3" then
             if BoatSelect == "PirateBrigade" or BoatSelect == "MarineBrigade" then
                 ZoneCFrame = CFrame.new(-28464.876953125, 12.553319931030273, 6896.8076171875)
-            elseif BoatSelect == "PirateGrandBrigade" or BoatSelect == "Beast Hunter" or BoatSelect == "MarineGrandBrigade" then
+            elseif BoatSelect == "PirateGrandBrigade" or BoatSelect == "BeastHunter" or BoatSelect == "MarineGrandBrigade" then
                 ZoneCFrame = CFrame.new(-28464.876953125, 45.90665817260742, 6896.8076171875)
             end
         elseif ZoneSelect == "Zone 4" then
             if BoatSelect == "PirateBrigade" or BoatSelect == "MarineBrigade" then
                 ZoneCFrame = CFrame.new(-30294.8515625, 12.554117202758789, 10409.8564453125)
-            elseif BoatSelect == "PirateGrandBrigade" or BoatSelect == "Beast Hunter" or BoatSelect == "MarineGrandBrigade" then
+            elseif BoatSelect == "PirateGrandBrigade" or BoatSelect == "BeastHunter" or BoatSelect == "MarineGrandBrigade" then
                 ZoneCFrame = CFrame.new(-30294.8515625, 45.95185470581055, 10409.8564453125)
             end
         elseif ZoneSelect == "Zone 5" then
             if BoatSelect == "PirateBrigade" or BoatSelect == "MarineBrigade" then
                 ZoneCFrame = CFrame.new(-37704.828125, 12.561018943786621, 6750.69873046875)
-            elseif BoatSelect == "PirateGrandBrigade" or BoatSelect == "Beast Hunter" or BoatSelect == "MarineGrandBrigade" then
+            elseif BoatSelect == "PirateGrandBrigade" or BoatSelect == "BeastHunter" or BoatSelect == "MarineGrandBrigade" then
                 ZoneCFrame = CFrame.new(-37704.828125, 45.90665817260742, 6750.69873046875)
             end
         elseif ZoneSelect == "Zone 6" or ZoneSelect == nil then
             if BoatSelect == "PirateBrigade" or BoatSelect == "MarineBrigade" then
                 ZoneCFrame = CFrame.new(-32704.103515625, 12.557344436645508, 24089.923828125)
-            elseif BoatSelect == "PirateGrandBrigade" or BoatSelect == "Beast Hunter" or BoatSelect == "MarineGrandBrigade" then
+            elseif BoatSelect == "PirateGrandBrigade" or BoatSelect == "BeastHunter" or BoatSelect == "MarineGrandBrigade" then
                 ZoneCFrame = CFrame.new(-32704.103515625, 45.90665817260742, 24089.923828125)
             end
         end

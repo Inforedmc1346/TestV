@@ -1,4 +1,4 @@
---Memories Hub Hyper - Rewrite Fixed & Update #38.3
+--Memories Hub Hyper - Rewrite Fixed & Update #38.4
 repeat task.wait() until game:IsLoaded()
 notis = require(game.ReplicatedStorage:WaitForChild("Notification"))
 notis.new("<Color=White>MEMORIES HUB<Color=/>"):Display()
@@ -4175,7 +4175,7 @@ StatusTab:AddSection({Name = "Status Leviathan"})
 local leviathan = StatusTab:AddLabel("Status: N/A")
 spawn(function()
     while wait() do
-        if RS.Remotes.CommF_:InvokeServer("InfoLeviathan", "1") == 2 then
+        if RS.Remotes.CommF_:InvokeServer("InfoLeviathan", "1") == 3 then
             leviathan:Set("Status: You Can Find Leviathan")
         else
             leviathan:Set("Status: I Don't Know Anything Yet")

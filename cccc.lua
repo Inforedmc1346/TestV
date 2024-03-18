@@ -1,3 +1,10 @@
+if game.PlaceId == 2753915549 then
+    Main = true
+elseif game.PlaceId == 4442272183 then
+    Dressora = true
+elseif game.PlaceId == 7449423635 then
+    Zou = true
+end
 local function CheckQuest()--2
     local Quest = require(game.ReplicatedStorage.Quests)
     local QuestTable = {}

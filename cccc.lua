@@ -1,4 +1,4 @@
-local function CheckQuest()
+local function CheckQuest()--2
     local Quest = require(game.ReplicatedStorage.Quests)
     local QuestTable = {}
     local Ignore = {"BartiloQuest", "Trainees", "MarineQuest", "CitizenQuest"}
@@ -85,11 +85,12 @@ function GetNPCPosition()
 		end
 	end
 end
-function GetDistance(a, b)
-    if not b then
-        b = game.Players.LocalPlayer
+function GetDistance(q)
+    if typeof(q) == "CFrame" then
+        return LP:DistanceFromCharacter(q.Position)
+    elseif typeof(q) == "Vector3" then
+        return LP:DistanceFromCharacter(q)
     end
-    return (a - b.HumanoidRootPart.Position).Magnitude
 end
 function RETeleport(ze)
     local cle = game.Players.LocalPlayer

@@ -1,4 +1,4 @@
-if game.PlaceId == 2753915549 then
+if game.PlaceId == 2753915549 then --091
     Main = true
 elseif game.PlaceId == 4442272183 then
     Dressora = true
@@ -94,9 +94,9 @@ function GetNPCPosition()
 end
 function GetDistance(q)
     if typeof(q) == "CFrame" then
-        return LP:DistanceFromCharacter(q.Position)
+        return game.Players.LocalPlayer:DistanceFromCharacter(q.Position)
     elseif typeof(q) == "Vector3" then
-        return LP:DistanceFromCharacter(q)
+        return game.Players.LocalPlayer:DistanceFromCharacter(q)
     end
 end
 function RETeleport(ze)
